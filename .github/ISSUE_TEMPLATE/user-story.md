@@ -1,10 +1,12 @@
 ---
 name: User Story
-about: This is my default user story template
+about: Issue for user stories
 title: 'USER STORY: <TITLE>'
-labels: ''
+labels: Story
 assignees: ''
 
 ---
 
-As a **role**, I want to be able to **capability**, so that I can **received benefit**.
+Epic:
+
+As a **role**, I want to be able to **capability**, so that I can **receive benefit**.
