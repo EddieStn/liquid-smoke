@@ -1,108 +1,73 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+## Epics Breakdown
+### EPIC 1 Product Catalog and Search
 
-Welcome EddieStn,
+As a customer, I want to be able to easily find the candles and essential oils that I'm interested in, so that I can quickly make a purchase without any issues.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+To achieve this goal, I expect the following functionality:
 
-You can safely delete this README.md file, or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **September 1, 2021**
+* The ability to browse through different categories of candles and essential oils, and view a clear and organized display of the products within each category.
+* The ability to filter my search results by different factors, such as scent, price, and product type, and see accurate and relevant results.
+* The ability to search for products by keywords or phrases, and see relevant results that match my search terms.
+* The ability to view product details and images, and have a clear and accurate understanding of what I'm purchasing.
+A smooth and seamless user experience throughout the entire browsing and purchasing process, without encountering any errors, glitches, or technical issues.
 
-## Gitpod Reminders
+As a user, I expect the product catalog and search functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
 
-`python3 -m http.server`
+### EPIC 2 Shopping Cart and Checkout
 
-A blue button should appear to click: _Make Public_,
+As a customer, I want to be able to easily add products to my shopping cart, check out, and complete my purchase, without encountering any issues or errors.
 
-Another blue button should appear to click: _Open Browser_.
+To achieve this goal, I expect the following functionality:
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+* The ability to add products to my shopping cart, view the contents of my cart, and update the quantities of products as needed.
+* The ability to easily navigate to the checkout page, and to enter my shipping and billing information, as well as select from a variety of payment options.
+* The ability to securely process my payment and complete my purchase, without encountering any issues or errors.
+* The ability to receive email notifications regarding my order status, including order confirmation, shipping notifications, and delivery confirmations.
+* A smooth and seamless user experience throughout the entire checkout process, without encountering any errors, glitches, or technical issues.
 
-A blue button should appear to click: _Make Public_,
+As a user, I expect the shopping cart and checkout functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-Another blue button should appear to click: _Open Browser_.
+### EPIC 3 Order Management and Shipping
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+As a customer, I want to be able to place an order, receive email notifications regarding my order status, and track my shipment, so that I can easily and efficiently receive the products I have purchased.
 
-To log into the Heroku toolbelt CLI:
+To achieve this goal, I expect the following functionality:
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+* The ability to easily place an order and receive a confirmation email indicating that my order has been received.
+* The ability to receive email notifications throughout the order processing and shipping process, indicating when my order has been processed and when it has been shipped.
+* The ability to track my shipment and receive delivery notifications, allowing me to know when to expect my order and ensuring that it is delivered to the correct address.
+* Accurate and up-to-date inventory levels, ensuring that the products I order are in stock and available for purchase.
+* Efficient and accurate order processing and shipping, ensuring that my order is shipped quickly and accurately.
+* A smooth and seamless user experience throughout the entire order management and shipping process, without encountering any errors, glitches, or technical issues.
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you so do not share it. If you accidentally make it public then you can create a new one with _Regenerate API Key_.
+As a user, I expect the order management and shipping functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-------
+### EPIC 4 Customer Accounts and Personalization
 
-## Release History
+As a customer, I want to be able to create an account, save my shipping and payment information, view my order history, and receive personalized product recommendations, so that I can easily manage my purchases and discover new products that I might like.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+To achieve this goal, I expect the following functionality:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+* A smooth and easy account registration process, allowing me to easily create an account and save my shipping and payment information for future purchases.
+* A secure user authentication and authorization system, ensuring that my account information is protected and only accessible by authorized users.
+* A clear and easy-to-use interface for viewing my order history, allowing me to easily track my past purchases and spending.
+* Accurate and relevant personalized product recommendations, based on my past purchases and browsing history, that help me discover new products that I might like.
+* A smooth and seamless user experience throughout the entire account management and personalization process, without encountering any errors, glitches, or technical issues.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+As a user, I expect the account management and personalization functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+### EPIC 5 Customer Support and Feedback
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+As a customer, I want to be able to contact customer support through various channels, leave reviews and ratings for products, and receive promotional offers and discounts, so that I can feel confident and supported during my shopping experience. During testing, I want to ensure that each of these features is easy to use and works as expected. Specifically, I want to be able to:
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+* Easily find and access customer support options, such as email, phone, and chat, and receive prompt and helpful responses to my inquiries or issues.
+* Leave reviews and ratings for products I've purchased, with the ability to provide detailed feedback and indicate whether or not I would recommend the product to others.
+* Receive promotional offers and discounts through email and other channels, with personalized recommendations based on my past purchases and interests.
+* Manage my communication preferences and opt-out of certain channels if desired, to ensure that I only receive relevant and useful information.
+* Overall, have a positive and streamlined shopping experience that makes it easy to find and purchase products, get help if needed, and receive personalized recommendations and offers.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+### EPIC 6 Website Administration and Maintenance
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
-
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
-
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
-
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
-
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
-
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
-
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
-
-------
-
-## FAQ about the uptime script
-
-**Why have you added this script?**
-
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
-
-**How will this affect me?**
-
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
-
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
-
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
-
-**So….?**
-
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
-
-**Can I opt out?**
-
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
-
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
-
-**Anything more?**
-
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
-
----
-
-Happy coding!
+As a website administrator, I want to ensure that the website is always functioning properly, so that customers have a seamless shopping experience. I want to be able to regularly test the website's features and functionalities, and quickly identify and resolve any issues that are found. This will ensure that customers can browse, search, and purchase products without any disruptions, and that the website remains a reliable and trusted source for candles and essential oils.
