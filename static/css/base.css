@@ -1,0 +1,29 @@
+
+.bg-nav {
+    background-color: rgb(85, 124, 134) !important;
+}
+
+.font-white {
+    color: white !important;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.account-link {
+    text-decoration: underline;
+    display: inline;
+    line-height: 2.5em;
+}
+
+.bag {
+    padding: 1em !important;
+}
+
+.menu-item {
+    padding: 0.5em;
+}
+.menu-item:hover {
+    background-color: rgb(33, 52, 58);
+}
