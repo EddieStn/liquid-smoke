@@ -30,12 +30,12 @@
 </head>
 
 <body class="font-white">
-  <header class="container-fluid fixed-top p-0">
-    <nav class="navbar navbar-expand-lg navbar-light bg-nav font-white">
-      <a class="navbar-brand font-white mx-5" href="#">Liquid Smoke</a>
+  <header class="container-fluid fixed-top bg-nav p-0">
+    <nav class="navbar navbar-expand-lg font-white">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span><i class="fa-solid fa-bars font-white"></i></span>
       </button>
+      <a class="navbar-brand font-white ml-5 mr-auto p-3" href="#">Liquid Smoke</a>
       <form class="form d-flex" method="GET" action="">
         <div class="input-group w-100">
           <input class="form-control me-2 border border-black rounded-0" type="text" name="q"
@@ -49,7 +49,7 @@
           </div>
         </div>
       </form>
-      <div class="collapse navbar-collapse bg-nav" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto mr-3">
           <li class="nav-item dropdown menu-item">
             <a class="nav-link font-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
@@ -63,17 +63,41 @@
           </li>
           <li class="nav-item dropdown menu-item">
             <a class="nav-link font-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+              Specials
+            </a>
+          </li>
+          <li class="nav-item dropdown menu-item">
+            <a class="nav-link font-white" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
               All products
             </a>
           </li>
-          <li class="nav-item dropdown menu-item mx-lg-3">
-              <a href="#" class="nav-link font-white account-link">Sign In</a>
+          <li class="nav-item dropdown menu-item mx-lg-3"><i class="fas fa-user fa-lg"></i>
+            {% if request.user.is_authenticated %}
+              {% if request.user.is_superuser %}
+                  <a href="#" class="nav-link font-white account-link">Product Management</a>
+              {% endif %}
+              <a href="#" class="nav-link font-white account-link">My Profile</a>
+              <a href="{% url 'account_logout' %}" class="nav-link font-white account-link">Logout</a>
+            {% else %}
+              <a href="{% url 'account_login' %}" class="nav-link font-white account-link">Sign In</a>
               <span>or</span>
-              <a href="#" class="nav-link font-white account-link">Register</a>
+              <a href="{% url 'account_signup' %}" class="nav-link font-white account-link">Register</a>
+            {% endif %}
           </li>
         </ul>
       </div>
-      <a href="#" class="bag nav-item font-white menu-item"><i class="fa-solid fa-bag-shopping"></i> Bag</a>
+      <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link bag font-white ml-auto" href="#">
+        <div class="text-center">
+            <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+            <p class="my-0">
+                {% if grand_total %}
+                    ${{ grand_total|floatformat:2 }}
+                {% else %}
+                    $0.00
+                {% endif %}
+            </p>
+        </div>
+      </a>
     </nav>
   </header>
 

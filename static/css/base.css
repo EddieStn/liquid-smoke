@@ -1,6 +1,13 @@
+html {
+    height: 100%;
+}
 
+body {
+    height: calc(100vh - 2.5em);
+}
 .bg-nav {
-    background-color: rgb(85, 124, 134) !important;
+    background: rgb(89,156,170);
+    background: linear-gradient(90deg, rgba(89,156,170,1) 0%, rgba(26,65,68,1) 50%, rgba(89,156,170,1) 100%);
 }
 
 .font-white {
@@ -17,8 +24,8 @@
     line-height: 2.5em;
 }
 
-.bag {
-    padding: 1em !important;
+.bag:hover {
+    color: rgb(33, 52, 58) !important;
 }
 
 .menu-item {
@@ -26,4 +33,10 @@
 }
 .menu-item:hover {
     background-color: rgb(33, 52, 58);
+}
+
+@media (max-width: 992px) {
+    .account-link {
+        display: block;
+    }
 }
