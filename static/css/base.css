@@ -3,19 +3,20 @@ html {
 }
 
 body {
-    height: calc(100vh - 2.5em);
-}
-.bg-nav {
-    background: rgb(89,156,170);
-    background: linear-gradient(90deg, rgba(89,156,170,1) 0%, rgba(26,65,68,1) 50%, rgba(89,156,170,1) 100%);
+    height: calc(100vh - 200px);
+    font-family: 'Lora', serif;
 }
 
-.font-white {
-    color: white !important;
+.bg-nav {
+    background: rgb(33, 52, 58);
 }
 
 .bg-white {
     background-color: white;
+}
+
+.logo {
+    width: fit-content;
 }
 
 .account-link {
@@ -28,15 +29,42 @@ body {
     color: rgb(33, 52, 58) !important;
 }
 
-.menu-item {
-    padding: 0.5em;
-}
 .menu-item:hover {
     background-color: rgb(33, 52, 58);
+}
+
+.nav-link {
+    padding: 0.5rem;
+}
+
+.nav-cat {
+    border: 1px outset white ;
+}
+
+.nav-cat:hover {
+    border: 1px inset white ;
+}
+
+.dropdown-menu {
+    border: 1px solid black !important;
+}
+
+.dropdown-item:hover {
+    background-color: rgb(33, 52, 58);
+    text-decoration: underline;
 }
 
 @media (max-width: 992px) {
     .account-link {
         display: block;
     }
+
+    .nav-cat {
+        border: none;
+    }
+
+    .nav-cat:hover {
+        border: none;
+    }
+
 }
