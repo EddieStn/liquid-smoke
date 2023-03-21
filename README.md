@@ -71,3 +71,10 @@ As a customer, I want to be able to contact customer support through various cha
 ### EPIC 6 Website Administration and Maintenance
 
 As a website administrator, I want to ensure that the website is always functioning properly, so that customers have a seamless shopping experience. I want to be able to regularly test the website's features and functionalities, and quickly identify and resolve any issues that are found. This will ensure that customers can browse, search, and purchase products without any disruptions, and that the website remains a reliable and trusted source for candles and essential oils.
+
+* Navbar changes
+    * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
+# Bugs
+
+* The header is covering the body of the website
+    * having `html {height: 100%}` and `body {height: calc(100vh - any size)}` doesn't fix it.
