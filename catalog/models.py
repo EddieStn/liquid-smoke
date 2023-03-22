@@ -55,6 +55,7 @@ class Review(models.Model):
         choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    approved = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('product', 'user')
