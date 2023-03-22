@@ -3,37 +3,61 @@ from django.contrib.auth.models import User
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    candles = models.ManyToManyField('Candle', blank=True)
+    oils = models.ManyToManyField('EssentialOil', blank=True)
+
+    class Meta:
+        verbose_name_plural = 'categories'
 
     def __str__(self):
         return self.name
-
-    class Meta:
-        verbose_name_plural = 'Categories'
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='product_images/')
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    scent = models.CharField(max_length=50)
-    size = models.CharField(max_length=20)
-    availability = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
-    num_reviews = models.IntegerField(default=0)
+    discounted_price = models.DecimalField(max_digits=6,
+                                           decimal_places=2,
+                                           null=True,
+                                           blank=True)
+    image = models.ImageField(upload_to='product_images/')
+    is_available = models.BooleanField(default=True)
+    categories = models.ManyToManyField(Category, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'products'
 
     def __str__(self):
         return self.name
 
 
+class Candle(Product):
+    scent = models.CharField(max_length=255)
+    burn_time = models.CharField(max_length=50)
+
+
+class EssentialOil(Product):
+    scent = models.CharField(max_length=255)
+    volume = models.CharField(max_length=50)
+
+
 class Review(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    rating = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255)
+    body = models.TextField()
+    rating = models.IntegerField(
+        choices=((1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('product', 'user')
+
+    def __str__(self):
+        return f"{self.user.username}'s review for {self.product.name}"
