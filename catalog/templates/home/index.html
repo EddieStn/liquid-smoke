@@ -2,32 +2,38 @@
 {% load static %}
 
 {% block content %}
-<h2>Candles</h2>
-{% for candle in candles %}
-  <div>
-    <a href="#">
-        <img class="img-fluid" src="{{ candle.image.url }}" alt="{{ candle.name }}">
-        <h2>{{ candle.name }}</h2>
-      </a>
-    <p>{{ candle.description }}</p>
-    <p>Price: {{ candle.price }}</p>
-    <p>Scent: {{ candle.scent }}</p>
-    <p>Burn time: {{ candle.burn_time }}</p>
-  </div>
-{% empty %}
-  <p>No candles available.</p>
-{% endfor %}
-
-<h2>Essential Oils</h2>
-{% for oil in essential_oils %}
-  <div>
-    <h3>{{ oil.name }}</h3>
-    <p>{{ oil.description }}</p>
-    <p>Price: {{ oil.price }}</p>
-    <p>Scent: {{ oil.scent }}</p>
-    <p>Volume: {{ oil.volume }}</p>
-  </div>
-{% empty %}
-  <p>No essential oils available.</p>
-{% endfor %}
+<div class="container">
+    <div class="row">
+        <h2>Candles</h2>
+            {% for candle in candles %}
+                <div class="col col-lg-4">
+                    <a href="#">
+                        <img class="img-fluid" src="{{ candle.image.url }}" alt="{{ candle.name }}">
+                        <h2>{{ candle.name }}</h2>
+                    </a>
+                    <p>{{ candle.description }}</p>
+                    <p>Price: {{ candle.price }}</p>
+                    <p>Scent: {{ candle.scent }}</p>
+                    <p>Burn time: {{ candle.burn_time }}</p>
+                </div>
+            {% empty %}
+                <p>No candles available.</p>
+            {% endfor %}
+    </div>
+        <h2>Essential Oils</h2>
+        {% for oil in essential_oils %}
+            <div class="col-lg-4 col">
+                <div>
+                    <h3>{{ oil.name }}</h3>
+                    <p>{{ oil.description }}</p>
+                    <p>Price: {{ oil.price }}</p>
+                    <p>Scent: {{ oil.scent }}</p>
+                    <p>Volume: {{ oil.volume }}</p>
+                </div>
+                {% empty %}
+                    <p>No essential oils available.</p>
+                {% endfor %}
+            </div>
+    </div>
+</div>
 {% endblock %}
