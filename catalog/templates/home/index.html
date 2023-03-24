@@ -2,38 +2,54 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <h2>Candles</h2>
-            {% for candle in candles %}
-                <div class="col col-lg-4">
-                    <a href="#">
-                        <img class="img-fluid" src="{{ candle.image.url }}" alt="{{ candle.name }}">
-                        <h2>{{ candle.name }}</h2>
-                    </a>
-                    <p>{{ candle.description }}</p>
-                    <p>Price: {{ candle.price }}</p>
-                    <p>Scent: {{ candle.scent }}</p>
-                    <p>Burn time: {{ candle.burn_time }}</p>
-                </div>
-            {% empty %}
-                <p>No candles available.</p>
-            {% endfor %}
-    </div>
-        <h2>Essential Oils</h2>
-        {% for oil in essential_oils %}
-            <div class="col-lg-4 col">
-                <div>
-                    <h3>{{ oil.name }}</h3>
-                    <p>{{ oil.description }}</p>
-                    <p>Price: {{ oil.price }}</p>
-                    <p>Scent: {{ oil.scent }}</p>
-                    <p>Volume: {{ oil.volume }}</p>
-                </div>
-                {% empty %}
-                    <p>No essential oils available.</p>
-                {% endfor %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Candles</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      {% for candle in candles %}
+        <div class="col mb-4">
+          <div class="card h-100">
+            <img src="{{ candle.image.url }}" class="card-img-top" alt="{{ candle.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ candle.name }}</h5>
+              <p class="card-text">{{ candle.description }}</p>
+              <p class="card-text">Scent: {{ candle.scent }}</p>
+              <p class="card-text">Burn time: {{ candle.burn_time }}</p>
+              <p class="card-text"><small class="text-muted">Price: ${{ candle.price }}</small></p>
+              <form method="POST" action="#">
+                {% csrf_token %}
+                <label for="quantity">Quantity:</label>
+                <select id="quantity" name="quantity">
+                  
+                  <option value="{{ i }}">{{ i }}</option>
+                  
+                </select>
+                <button type="submit" class="btn btn-primary">Add to Basket</button>
+              </form>
             </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No candles found.</p>
+      {% endfor %}
     </div>
-</div>
+    <h2 class="my-4">Essential Oils</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+      {% for oil in essential_oils %}
+        <div class="col mb-4">
+          <div class="card h-100">
+            <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ oil.name }}</h5>
+              <p class="card-text">{{ oil.description }}</p>
+              <p class="card-text">Scent: {{ oil.scent }}</p>
+              <p class="card-text">Volume: {{ oil.volume }}</p>
+              <p class="card-text"><small class="text-muted">Price: ${{ oil.price }}</small></p>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p>No essential oils found.</p>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock %}
