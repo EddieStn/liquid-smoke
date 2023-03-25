@@ -4,6 +4,14 @@
 
 {% block content %}
   <div class="container mt-5">
+    <div class="col-12 col-md-6 order-md-first">
+      <p class="text-muted mt-3 text-center text-md-left">
+          {% if search_term or current_categories or current_sorting != 'None_None' %}
+              <span class="small"><a href="{% url 'home' %}">All products</a> | </span>
+          {% endif %}
+          {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+      </p>
+    </div>
     <h2 class="mb-4">Candles</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
       {% for candle in candles %}
@@ -14,7 +22,6 @@
             <h5 class="card-title m-auto text-align-center">{{ candle.name }}</h5>
           </a>
             <div class="card-body">
-              <!-- <p class="card-text">{{ candle.description }}</p> -->
               <p class="card-text">Scent: {{ candle.scent }}</p>
               <p class="card-text">Burn time: {{ candle.burn_time }}</p>
               <p class="card-text"><small class="text-muted">Price: ${{ candle.price }}</small></p>
@@ -40,10 +47,11 @@
       {% for oil in essential_oils %}
         <div class="col mb-4">
           <div class="card h-100">
-            <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
+            <a href="{% url 'product_details' oil.id %}">
+              <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
+              <h5 class="card-title m-auto text-align-center">{{ oil.name }}</h5>
+            </a>
             <div class="card-body">
-              <h5 class="card-title">{{ oil.name }}</h5>
-              <p class="card-text">{{ oil.description }}</p>
               <p class="card-text">Scent: {{ oil.scent }}</p>
               <p class="card-text">Volume: {{ oil.volume }}</p>
               <p class="card-text"><small class="text-muted">Price: ${{ oil.price }}</small></p>
