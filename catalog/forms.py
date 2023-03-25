@@ -1,4 +1,5 @@
 from django import forms
+from .models import Review
 
 
 class AddToBasketForm(forms.Form):
@@ -9,3 +10,19 @@ class AddToBasketForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['product_id'].initial = product.id
         self.fields['quantity'].widget.attrs['class'] = 'form-control'
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ('title', 'body', 'rating')
+        labels = {
+            'title': 'Title',
+            'body': 'Body',
+            'rating': 'Rating',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+            'rating': forms.Select(attrs={'class': 'form-control'}),
+        }
