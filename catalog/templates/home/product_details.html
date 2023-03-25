@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+            <p>Price: {{ product.price }}</p>
+            {% if product.discounted_price %}
+            <p>Discounted price: {{ product.discounted_price }}</p>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ basket_form.as_p }}
+                <button type="submit" class="btn btn-primary">Add to basket</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <div class="col-md-6">
+            <h2>Reviews</h2>
+            {% if reviews %}
+            <ul>
+                {% for review in reviews %}
+                <li>
+                    <p>{{ review.title }}</p>
+                    <p>{{ review.body }}</p>
+                    <p>Rating: {{ review.rating }}</p>
+                    <p>Posted by {{ review.user.username }} on {{ review.created_at }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No reviews yet. Be the first to leave a review!</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>Add a review</h2>
+            {% if request.user.is_authenticated %}
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_title">Title</label>
+                    <input type="text" class="form-control" id="id_title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_body">Body</label>
+                    <textarea class="form-control" id="id_body" name="body" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="id_rating">Rating</label>
+                    <select class="form-control" id="id_rating" name="rating" required>
+                        {% for i in 5|make_range:1 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+            <p>Please <a href="{% url 'account_login' %}">log in</a> to leave a review.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

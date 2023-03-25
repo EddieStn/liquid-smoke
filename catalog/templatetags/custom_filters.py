@@ -4,5 +4,5 @@ register = template.Library()
 
 
 @register.filter
-def make_range(number):
-    return range(number)
+def make_range(value, start=1):
+    return range(start, value+1)
