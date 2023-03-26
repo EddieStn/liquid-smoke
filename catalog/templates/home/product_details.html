@@ -13,6 +13,14 @@
             <p>Price: {{ product.price }}</p>
             {% if product.discounted_price %}
             <p>Discounted price: {{ product.discounted_price }}</p>
+            <p class="text-muted">
+                <i class="fas fa-star mr-1"></i>
+                {% if candle.avg_rating %}
+                  {{ candle.avg_rating|floatformat:1 }} / 5
+                {% else %}
+                  No rating
+                {% endif %}
+              </p>
             {% endif %}
             {% if request.user.is_authenticated %}
             <form method="POST" action="">
@@ -28,18 +36,18 @@
         <div class="col-md-6">
             <h2>Reviews</h2>
             {% if reviews %}
-            <ul>
-                {% for review in reviews %}
-                <li>
-                    <p>{{ review.title }}</p>
-                    <p>{{ review.body }}</p>
-                    <p>Rating: {{ review.rating }}</p>
-                    <p>Posted by {{ review.user.username }} on {{ review.created_at }}</p>
-                </li>
-                {% endfor %}
-            </ul>
+                <ul>
+                    {% for review in reviews %}
+                        <li>
+                            <p><i class="fas fa-star mr-1"></i>{{ review.rating }} / 5</p>
+                            <p><strong>{{ review.title }}</strong></p>
+                            <p>{{ review.body }}</p>
+                            <small>Posted by {{ review.user.username }} on {{ review.created_at }}</small>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% else %}
-            <p>No reviews yet. Be the first to leave a review!</p>
+                <p>No reviews yet. Be the first to leave a review!</p>
             {% endif %}
         </div>
         <div class="col-md-6">

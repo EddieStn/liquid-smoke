@@ -3,13 +3,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models.functions import Lower
+from django.db.models import Avg
 from .models import Candle, EssentialOil, Review, Product
 from .forms import ReviewForm, AddToBasketForm
 
 
 def product(request):
     """ A view to display the store products page """
-    products = Product.objects.all()
+    products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
     candles = Candle.objects.all()
     essential_oils = EssentialOil.objects.all()
     query = None
@@ -90,7 +91,7 @@ def product_details(request, product_id):
         basket_form = AddToBasketForm(product=product)
 
     # Get the reviews for the product
-    reviews = Review.objects.filter(product=product)
+    reviews = Review.objects.filter(product=product, approved=True)
 
     context = {
         'product': product,

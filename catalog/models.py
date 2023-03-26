@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from django.contrib.auth.models import User
 
 
@@ -33,6 +34,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def avg_rating(self):
+        reviews = self.reviews.filter(approved=True)
+        if reviews.count() > 0:
+            return reviews.aggregate(Avg('rating'))['rating__avg']
+        else:
+            return None
 
 
 class Candle(Product):
