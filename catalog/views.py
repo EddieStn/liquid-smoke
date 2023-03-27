@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -10,7 +10,30 @@ from .forms import ReviewForm, AddToBasketForm
 
 def index(request):
     """ A view to return the index page """
-    return render(request, 'home/index.html')
+    products = Product.objects.all()
+    candles = Candle.objects.all()
+    essential_oils = EssentialOil.objects.all()
+    query = None
+
+    if 'q' in request.GET:
+        query = request.GET['q']
+        if not query:
+            messages.error(request, "You didn't enter any search criteria")
+            return redirect(reverse('home'))
+
+        queries = Q(name__icontains=query) | Q(
+                    description__icontains=query)
+        products = products.filter(queries)
+        candles = candles.filter(queries)
+        essential_oils = essential_oils.filter(queries)
+
+    context = {
+        'products': products,
+        'search_term': query,
+        'candles': candles,
+        'essential_oils': essential_oils,
+    }
+    return render(request, 'home/index.html', context)
 
 
 def product(request):
@@ -45,10 +68,11 @@ def product(request):
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
-                messages.error(request, "You didn't enter any search criteria!")
-                return redirect(reverse('home'))
+                messages.error(request, "You didn't enter any search criteria")
+                return redirect(reverse('products'))
 
-            queries = Q(name__icontains=query) | Q(description__icontains=query)
+            queries = Q(name__icontains=query) | Q(
+                        description__icontains=query)
             products = products.filter(queries)
             candles = candles.filter(queries)
             essential_oils = essential_oils.filter(queries)
