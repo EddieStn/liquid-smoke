@@ -8,6 +8,11 @@ from .models import Candle, EssentialOil, Review, Product
 from .forms import ReviewForm, AddToBasketForm
 
 
+def index(request):
+    """ A view to return the index page """
+    return render(request, 'home/index.html')
+
+
 def product(request):
     """ A view to display the store products page """
     products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
@@ -54,7 +59,7 @@ def product(request):
         'candles': candles,
         'essential_oils': essential_oils,
     }
-    return render(request, 'home/index.html', context)
+    return render(request, 'home/products.html', context)
 
 
 def product_details(request, product_id):

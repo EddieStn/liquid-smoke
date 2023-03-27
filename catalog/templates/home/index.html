@@ -1,94 +1,67 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load custom_filters %}
 
 {% block content %}
-  <div class="container mt-5">
-    <div class="col-12 col-md-6 order-md-first">
-      <p class="text-muted mt-3 text-center text-md-left">
-          {% if search_term or current_categories or current_sorting != 'None_None' %}
-              <span class="small"><a href="{% url 'home' %}">All products</a> | </span>
-          {% endif %}
-          {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-      </p>
+<section class="hero">
+    <div class="container">
+        <h1>Welcome to our candle and essential oils store</h1>
+        <h4>Shop our selection of hand-poured candles and pure essential oils</h4>
+        <a href="#" class="btn btn-primary">Shop Now</a>
     </div>
-    <h2 class="mb-4">Candles</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for candle in candles %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' candle.id %}">
-              <img src="{{ candle.image.url }}" class="card-img-top" alt="{{ candle.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ candle.name }}</h5>
-            </a>
-              <div class="card-body">
-                <p class="card-text">Scent: {{ candle.scent }}</p>
-                <p class="card-text">Burn time: {{ candle.burn_time }}</p>
-                <p class="card-text"><small class="text-muted">Price: ${{ candle.price }}</small></p>
-                <p class="text-muted">
-                  <i class="fas fa-star mr-1"></i>
-                  {% if candle.avg_rating %}
-                    {{ candle.avg_rating|floatformat:1 }} / 5
-                  {% else %}
-                    No rating
-                  {% endif %}
-                </p>
-                <hr>
-                <form method="POST" action="#">
-                  {% csrf_token %}
-                  <label for="quantity">Quantity:</label>
-                  <select id="quantity" name="quantity">
-                    {% for i in 10|make_range:1 %}
-                      <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                  </select>
-                  <button type="submit" class="btn btn-primary">Add to Basket</button>
-                </form>
-              </div>
-          </div>
-        </div>    
-      {% empty %}
-        <p>No candles found.</p>
-      {% endfor %}
-    </div>
-    <h2 class="my-4">Essential Oils</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for oil in essential_oils %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' oil.id %}">
-              <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ oil.name }}</h5>
-            </a>
-            <div class="card-body">
-              <p class="card-text">Scent: {{ oil.scent }}</p>
-              <p class="card-text">Volume: {{ oil.volume }}</p>
-              <p class="card-text"><small class="text-muted">Price: ${{ oil.price }}</small></p>
-              <p class="text-muted">
-                <i class="fas fa-star mr-1"></i>
-                {% if oil.avg_rating %}
-                  {{ oil.avg_rating|floatformat:1 }} / 5
-                {% else %}
-                  No rating
-                {% endif %}
-              </p>
-              <hr>
-                <form method="POST" action="#">
-                  {% csrf_token %}
-                  <label for="quantity">Quantity:</label>
-                  <select id="quantity" name="quantity">
-                    {% for i in 10|make_range:1 %}
-                      <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                  </select>
-                  <button type="submit" class="btn btn-primary">Add to Basket</button>
-                </form>
+</section>
+
+<section class="links">
+    <div class="container border my-3">
+        <h2 class="text-center my-3">Discover our collection</h2>
+        <div class="row p-2">
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}media/product_images/pexels-photo-6311974.jpeg" class="card-img-top"
+                        alt="Candles">
+                    <div class="card-body">
+                        <h4 class="card-title">Candles</h4>
+                        <p class="card-text">Explore our selection of hand-poured candles made with 100% soy wax and
+                            pure essential oils.</p>
+                        <a href="" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}media/product_images/pexels-photo-932577.jpeg" class="card-img-top"
+                        alt="Essential Oils">
+                    <div class="card-body">
+                        <h4 class="card-title">Essential Oils</h4>
+                        <p class="card-text">Discover our collection of pure essential oils, perfect for aromatherapy
+                            and natural healing.</p>
+                        <a href="#" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      {% empty %}
-        <p>No essential oils found.</p>
-      {% endfor %}
     </div>
-  </div>
+</section>
+
+<section class="about m-4">
+    <div class="container">
+        <h2>About Us</h2>
+        <p>We are a family-owned business that takes pride in producing high-quality, natural candles and essential
+            oils. Our products are made with 100% soy wax and pure essential oils, and we never use synthetic fragrances
+            or dyes. We believe in creating products that are both good for you and good for the environment.</p>
+    </div>
+</section>
+
+<section>
+    <div class="container newsletter">
+        <h2>Subscribe to our Newsletter</h2>
+        <p>Stay up-to-date on our latest products and promotions by subscribing to our newsletter</p>
+        <form action="#">
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Enter your email">
+            </div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+    </div>
+</section>
 {% endblock %}
+
