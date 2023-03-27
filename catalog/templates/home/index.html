@@ -10,9 +10,9 @@
     </div>
 </section>
 
-<section class="links">
-    <div class="container border my-3">
-        <h2 class="text-center my-3">Discover our collection</h2>
+<section>
+    <div class="container links border my-3">
+        <h2 class="text-center text-white">Discover our collection</h2>
         <div class="row p-2">
             <div class="col-md-6">
                 <div class="card">
@@ -25,6 +25,7 @@
                         <a href="" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
+                <hr class="d-none">
             </div>
             <div class="col-md-6">
                 <div class="card">
@@ -56,12 +57,17 @@
         <h2>Subscribe to our Newsletter</h2>
         <p>Stay up-to-date on our latest products and promotions by subscribing to our newsletter</p>
         <form action="#">
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Enter your email">
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <input type="email" class="form-control" placeholder="Enter your email">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
     </div>
 </section>
+
 {% endblock %}
 

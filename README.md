@@ -76,5 +76,8 @@ As a website administrator, I want to ensure that the website is always function
     * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
 # Bugs
 
+* Clicking an <a> tag (eg. "All products") wouldn`t open the link, but right click > "open in a new tab" works
+    * Fixed by removing `data-toggle="dropdown"` that was needed for the account dropdown menu
 * The header is covering the body of the website
     * having `html {height: 100%}` and `body {height: calc(100vh - any size)}` doesn't fix it.
+    * Fixed by addig `padding-top: 145px;` to the body element
