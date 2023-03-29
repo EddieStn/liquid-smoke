@@ -168,7 +168,8 @@ def essential_oils(request):
     if request.GET:
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
-            essential_oils = essential_oils.filter(category__name__in=categories)
+            essential_oils = essential_oils.filter(
+                category__name__in=categories)
 
         if 'q' in request.GET:
             query = request.GET['q']
@@ -188,3 +189,17 @@ def essential_oils(request):
         'num_products': num_products
     }
     return render(request, 'home/essential_oils.html', context)
+
+
+def specials(request):
+    """A view to display items on sale"""
+    discounted_products = Product.objects.filter(
+        discounted_price__isnull=False)
+
+    num_products = discounted_products.count()
+
+    context = {
+        'discounted_products': discounted_products,
+        'num_products': num_products,
+    }
+    return render(request, 'home/specials.html', context)
