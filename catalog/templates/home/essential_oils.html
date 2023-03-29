@@ -12,28 +12,28 @@
           {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
       </p>
     </div>
-    <h2 class="mb-4">Candles</h2>
+    <h2 class="my-4">Essential Oils</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for candle in candles %}
+      {% for oil in essential_oils %}
         <div class="col mb-5">
           <div class="card h-100">
-            <a href="{% url 'product_details' candle.id %}">
-              <img src="{{ candle.image.url }}" class="card-img-top" alt="{{ candle.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ candle.name }}</h5>
+            <a href="{% url 'product_details' oil.id %}">
+              <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
+              <h5 class="card-title py-3 text-dark text-center">{{ oil.name }}</h5>
             </a>
-              <div class="card-body">
-                <p class="card-text">Scent: {{ candle.scent }}</p>
-                <p class="card-text">Burn time: {{ candle.burn_time }}</p>
-                <p class="card-text"><small class="text-muted">Price: ${{ candle.price }}</small></p>
-                <p class="text-muted">
-                  <i class="fas fa-star mr-1"></i>
-                  {% if candle.avg_rating %}
-                    {{ candle.avg_rating|floatformat:1 }} / 5
-                  {% else %}
-                    No rating
-                  {% endif %}
-                </p>
-                <hr>
+            <div class="card-body">
+              <p class="card-text">Scent: {{ oil.scent }}</p>
+              <p class="card-text">Volume: {{ oil.volume }}</p>
+              <p class="card-text"><small class="text-muted">Price: ${{ oil.price }}</small></p>
+              <p class="text-muted">
+                <i class="fas fa-star mr-1"></i>
+                {% if oil.avg_rating %}
+                  {{ oil.avg_rating|floatformat:1 }} / 5
+                {% else %}
+                  No rating
+                {% endif %}
+              </p>
+              <hr>
                 <form method="POST" action="#">
                   {% csrf_token %}
                   <label for="quantity">Quantity:</label>
@@ -44,11 +44,11 @@
                   </select>
                   <button type="submit" class="btn btn-primary">Add to Basket</button>
                 </form>
-              </div>
+            </div>
           </div>
-        </div>    
+        </div>
       {% empty %}
-        <p>No candles found.</p>
+        <p>No essential oils found.</p>
       {% endfor %}
     </div>
   </div>

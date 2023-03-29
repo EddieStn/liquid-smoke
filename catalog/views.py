@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Avg, Count
 from django.db.models.functions import Lower
-from django.db.models import Avg
 from .models import Candle, EssentialOil, Review, Product
 from .forms import ReviewForm, AddToBasketForm
 
@@ -134,13 +133,58 @@ def product_details(request, product_id):
 def candles(request):
     """ A view to display only candles """
     candles = Candle.objects.all()
+    query = None
 
     if request.GET:
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             candles = candles.filter(category__name__in=categories)
 
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request, "You didn't enter any search criteria")
+                return redirect(reverse('candles'))
+
+            queries = Q(name__icontains=query) | Q(
+                        description__icontains=query)
+            candles = candles.filter(queries)
+
+    num_products = candles.count()
+
     context = {
         'candles': candles,
+        'search_term': query,
+        'num_products': num_products
     }
     return render(request, 'home/candles.html', context)
+
+
+def essential_oils(request):
+    """ A view to display only essential_oils """
+    essential_oils = EssentialOil.objects.all()
+    query = None
+
+    if request.GET:
+        if 'category' in request.GET:
+            categories = request.GET.getlist('category')
+            essential_oils = essential_oils.filter(category__name__in=categories)
+
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(request, "You didn't enter any search criteria")
+                return redirect(reverse('essential_oils'))
+
+            queries = Q(name__icontains=query) | Q(
+                        description__icontains=query)
+            essential_oils = essential_oils.filter(queries)
+
+    num_products = essential_oils.count()
+
+    context = {
+        'essential_oils': essential_oils,
+        'search_term': query,
+        'num_products': num_products
+    }
+    return render(request, 'home/essential_oils.html', context)
