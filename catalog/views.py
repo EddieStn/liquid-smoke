@@ -129,3 +129,18 @@ def product_details(request, product_id):
         'basket_form': basket_form
     }
     return render(request, 'home/product_details.html', context)
+
+
+def candles(request):
+    """ A view to display only candles """
+    candles = Candle.objects.all()
+
+    if request.GET:
+        if 'category' in request.GET:
+            categories = request.GET.getlist('category')
+            candles = candles.filter(category__name__in=categories)
+
+    context = {
+        'candles': candles,
+    }
+    return render(request, 'home/candles.html', context)
