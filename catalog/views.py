@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Avg, Count
 from django.db.models.functions import Lower
 from .models import Candle, EssentialOil, Review, Product
-from .forms import ReviewForm, AddToBasketForm
+from .forms import ReviewForm, AddToBasketForm, CandleForm, \
+    EssentialOilForm
 
 
 def index(request):
@@ -223,3 +224,36 @@ def specials(request):
         'num_products': num_products,
     }
     return render(request, 'home/specials.html', context)
+
+
+@login_required
+def add_product(request):
+    """ Add a product to the store """
+    if not request.user.is_superuser:
+        messages.error(request, 'Sorry, only store owners can do that.')
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        candle_form = CandleForm(request.POST, request.FILES)
+        oil_form = EssentialOilForm(request.POST, request.FILES)
+        if candle_form.is_valid():
+            candle_form.save()
+            messages.success(request, 'Successfully added product!')
+            return redirect('add_product')
+        elif oil_form.is_valid():
+            oil_form.save()
+            messages.success(request, 'Successfully added product!')
+            return redirect('add_product')
+        else:
+            messages.error(request, 'Failed to add product. \
+            Please ensure the form is valid.')
+    else:
+        candle_form = CandleForm()
+        oil_form = EssentialOilForm()
+
+    context = {
+        'candle_form': candle_form,
+        'oil_form': oil_form,
+    }
+
+    return render(request, 'home/add_product.html', context)
