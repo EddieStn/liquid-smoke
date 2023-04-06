@@ -40,24 +40,45 @@ def product(request):
     products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
     candles = Candle.objects.all()
     essential_oils = EssentialOil.objects.all()
+    categories = None
     query = None
     sort = None
     direction = None
 
     if request.GET:
-        if 'sort' in request.GET:
-            sortkey = request.GET['sort']
-            sort = sortkey
-            if sortkey == 'name':
-                sortkey = 'lower_name'
-                products = products.annotate(lower_name=Lower('name'))
-            if sortkey == 'category':
-                sortkey = 'category__name'
-            if 'direction' in request.GET:
-                direction = request.GET['direction']
-                if direction == 'desc':
-                    sortkey = f'-{sortkey}'
-            products = products.order_by(sortkey)
+        sortkey = request.GET.get('sort', 'name')
+        direction = request.GET.get('direction', 'asc')
+
+        if sortkey == 'name':
+            if direction == 'asc':
+                products = products.order_by('name')
+            else:
+                products = products.order_by('-name')
+        elif sortkey == 'price':
+            if direction == 'asc':
+                products = products.order_by('price')
+            else:
+                products = products.order_by('-price')
+        elif sortkey == 'reviews':
+            if direction == 'asc':
+                products = products.annotate(avg_rating=Avg('reviews__rating')).order_by('avg_rating')
+            else:
+                products = products.annotate(avg_rating=Avg('reviews__rating')).order_by('-avg_rating')
+        elif sortkey == 'discounted_price':
+            if direction == 'asc':
+                products = products.annotate(discounted_price=Case(
+                    When(discount__isnull=False, then=F('price') - F('discount__amount')),
+                    default=F('price'),
+                    output_field=FloatField(),
+                )).order_by('discounted_price')
+            else:
+                products = products.annotate(discounted_price=Case(
+                    When(discount__isnull=False, then=F('price') - F('discount__amount')),
+                    default=F('price'),
+                    output_field=FloatField(),
+                )).order_by('-discounted_price')
+        else:
+            products = products.order_by('name')
 
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
@@ -78,22 +99,23 @@ def product(request):
 
     context = {
         'products': products,
-        'search_term': query,
         'candles': candles,
         'essential_oils': essential_oils,
+        'current_categories': categories,
+        'search_term': query,
+        'sortkey': sortkey,
+        'direction': direction,
     }
     return render(request, 'home/products.html', context)
 
 
 def product_details(request, product_id):
-    # Get the product with the given ID or return 404
+    """A view to display an individual product details"""
     product = get_object_or_404(Product, pk=product_id)
 
-    # Handle ReviewForm submission
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
-            # Create a new review object
             review = Review(
                 product=product,
                 user=request.user,
@@ -103,7 +125,6 @@ def product_details(request, product_id):
             )
             review.save()
     else:
-        # Display a blank form for the user to fill in
         form = ReviewForm()
 
     # Handle AddToBasketForm submission
@@ -118,7 +139,6 @@ def product_details(request, product_id):
         # Display a blank form for the user to fill in
         basket_form = AddToBasketForm(product=product)
 
-    # Get the reviews for the product
     reviews = Review.objects.filter(product=product, approved=True)
 
     context = {
