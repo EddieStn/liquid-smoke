@@ -42,7 +42,7 @@ def product(request):
     essential_oils = EssentialOil.objects.all()
     categories = None
     query = None
-    sort = None
+    sortkey = None
     direction = None
 
     if request.GET:
