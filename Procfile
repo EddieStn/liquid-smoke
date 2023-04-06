@@ -1,1 +1,1 @@
-web: gunicorn liquid_smoke.wsgi.application
+web: gunicorn liquid_smoke.wsgi:application
