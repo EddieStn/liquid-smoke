@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review, Candle, EssentialOil
+from .models import Review, Product, Candle, EssentialOil, Category
 
 
 class AddToBasketForm(forms.Form):
@@ -26,6 +26,17 @@ class ReviewForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control'}),
             'rating': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class ProductForm(forms.ModelForm):
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        categories = Category.objects.all()
 
 
 class CandleForm(forms.ModelForm):

@@ -29,6 +29,12 @@
                 <button type="submit" class="btn btn-primary">Add to basket</button>
             </form>
             {% endif %}
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+            <div>
+                <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'delete_product' product.id %}" class="btn btn-danger">Delete</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 
