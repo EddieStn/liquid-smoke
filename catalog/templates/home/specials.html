@@ -12,43 +12,54 @@
           {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
       </p>
     </div>
-    <h2 class="mb-4">Offers</h2>
+    <div class="jumbotron text-center mb-5">
+      <h1 class="display-4">Specials</h1>
+      <h4>Check out our latest offers and discounts</h4>
+    </div>
+    <hr>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for product in discounted_products%}
+      {% for product in discounted_products %}
         <div class="col mb-5">
           <div class="card h-100">
             <a href="{% url 'product_details' product.id %}">
               <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
               <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>
-              <div class="card-body">
-                <p class="card-text">{{ product.description }}</p>
-                <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ product.price }}</span>-> ${{ product.discounted_price }}</small></p>
-                <p class="text-muted">
-                  <i class="fas fa-star mr-1"></i>
-                  {% if product.avg_rating %}
-                    {{ product.avg_rating|floatformat:1 }} / 5
-                  {% else %}
-                    No rating
-                  {% endif %}
-                </p>
-                <hr>
-                <form method="POST" action="#">
-                  {% csrf_token %}
-                  <label for="quantity">Quantity:</label>
-                  <select id="quantity" name="quantity">
-                    {% for i in 10|make_range:1 %}
-                      <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                  </select>
-                  <button type="submit" class="btn btn-primary">Add to Basket</button>
-                </form>
-              </div>
+            <div class="card-body">
+              {% if product.candle %}
+                <p class="card-text">Scent: {{ product.candle.scent }}</p>
+                <p class="card-text">Burn Time: {{ product.candle.burn_time }}</p>
+              {% elif product.essentialoil %}
+                <p class="card-text">Scent: {{ product.essentialoil.scent }}</p>
+                <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
+              {% endif %}
+              <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ product.price }}</span>-> ${{ product.discounted_price }}</small></p>
+              <p class="text-muted">
+                <i class="fas fa-star mr-1"></i>
+                {% if product.avg_rating %}
+                  {{ product.avg_rating|floatformat:1 }} / 5
+                {% else %}
+                  No rating
+                {% endif %}
+              </p>
+              <hr>
+              <form method="POST" action="#">
+                {% csrf_token %}
+                <label for="quantity">Quantity:</label>
+                <select id="quantity" name="quantity">
+                  {% for i in 10|make_range:1 %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Add to Basket</button>
+              </form>
+            </div>
           </div>
         </div>    
       {% empty %}
         <p>No Offers at the moment</p>
       {% endfor %}
+
     </div>
   </div>
 {% endblock %}
