@@ -115,29 +115,33 @@ def product_details(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
 
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            review = Review(
-                product=product,
-                user=request.user,
-                title=form.cleaned_data['title'],
-                body=form.cleaned_data['body'],
-                rating=form.cleaned_data['rating']
-            )
-            review.save()
+        if 'review_form' in request.POST:
+            # Handle ReviewForm submission
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                review = Review(
+                    product=product,
+                    user=request.user,
+                    title=form.cleaned_data['title'],
+                    body=form.cleaned_data['body'],
+                    rating=form.cleaned_data['rating']
+                )
+                review.save()
+        else:
+            form = ReviewForm()
+
+        if 'basket_form' in request.POST:
+            # Handle AddToBasketForm submission
+            basket_form = AddToBasketForm(product, request.POST)
+            if basket_form.is_valid():
+                # Add the product to the user's basket
+                quantity = basket_form.cleaned_data['quantity']
+                # Implementation to add to basket
+        else:
+            basket_form = AddToBasketForm(product=product)
+
     else:
         form = ReviewForm()
-
-    # Handle AddToBasketForm submission
-    if request.method == 'POST':
-        basket_form = AddToBasketForm(product, request.POST)
-        if basket_form.is_valid():
-            # Add the product to the user's basket
-            quantity = basket_form.cleaned_data['quantity']
-            # Your implementation to add to basket
-
-    else:
-        # Display a blank form for the user to fill in
         basket_form = AddToBasketForm(product=product)
 
     reviews = Review.objects.filter(product=product, approved=True)

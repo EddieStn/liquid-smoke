@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
-
+{% block extra_title %}/ Specials {% endblock %}
 {% block content %}
   <div class="container mt-5">
     <div class="col-12 col-md-6 order-md-first">
@@ -14,7 +14,7 @@
     </div>
     <h2 class="mb-4">Offers</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for product in discounted_price %}
+      {% for product in discounted_products%}
         <div class="col mb-5">
           <div class="card h-100">
             <a href="{% url 'product_details' product.id %}">
@@ -22,9 +22,8 @@
               <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>
               <div class="card-body">
-                <p class="card-text">Scent: {{ product.scent }}</p>
-                <p class="card-text">Burn time: {{ product.burn_time }}</p>
-                <p class="card-text"><small class="text-muted">Price: ${{ product.price }}</small></p>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ product.price }}</span>-> ${{ product.discounted_price }}</small></p>
                 <p class="text-muted">
                   <i class="fas fa-star mr-1"></i>
                   {% if product.avg_rating %}

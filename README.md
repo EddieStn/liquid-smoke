@@ -76,6 +76,10 @@ As a website administrator, I want to ensure that the website is always function
     * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
 # Bugs
 
+* Submitting a review form will trigger error from the basket form (quantity field required)
+    * Fixed by wrapping both form handlers in an if statement `if request.method == 'POST':`
+    * Added a hidden input field to both forms `if 'review_form' in request.POST:` & `if 'basket_form' in request.POST:`
+    * Added to each form button tag the name attribute to check for hidden input `<button type="submit" name="review_form ( / basket_form)">Submit</button>`
 * Clicking an <a> tag (eg. "All products") wouldn`t open the link, but right click > "open in a new tab" works
     * Fixed by removing `data-toggle="dropdown"` that was needed for the account dropdown menu
 * The header is covering the body of the website

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% block extra_title %}/ Candles {% endblock %}
 
 {% block content %}
   <div class="container mt-5">
@@ -24,7 +25,11 @@
               <div class="card-body">
                 <p class="card-text">Scent: {{ candle.scent }}</p>
                 <p class="card-text">Burn time: {{ candle.burn_time }}</p>
+                {% if candle.discounted_price %}
+                <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ candle.price }}</span> -> ${{ candle.discounted_price }}</small></p>
+                {% else %}
                 <p class="card-text"><small class="text-muted">Price: ${{ candle.price }}</small></p>
+                {% endif %}
                 <p class="text-muted">
                   <i class="fas fa-star mr-1"></i>
                   {% if candle.avg_rating %}
