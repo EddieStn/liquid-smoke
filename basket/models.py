@@ -19,4 +19,5 @@ class BasketItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} in {self.basket.user.username}'s basket"
+        return f"{self.quantity} x {self.product.name} \
+        in {self.basket.user.username}'s basket"
