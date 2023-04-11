@@ -26,8 +26,9 @@ body {
 }
 
 .newsletter {
-    background-color: yellow;
+    background-color: rgb(81, 124, 128);
     padding: 20px;
+    color: white;
 }
 
 .bg-nav {
