@@ -12,7 +12,7 @@ def view_basket(request):
 
 
 @login_required
-def add_to_basket(request, product_id):
+def add_to_basket_view(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     basket, created = Basket.objects.get_or_create(user=request.user)
 

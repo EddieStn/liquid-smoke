@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Your Basket</h1>
+
+  {% if basket.basketitem_set.all %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in basket.basketitem_set.all %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.price }}</td>
+            <td>
+              <form action="{% url 'remove_from_basket' item.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link btn-sm" {% if item.quantity == 1 %}disabled{% endif %}>-</button>
+              </form>
+              {{ item.quantity }}
+              <form action="{% url 'add_to_basket' item.product.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link btn-sm">+</button>
+              </form>
+            </td>
+            <td>{{ item.total_price }}</td>
+            <td>
+              <form action="{% url 'remove_from_basket' item.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link btn-sm">Remove</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Total:</strong></td>
+          <td><strong>{{ basket.total_price }}</strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  {% else %}
+    <p>Your basket is empty.</p>
+  {% endif %}
+{% endblock %}

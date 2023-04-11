@@ -11,6 +11,13 @@
         <div class="col-md-6">
             <h1>{{ product.name }}</h1>
             <p>{{ product.description }}</p>
+            {% if product.candle %}
+            <p class="card-text">Scent: {{ product.candle.scent }}</p>
+            <p class="card-text">Burn Time: {{ product.candle.burn_time }}</p>
+            {% elif product.essentialoil %}
+            <p class="card-text">Scent: {{ product.essentialoil.scent }}</p>
+            <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
+            {% endif %}
             {% if product.discounted_price %}
             <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ product.price }}</span> -> ${{ product.discounted_price }}</small></p>
             {% else %}
@@ -18,18 +25,26 @@
             {% endif %}
             <p class="text-muted">
                 <i class="fas fa-star mr-1"></i>
-                {% if candle.avg_rating %}
-                  {{ candle.avg_rating|floatformat:1 }} / 5
+                {% if product.avg_rating %}
+                  {{ product.avg_rating|floatformat:1 }} / 5
                 {% else %}
                   No rating
                 {% endif %}
               </p>
             {% if request.user.is_authenticated %}
-            <form method="POST" class="form-inline" action="">
+            <form method="POST" action="{% url 'basket:add_to_basket' %}">
                 {% csrf_token %}
-                {{ basket_form|crispy }}
-                <button type="submit" class="btn btn-primary ml-2" name="basket_form">Add to basket</button>
+                <input type="hidden" name="product_id" value="{{ product.id }}">
+                <label for="quantity">Quantity:</label>
+                <select id="quantity" name="quantity">
+                    {% for i in 10|make_range:1 %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Add to Basket</button>
             </form>
+            {% else %}
+            <h5>You need to be logged in to add products in your basket. Please <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Register</a> first.</h5>
             {% endif %}
             {% if request.user.is_authenticated and request.user.is_superuser %}
             <div class="mt-3">
@@ -39,6 +54,7 @@
             {% endif %}
         </div>
     </div>
+    <hr>
 
     <div class="row my-5">
         <div class="col-md-6">

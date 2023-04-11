@@ -47,40 +47,6 @@ def product(request):
     direction = None
 
     if request.GET:
-        sortkey = request.GET.get('sort', 'name')
-        direction = request.GET.get('direction', 'asc')
-
-        if sortkey == 'name':
-            if direction == 'asc':
-                products = products.order_by('name')
-            else:
-                products = products.order_by('-name')
-        elif sortkey == 'price':
-            if direction == 'asc':
-                products = products.order_by('price')
-            else:
-                products = products.order_by('-price')
-        elif sortkey == 'reviews':
-            if direction == 'asc':
-                products = products.annotate(avg_rating=Avg('reviews__rating')).order_by('avg_rating')
-            else:
-                products = products.annotate(avg_rating=Avg('reviews__rating')).order_by('-avg_rating')
-        elif sortkey == 'discounted_price':
-            if direction == 'asc':
-                products = products.annotate(discounted_price=Case(
-                    When(discount__isnull=False, then=F('price') - F('discount__amount')),
-                    default=F('price'),
-                    output_field=FloatField(),
-                )).order_by('discounted_price')
-            else:
-                products = products.annotate(discounted_price=Case(
-                    When(discount__isnull=False, then=F('price') - F('discount__amount')),
-                    default=F('price'),
-                    output_field=FloatField(),
-                )).order_by('-discounted_price')
-        else:
-            products = products.order_by('name')
-
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
@@ -136,7 +102,8 @@ def product_details(request, product_id):
             if basket_form.is_valid():
                 # Add the product to the user's basket
                 quantity = basket_form.cleaned_data['quantity']
-                # Implementation to add to basket
+                basket_url = reverse('add_to_basket_view', args=[product.id])
+                return HttpResponseRedirect(f"{basket_url}?quantity={quantity}")
         else:
             basket_form = AddToBasketForm(product=product)
 
