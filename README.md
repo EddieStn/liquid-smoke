@@ -76,6 +76,17 @@ As a website administrator, I want to ensure that the website is always function
     * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
 # Bugs
 
+### Basket 
+* Adding an offer item will not add it with the discounted price
+* Hitting enter on the quantity field in the basket & clicking Remove will reduce the quantity by 1
+    * Fixed the remove button by updating the view to only delete the item
+    * Fixed the quantity issues with javascript event listeners in view_basket.html
+* The basket will always have one empty product displayed
+    * Fixed by adding a check to make sure `product_id is not None` before creating the BasketItem object.
+* First added item to the basket will always be 1 regardless of set quantity
+    * Fixed by modifying the add_to_basket to check if the BasketItem object already exists, and update its quantity accordingly.
+
+
 * Submitting a review form will trigger error from the basket form (quantity field required)
     * Fixed by wrapping both form handlers in an if statement `if request.method == 'POST':`
     * Added a hidden input field to both forms `if 'review_form' in request.POST:` & `if 'basket_form' in request.POST:`

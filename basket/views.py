@@ -10,10 +10,12 @@ def view_basket(request):
     basket, created = Basket.objects.get_or_create(user=request.user)
     product_id = request.GET.get('product_id')
     if product_id is not None:
-        item, _ = BasketItem.objects.get_or_create(basket=basket, product_id=product_id)
+        item, _ = BasketItem.objects.get_or_create(
+            basket=basket, product_id=product_id)
     basket_items = basket.items.all()
     basket_total = sum(
-        item.product.price * item.quantity if item.product else 0 for item in basket_items)
+        item.product.price * item.quantity if item.product
+        else 0 for item in basket_items)
     context = {
         'basket_items': basket_items,
         'basket_total': basket_total,
@@ -47,15 +49,22 @@ def update_basket(request, basket_item_id):
 
     if request.method == 'POST':
         action = request.POST.get('action')
+        basket_item_id = request.POST.get('basket_item_id')
+        basket_item = get_object_or_404(BasketItem, id=basket_item_id)
 
         if action == 'increase':
             basket_item.quantity += 1
         elif action == 'decrease':
-            basket_item.quantity -= 1
-
-            if basket_item.quantity <= 0:
-                # If the quantity is zero or negative, remove the item from the basket
-                basket_item.delete()
+            basket_item.quantity = max(1, basket_item.quantity - 1)
+        elif action == 'delete':
+            basket_item.delete()
+        else:
+            try:
+                new_quantity = int(request.POST.get('quantity'))
+                difference = new_quantity - basket_item.quantity
+                basket_item.quantity = max(1, new_quantity)
+            except (TypeError, ValueError):
+                pass
 
         basket_item.save()
 
@@ -69,10 +78,6 @@ def remove_from_basket(request, basket_item_id):
     if basket_item.basket.user != request.user:
         return redirect('view_basket')
 
-    if basket_item.quantity > 1:
-        basket_item.quantity -= 1
-        basket_item.save()
-    else:
-        basket_item.delete()
+    basket_item.delete()
 
     return redirect('view_basket')

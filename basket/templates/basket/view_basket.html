@@ -2,31 +2,33 @@
 {% load custom_filters %}
 
 {% block content %}
-  <div class="container mt-5">
-    <h1>Your Shopping Basket</h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Total</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in basket_items %}
+<div class="container mt-5">
+  <h1>Your Shopping Basket</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in basket_items %}
         <tr>
           <td>{{ item.product.name }}</td>
           <td>{{ item.product.price }}</td>
           <td>
             <form method="post" action="{% url 'update_basket' item.id %}">
               {% csrf_token %}
+              <input type="hidden" name="basket_item_id" value="{{ item.id }}">
               <div class="input-group">
-                <button class="btn btn-outline-secondary" type="submit" name="action" value="decrease">-</button>
-                <input type="number" class="form-control" name="quantity" value="{{ item.quantity }}" min="1">
-                <button class="btn btn-outline-secondary" type="submit" name="action" value="increase">+</button>
+                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity('{{ item.id }}')">-</button>
+                <input id="quantity_{{ item.id }}" type="number" class="form-control" name="quantity" value="{{ item.quantity }}" min="1" max="100">
+                <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity('{{ item.id }}')">+</button>
               </div>
+              <button type="submit" name="action" value="update" style="display:none"></button>
             </form>
           </td>
           <td>{{ item.product.price|multiply:item.quantity }}</td>
@@ -34,21 +36,55 @@
             <a href="{% url 'remove_from_basket' item.id %}" class="btn btn-danger btn-sm">Remove</a>
           </td>
         </tr>
-        {% empty %}
+      {% empty %}
         <tr>
           <td colspan="5">Your basket is empty.</td>
         </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col-6">
-        <a href="{% url 'products' %}" class="btn btn-primary">Continue Shopping</a>
-      </div>
-      <div class="col-6 text-right">
-        <p><strong>Total: </strong>{{ basket.total }}</p>
-        <a href="#" class="btn btn-success">Checkout</a>
-      </div>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="row">
+    <div class="col-6">
+      <a href="{% url 'products' %}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+    <div class="col-6 text-right">
+      <p><strong>Total: </strong>{{ basket.total }}</p>
+      <a href="#" class="btn btn-success">Checkout</a>
     </div>
   </div>
+</div>
+{% endblock %}
+
+{% block postloadjs %}
+<script>
+  function increaseQuantity(itemId) {
+    var quantityInput = document.getElementById('quantity_' + itemId);
+    var currentValue = parseInt(quantityInput.value);
+    if (!isNaN(currentValue) && currentValue < 100) {
+      quantityInput.value = currentValue + 1;
+      quantityInput.dispatchEvent(new Event('change')); // trigger validation
+    }
+  }
+  
+  function decreaseQuantity(itemId) {
+    var quantityInput = document.getElementById('quantity_' + itemId);
+    var currentValue = parseInt(quantityInput.value);
+    if (!isNaN(currentValue) && currentValue > 1) {
+      quantityInput.value = currentValue - 1;
+      quantityInput.dispatchEvent(new Event('change')); // trigger validation
+    }
+  }
+  
+  var quantityInputs = document.querySelectorAll('input[name="quantity"]');
+  Array.prototype.forEach.call(quantityInputs, function(quantityInput) {
+    quantityInput.addEventListener('change', function() {
+      var currentValue = parseInt(quantityInput.value);
+      if (isNaN(currentValue) || currentValue < 1 || currentValue > 100) {
+        quantityInput.value = '1'; // reset to default value
+      }
+      var form = quantityInput.closest('form');
+      form.querySelector('button[type="submit"]').click(); // submit the form
+    });
+  });
+</script>
 {% endblock %}
