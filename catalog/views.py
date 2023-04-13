@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Avg, Count
 from django.db.models.functions import Lower
 from .models import Candle, EssentialOil, Review, Product
-from .forms import ReviewForm, AddToBasketForm, CandleForm, \
+from .forms import ReviewForm, CandleForm, \
     EssentialOilForm, ProductForm
 
 
@@ -96,20 +96,8 @@ def product_details(request, product_id):
         else:
             form = ReviewForm()
 
-        if 'basket_form' in request.POST:
-            # Handle AddToBasketForm submission
-            basket_form = AddToBasketForm(product, request.POST)
-            if basket_form.is_valid():
-                # Add the product to the user's basket
-                quantity = basket_form.cleaned_data['quantity']
-                basket_url = reverse('add_to_basket_view', args=[product.id])
-                return HttpResponseRedirect(f"{basket_url}?quantity={quantity}")
-        else:
-            basket_form = AddToBasketForm(product=product)
-
     else:
         form = ReviewForm()
-        basket_form = AddToBasketForm(product=product)
 
     reviews = Review.objects.filter(product=product, approved=True)
 
@@ -117,7 +105,6 @@ def product_details(request, product_id):
         'product': product,
         'reviews': reviews,
         'form': form,
-        'basket_form': basket_form
     }
     return render(request, 'home/product_details.html', context)
 
