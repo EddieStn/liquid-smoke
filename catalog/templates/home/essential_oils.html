@@ -26,9 +26,9 @@
               <p class="card-text">Scent: {{ oil.scent }}</p>
               <p class="card-text">Volume: {{ oil.volume }}</p>
               {% if oil.discounted_price %}
-              <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ oil.price }}</span> -> ${{ oil.discounted_price }}</small></p>
+              <del>${{ oil.price }}</del> <span class="discount">${{ oil.discounted_price }}</span>
               {% else %}
-              <p class="card-text"><small class="text-muted">Price: ${{ oil.price }}</small></p>
+              ${{ oil.price }}
               {% endif %}
               <p class="text-muted">
                 <i class="fas fa-star mr-1"></i>

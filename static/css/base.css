@@ -6,6 +6,7 @@ html {
 body {
     padding-top: 145px;
     font-family: 'Lora', serif;
+    font-size: 1rem;
 }
 
 /* ********** HOME PAGE *********** */
@@ -39,9 +40,8 @@ body {
     background-color: white;
 }
 
-.strike {
-    color: rgb(209, 121, 121) !important;
-    text-decoration: line-through;
+.discount{
+    color: rgb(187, 77, 3) !important;
 }
 
 .logo {
@@ -54,10 +54,6 @@ body {
     line-height: 2.5em;
 }
 
-.bag:hover {
-    color: rgb(33, 52, 58) !important;
-}
-
 .menu-item:hover {
     background-color: rgb(33, 52, 58);
 }
@@ -67,11 +63,11 @@ body {
 }
 
 .nav-cat {
-    border: 1px outset white ;
+    border: 1px outset white;
 }
 
 .nav-cat:hover {
-    border: 1px inset white ;
+    border: 1px inset white;
 }
 
 .dropdown-menu {
@@ -101,6 +97,8 @@ body {
     cursor: pointer;
 }
 
+/* ********** BASKET PAGE *********** */
+
 .jumbotron {
     /* background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-5650048.jpeg'); */
     background-image: url('/media/product_images/pexels-photo-5650048.jpeg');
@@ -109,11 +107,53 @@ body {
     background-position: center;
 }
 
+table td,
+table th {
+  vertical-align: middle !important;
+}
+
+.qty {
+    width: 58px;
+    margin: 2px 0;
+}
+.btn-qty {
+    font-size: .9rem;
+    padding: 3px 8.5px;
+}
+
+@media (max-width: 530px) {
+    table {
+      font-size: 14px;
+    }
+    table thead th:nth-child(1), 
+    table tbody td:nth-child(1) {
+      display: none;
+    }
+    table thead th:nth-child(2) {
+      width: 40%;
+    }
+    table thead th:nth-child(3), 
+    table tbody td:nth-child(3),
+    table thead th:nth-child(4),
+    table tbody td:nth-child(4) {
+      width: 20%;
+    }
+    table thead th:nth-child(5), 
+    table tbody td:nth-child(5),
+    table thead th:nth-child(6),
+    table tbody td:nth-child(6) {
+      width: 20%;
+    }
+    .btn-remove {
+        display: none;
+    }
+}
+
 @media (max-width: 767px) {
     hr.d-none {
-      display: block !important;
+        display: block !important;
     }
-  }
+}
 
 
 @media (max-width: 992px) {

@@ -34,9 +34,9 @@
     <div class="dropdown-menu border-0  bg-nav" aria-labelledby="user-options">
         {% if request.user.is_authenticated %}
             {% if request.user.is_superuser %}
-                <a href="#" class="dropdown-item text-white">Product Management</a>
+                <a href="{% url 'add_product' %}" class="dropdown-item text-white">Product Management</a>
             {% endif %}
-                <a href="" class="dropdown-item">My Profile</a>
+                <a href="" class="dropdown-item text-white">My Profile</a>
                 <a href="{% url 'account_logout' %}" class="dropdown-item text-white">Logout</a>
             {% else %}
                 <a href="{% url 'account_signup' %}" class="dropdown-item text-white">Register</a>
@@ -46,7 +46,7 @@
 </li>
 <li class="list-inline-item">
     <a class="{% if grand_total %}text-primary font-weight-bold{% else %}text-black{% endif %} nav-link d-block d-lg-none"
-        href="#">
+        href="{% url 'view_basket' %}">
         <div class="text-center">
             <div><i class="fas fa-shopping-bag fa-lg text-white"></i></div>
             <p class="my-0 text-white">

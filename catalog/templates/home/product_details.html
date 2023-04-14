@@ -19,9 +19,9 @@
             <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
             {% endif %}
             {% if product.discounted_price %}
-            <p class="card-text"><small class="text-muted">Price: <span class="strike">${{ product.price }}</span> -> ${{ product.discounted_price }}</small></p>
+            <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
             {% else %}
-            <p class="card-text"><small class="text-muted">Price: ${{ product.price }}</small></p>
+            ${{ product.price }}
             {% endif %}
             <p class="text-muted">
                 <i class="fas fa-star mr-1"></i>
