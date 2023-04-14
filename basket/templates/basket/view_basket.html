@@ -2,7 +2,8 @@
 {% load custom_filters %}
 
 {% block content %}
-<div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -35,30 +36,46 @@
     </thead>
     <tbody>
       {% for item in basket_items %}
-        <tr>
-          <td>{{ item.product.name }}</td>
-          <td>{{ item.product.price }}</td>
-          <td>
-            <form method="post" action="{% url 'update_basket' item.id %}">
-              {% csrf_token %}
-              <input type="hidden" name="basket_item_id" value="{{ item.id }}">
-              <div class="input-group">
-                <button class="btn btn-outline-secondary" type="button" onclick="decreaseQuantity('{{ item.id }}')">-</button>
-                <input id="quantity_{{ item.id }}" type="number" class="form-control" name="quantity" value="{{ item.quantity }}" min="1" max="100">
-                <button class="btn btn-outline-secondary" type="button" onclick="increaseQuantity('{{ item.id }}')">+</button>
-              </div>
-              <button type="submit" name="action" value="update" style="display:none"></button>
-            </form>
-          </td>
-          <td>{{ item.product.price|multiply:item.quantity }}</td>
-          <td>
-            <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmRemoveModal" data-item-id="{{ item.id }}">Remove</a>
-          </td>
-        </tr>
+      <tr>
+        <td>{{ item.product.name }}</td>
+        <td>
+          {% if item.discounted_price %}
+          <del>${{ item.product.price }}</del> ${{ item.discounted_price }}
+          {% else %}
+          ${{ item.product.price }}
+          {% endif %}
+        </td>
+        <td>
+          <form method="post" action="{% url 'update_basket' item.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="basket_item_id" value="{{ item.id }}">
+            <div class="input-group">
+              <button class="btn btn-outline-secondary" type="button"
+                onclick="decreaseQuantity('{{ item.id }}')">-</button>
+              <input id="quantity_{{ item.id }}" type="number" class="form-control" name="quantity"
+                value="{{ item.quantity }}" min="1" max="100">
+              <button class="btn btn-outline-secondary" type="button"
+                onclick="increaseQuantity('{{ item.id }}')">+</button>
+            </div>
+            <button type="submit" name="action" value="update" style="display:none"></button>
+          </form>
+        </td>
+        <td>
+          {% if item.discounted_price %}
+          ${{ item.discounted_price|multiply:item.quantity }}
+          {% else %}
+          ${{ item.product.price|multiply:item.quantity }}
+          {% endif %}
+        </td>
+        <td>
+          <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmRemoveModal"
+            data-item-id="{{ item.id }}">Remove</a>
+        </td>
+      </tr>
       {% empty %}
-        <tr>
-          <td colspan="5">Your basket is empty.</td>
-        </tr>
+      <tr>
+        <td colspan="5">Your basket is empty.</td>
+      </tr>
       {% endfor %}
     </tbody>
   </table>
@@ -67,7 +84,7 @@
       <a href="{% url 'products' %}" class="btn btn-primary">Continue Shopping</a>
     </div>
     <div class="col-6 text-right">
-      <p><strong>Total: </strong>{{ basket.total }}</p>
+      <p><strong>Total: </strong>${{ basket_total }}</p>
       <a href="#" class="btn btn-success">Checkout</a>
     </div>
   </div>
@@ -76,7 +93,6 @@
 
 {% block postloadjs %}
 <script>
-  
   function increaseQuantity(itemId) {
     var quantityInput = document.getElementById('quantity_' + itemId);
     var currentValue = parseInt(quantityInput.value);
@@ -85,7 +101,7 @@
       quantityInput.dispatchEvent(new Event('change')); // trigger validation
     }
   }
-  
+
   function decreaseQuantity(itemId) {
     var quantityInput = document.getElementById('quantity_' + itemId);
     var currentValue = parseInt(quantityInput.value);
@@ -94,10 +110,10 @@
       quantityInput.dispatchEvent(new Event('change')); // trigger validation
     }
   }
-  
+
   var quantityInputs = document.querySelectorAll('input[name="quantity"]');
-  Array.prototype.forEach.call(quantityInputs, function(quantityInput) {
-    quantityInput.addEventListener('change', function() {
+  Array.prototype.forEach.call(quantityInputs, function (quantityInput) {
+    quantityInput.addEventListener('change', function () {
       var currentValue = parseInt(quantityInput.value);
       if (isNaN(currentValue) || currentValue < 1 || currentValue > 100) {
         quantityInput.value = '1'; // reset to default value
@@ -107,12 +123,11 @@
     });
   });
 
-  $(document).ready(function() {
-    $('#confirmRemoveModal').on('show.bs.modal', function(e) {
+  $(document).ready(function () {
+    $('#confirmRemoveModal').on('show.bs.modal', function (e) {
       var itemId = $(e.relatedTarget).data('item-id');
       $('#confirm-remove-btn').attr('href', '{% url "remove_from_basket" 0 %}'.replace('0', itemId));
     });
   });
-
 </script>
 {% endblock %}

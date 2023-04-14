@@ -10,12 +10,16 @@ def view_basket(request):
     basket, created = Basket.objects.get_or_create(user=request.user)
     product_id = request.GET.get('product_id')
     if product_id is not None:
-        item, _ = BasketItem.objects.get_or_create(
-            basket=basket, product_id=product_id)
+        product = get_object_or_404(Product, id=product_id)
+        basket_item, created = BasketItem.objects.get_or_create(
+            basket=basket, product=product)
+        if product.discounted_price:
+            basket_item.discounted_price = product.discounted_price
+            basket_item.save()
+
     basket_items = basket.items.all()
-    basket_total = sum(
-        item.product.price * item.quantity if item.product
-        else 0 for item in basket_items)
+    basket_total = sum(item.get_total_price() for item in basket_items)
+
     context = {
         'basket_items': basket_items,
         'basket_total': basket_total,

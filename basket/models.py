@@ -15,10 +15,22 @@ class Basket(models.Model):
 class BasketItem(models.Model):
     basket = models.ForeignKey(Basket, on_delete=models.CASCADE,
                                related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE,
-                                null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    discounted_price = models.DecimalField(max_digits=6, decimal_places=2,
+                                           null=True, blank=True)
 
     def __str__(self):
-        return f"{self.quantity} x {self.product.name} \
-        in {self.basket.user.username}'s basket"
+        return f'{self.quantity} x {self.product.name}'
+
+    def get_item_price(self):
+        return self.discounted_price \
+                if self.discounted_price is not None else self.product.price
+
+    def get_total_price(self):
+        return self.quantity * self.get_item_price()
+
+    def save(self, *args, **kwargs):
+        if self.product.discounted_price:
+            self.discounted_price = self.product.discounted_price
+        super().save(*args, **kwargs)

@@ -78,6 +78,7 @@ As a website administrator, I want to ensure that the website is always function
 
 ### Basket 
 * Adding an offer item will not add it with the discounted price
+    * Fixed by changing the model to include a discounted_price field and the view_basket to check for the discounted_price
 * Hitting enter on the quantity field in the basket & clicking Remove will reduce the quantity by 1
     * Fixed the remove button by updating the view to only delete the item
     * Fixed the quantity issues with javascript event listeners in view_basket.html
@@ -96,3 +97,13 @@ As a website administrator, I want to ensure that the website is always function
 * The header is covering the body of the website
     * having `html {height: 100%}` and `body {height: calc(100vh - any size)}` doesn't fix it.
     * Fixed by addig `padding-top: 145px;` to the body element
+
+
+## Django notes
+
+* When changing a model and applying migrations you get an error message to provide a default value or set null=True
+    * If you have data stored in your database
+        * If you don't want to have those values in your fields, add a default="" to your field, makemigrations>migrate, then remake your model as needed and makemigrations>migrate again
+    * If you don't have any data stored
+        * Simply comment out your models or delete your migrations files (except __init__.py) and migrate again
+        * rm db.sqlite3 > python manage.py makemigrations > python manage.py migrate
