@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from catalog.models import Product
 from .models import Basket, BasketItem
 from .forms import AddToBasketForm
@@ -38,9 +39,14 @@ def add_to_basket(request, product_id):
                 basket=basket, product_id=product_id)
             if not created:
                 item.quantity += quantity
+                item.save()
+                messages.success(request, f"{item.product.name} \
+                    quantity updated in your basket.")
             else:
                 item.quantity = quantity
-            item.save()
+                item.save()
+                messages.success(request, f"{item.product.name} \
+                    was added to your basket successfully!")
             return redirect('view_basket')
     else:
         form = AddToBasketForm()
@@ -58,19 +64,29 @@ def update_basket(request, basket_item_id):
 
         if action == 'increase':
             basket_item.quantity += 1
+            basket_item.save()
+            messages.success(request, f"{basket_item.product.name} \
+                quantity updated in your basket.")
         elif action == 'decrease':
             basket_item.quantity = max(1, basket_item.quantity - 1)
+            basket_item.save()
+            messages.success(request, f"{basket_item.product.name} \
+                quantity updated in your basket.")
         elif action == 'delete':
+            item_name = basket_item.product.name
             basket_item.delete()
+            messages.success(request, f"{item_name} \
+                removed from your basket.")
         else:
             try:
                 new_quantity = int(request.POST.get('quantity'))
                 difference = new_quantity - basket_item.quantity
                 basket_item.quantity = max(1, new_quantity)
+                basket_item.save()
+                messages.success(request, f"{basket_item.product.name} \
+                    quantity updated in your basket.")
             except (TypeError, ValueError):
                 pass
-
-        basket_item.save()
 
     return redirect('view_basket')
 
@@ -82,6 +98,8 @@ def remove_from_basket(request, basket_item_id):
     if basket_item.basket.user != request.user:
         return redirect('view_basket')
 
+    item_name = basket_item.product.name
     basket_item.delete()
+    messages.success(request, f"{item_name} removed from your basket.")
 
     return redirect('view_basket')

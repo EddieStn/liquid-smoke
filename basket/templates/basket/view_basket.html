@@ -95,6 +95,8 @@
 {% endblock %}
 
 {% block postloadjs %}
+{{ block.super }}
+
 <script>
   function increaseQuantity(itemId) {
     var quantityInput = document.getElementById('quantity_' + itemId);
