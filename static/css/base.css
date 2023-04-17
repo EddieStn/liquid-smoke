@@ -102,8 +102,8 @@ body {
 
 .message-container {
     position: fixed;
-    top: 72px;
-    right: 15px;
+    top: 150px;
+    right: 20px;
     z-index: 99999999999;
 }
 
