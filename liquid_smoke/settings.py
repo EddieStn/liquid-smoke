@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'catalog',
     'basket',
+    'checkout',
     'storages',
     'crispy_forms',
     "crispy_bootstrap4",
