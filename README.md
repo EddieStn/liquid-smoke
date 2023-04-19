@@ -74,6 +74,11 @@ As a website administrator, I want to ensure that the website is always function
 
 * Navbar changes
     * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
+
+# Testing
+
+- To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, for testing
+
 # Bugs
 
 ### Basket 
