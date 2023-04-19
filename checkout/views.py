@@ -1,20 +1,34 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.conf import settings
 
 from .forms import OrderForm
 from catalog.models import Product
 from basket.models import Basket, BasketItem
 from .models import Order, OrderItem, Coupon
 
+import stripe
+
 
 @login_required
 def checkout_view(request):
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_secret_key = settings.STRIPE_SECRET_KEY
     basket = get_object_or_404(Basket, user=request.user)
     basket_items = basket.items.all()
     if not basket:
         messages.error(request, "Your basket is empty")
         return redirect(reverse('products'))
+
+    basket_total = sum(item.get_total_price() for item in basket_items)
+    stripe_total = round(basket_total * 100)
+    stripe.api_key = stripe_secret_key
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+    )
+
     if request.method == 'POST':
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
@@ -40,13 +54,12 @@ def checkout_view(request):
     else:
         order_form = OrderForm()
 
-    basket_total = sum(item.get_total_price() for item in basket_items)
     context = {
         'order_form': order_form,
-        'basket_items': basket.items.all(),
+        'basket_items': basket_items,
         'basket_total': basket_total,
-        'stripe_public_key': 'pk_test_51MbpVALekjW2f2iswf96UfAx7RhiocqOkvmGGnbD7r6LmXZ7keWzmH7zTG0f0Y4EoCsqyupjoi6i3U2fAbhZvgpo00Q0q1Khno',
-        'client_secret': 'test client secret',
+        'stripe_public_key': stripe_public_key,
+        'client_secret': intent.client_secret,
     }
     return render(request, 'checkout/checkout.html', context)
 
