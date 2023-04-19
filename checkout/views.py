@@ -15,21 +15,22 @@ import stripe
 def checkout_view(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
-    basket = get_object_or_404(Basket, user=request.user)
-    basket_items = basket.items.all()
-    if not basket:
-        messages.error(request, "Your basket is empty")
-        return redirect(reverse('products'))
-
-    basket_total = sum(item.get_total_price() for item in basket_items)
-    stripe_total = round(basket_total * 100)
-    stripe.api_key = stripe_secret_key
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
 
     if request.method == 'POST':
+        basket = get_object_or_404(Basket, user=request.user)
+
+        form_data = {
+            'first_name': request.POST['first_name'],
+            'last_name': request.POST['last_name'],
+            'email': request.POST['email'],
+            'phone_number': request.POST['phone_number'],
+            'address_line_1': request.POST['address_line_1'],
+            'address_line_2': request.POST['address_line_2'],
+            'city': request.POST['city'],
+            'country': request.POST['country'],
+            'postcode': request.POST['postcode'],
+        }
+
         order_form = OrderForm(request.POST)
         if order_form.is_valid():
             order = order_form.save(commit=False)
@@ -43,15 +44,37 @@ def checkout_view(request):
                     quantity=item.quantity
                 )
                 order_item.save()
-                basket_items.delete()
             if order.coupon:
                 order.discount = order.get_total_cost() * (
                     order.coupon.discount / 100
                 )
                 order.save()
-            messages.success(request, "Order created successfully!")
-            return redirect('order_detail')
+                messages.success(request, "Order created successfully!")
+                return redirect('order_detail', args=[order.order_number])
+
+            # Save the info to the user's profile if all is well
+            request.session['save_info'] = 'save-info' in request.POST
+            return redirect(reverse(
+                'order_detail', args=[order.order_number]))
+        else:
+            messages.error(request, 'There was an error with your form. \
+                    Please double check your information.')
+
     else:
+        basket = get_object_or_404(Basket, user=request.user)
+        basket_items = basket.items.all()
+        if not basket:
+            messages.error(request, "Your basket is empty")
+            return redirect(reverse('products'))
+
+        basket_total = sum(item.get_total_price() for item in basket_items)
+        stripe_total = round(basket_total * 100)
+        stripe.api_key = stripe_secret_key
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+
         order_form = OrderForm()
 
     context = {
@@ -66,9 +89,16 @@ def checkout_view(request):
 
 @login_required
 def order_detail(request, order_number):
+    save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number,
                               user=request.user)
+    messages.success(request, f'Order successfully processed! \
+        Your order number is {order_number}. A confirmation \
+        email will be sent to {order.email}.')
     order_items = order.items.all()
+    basket = get_object_or_404(Basket, user=request.user)
+    basket_items = basket.items.all()
+    basket_items.delete()
 
     context = {
         'order': order,

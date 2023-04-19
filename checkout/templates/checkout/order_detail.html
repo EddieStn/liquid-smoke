@@ -2,57 +2,6 @@
 
 {% block content %}
   <div class="container my-5">
-    <h2 class="mb-5">Order Detail: {{ order.order_number }}</h2>
-    <h4>Billing Address</h4>
-    <hr>
-    <p>{{ order.billing_address.full_name }}</p>
-    <p>{{ order.billing_address.line1 }}</p>
-    {% if order.billing_address.line2 %}
-      <p>{{ order.billing_address.line2 }}</p>
-    {% endif %}
-    <p>{{ order.billing_address.city }}</p>
-    <p>{{ order.billing_address.state }}</p>
-    <p>{{ order.billing_address.postcode }}</p>
-    <p>{{ order.billing_address.country }}</p>
-
-    <h4>Shipping Address</h4>
-    <hr>
-    <p>{{ order.shipping_address.full_name }}</p>
-    <p>{{ order.shipping_address.line1 }}</p>
-    {% if order.shipping_address.line2 %}
-      <p>{{ order.shipping_address.line2 }}</p>
-    {% endif %}
-    <p>{{ order.shipping_address.city }}</p>
-    <p>{{ order.shipping_address.postcode }}</p>
-    <p>{{ order.shipping_address.country }}</p>
-
-    <h4>Order Items</h4>
-    <hr>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Product Image</th>
-          <th>Product Name</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in order_items %}
-          <tr>
-            <td>{{ item.product.image }}</td>
-            <td>{{ item.product.name }}</td>
-            <td>{{ item.quantity }}</td>
-            <td>{{ item.price }}</td>
-            <td>{{ item.get_total_price }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <h4>Total</h4>
-    <hr>
-    <p>${{ order.get_total_price }}</p>
+    <h1>Success</h1>
   </div>
 {% endblock %}
