@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from checkout.forms import OrderForm
 from catalog.models import Product
+from basket.models import Basket, BasketItem
 from .models import Order
 
 
@@ -57,15 +58,13 @@ class TestOrderForm(TestCase):
 
 
 class TestCheckoutView(TestCase):
+    LOGIN_URL = '/accounts/login/'
+
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser',
-                                             password='testpass')
+        self.user = User.objects.create_user(username='testuser', password='testpass')
         self.product = Product.objects.create(name='Test Product', price=10)
-        self.order = Order.objects.create(
-            user=self.user, first_name='John', last_name='Doe',
-            email='johndoe@example.com', phone_number='1234567890',
-            address_line_1='123 Main St', city='New York',
-            postcode='10001', country='US')
+        self.basket = Basket.objects.create(user=self.user)
+        self.basket_item = BasketItem.objects.create(basket=self.basket, product=self.product, quantity=1)
 
     def test_checkout_view_get(self):
         self.client.login(username='testuser', password='testpass')
@@ -86,12 +85,11 @@ class TestCheckoutView(TestCase):
             'city': 'New York',
             'postcode': '10001',
             'country': 'US',
-            'payment_method': 'stripe',
         }
         response = self.client.post(reverse('checkout'), data=data)
-        self.assertRedirects(response, reverse('order_confirmation',
-                             kwargs={'order_id': self.order.id}))
-        self.assertEqual(Order.objects.count(), 2)
+        order = Order.objects.get(first_name='John')
+        self.assertRedirects(response, reverse('order_confirmation', kwargs={'order_number': order.order_number}))
+        self.assertEqual(Order.objects.count(), 1)
 
         new_order = Order.objects.last()
 
@@ -104,7 +102,6 @@ class TestCheckoutView(TestCase):
         self.assertEqual(new_order.city, 'New York')
         self.assertEqual(new_order.postcode, '10001')
         self.assertEqual(new_order.country, 'US')
-        self.assertEqual(new_order.payment_method, 'stripe')
         self.assertEqual(new_order.items.count(), 1)
 
         order_item = new_order.items.first()
@@ -112,3 +109,9 @@ class TestCheckoutView(TestCase):
         self.assertEqual(order_item.product, self.product)
         self.assertEqual(order_item.price, self.product.price)
         self.assertEqual(order_item.quantity, 1)
+
+        basket_items = self.basket.items.all()
+        self.assertEqual(basket_items.count(), 0)
+
+        response = self.client.get(reverse('checkout'))
+        self.assertRedirects(response, reverse('home'))

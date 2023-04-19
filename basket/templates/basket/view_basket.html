@@ -40,41 +40,42 @@
       </thead>
       <tbody>
         {% for item in basket_items %}
-        <tr>
-          <td><img src="{{ item.product.image.url }}" width="90" height="120"></td>
-          <td>{{ item.product.name }}</td>
-          <td>
-            {% if item.discounted_price %}
-            <del>${{ item.product.price }}</del> <span class="discount">${{ item.discounted_price }}</span>
-            {% else %}
-            ${{ item.product.price }}
-            {% endif %}
-          </td>
-          <td>
-            <form method="post" action="{% url 'update_basket' item.id %}">
-              {% csrf_token %}
-              <input type="hidden" name="basket_item_id" value="{{ item.id }}">
-              <input id="quantity_{{ item.id }}" type="number" class="form-control qty" name="quantity" value="{{ item.quantity }}" min="1" max="10">
-              <button class="btn btn-outline-secondary btn-qty" type="button" onclick="decreaseQuantity('{{ item.id }}')"><strong>-</strong></button>
-              <button class="btn btn-outline-secondary btn-qty" type="button" onclick="increaseQuantity('{{ item.id }}')"><strong>+</strong></button>
-              <button type="submit" name="action" value="update" style="display:none"></button>
-            </form>
-          </td>
-          <td>
-            {% if item.discounted_price %}
-            ${{ item.discounted_price|multiply:item.quantity }}
-            {% else %}
-            ${{ item.product.price|multiply:item.quantity }}
-            {% endif %}
-          </td>
-          <td>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <a href="#" class="text-dark" data-toggle="modal" data-target="#confirmRemoveModal" data-item-id="{{ item.id }}">
-                <i class="fa-solid fa-trash-can"></i>
-              </a>
-              <small class="btn-remove text-muted">Remove</small>
-            </div>
-          </td>
+        <tr>            
+            <td class="col-2"><img src="{{ item.product.image.url }}" class="img-thumbnail" alt=" {{ item.product.name }}"></td>
+            <td>{{ item.product.name }}</td>
+            <td>
+              {% if item.discounted_price %}
+              <del>${{ item.product.price }}</del> <span class="discount">${{ item.discounted_price }}</span>
+              {% else %}
+              ${{ item.product.price }}
+              {% endif %}
+            </td>
+            <td>
+              <form method="post" action="{% url 'update_basket' item.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="basket_item_id" value="{{ item.id }}">
+                <input id="quantity_{{ item.id }}" type="number" class="form-control qty" name="quantity" value="{{ item.quantity }}" min="1" max="10">
+                <button class="btn btn-outline-secondary btn-qty" type="button" onclick="decreaseQuantity('{{ item.id }}')"><strong>-</strong></button>
+                <button class="btn btn-outline-secondary btn-qty" type="button" onclick="increaseQuantity('{{ item.id }}')"><strong>+</strong></button>
+                <button type="submit" name="action" value="update" style="display:none"></button>
+              </form>
+            </td>
+            <td>
+              {% if item.discounted_price %}
+              ${{ item.discounted_price|multiply:item.quantity }}
+              {% else %}
+              ${{ item.product.price|multiply:item.quantity }}
+              {% endif %}
+            </td>
+            <td>
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <a href="#" class="text-dark" data-toggle="modal" data-target="#confirmRemoveModal" data-item-id="{{ item.id }}">
+                  <i class="fa-solid fa-trash-can"></i>
+                </a>
+                <small class="btn-remove text-muted">Remove</small>
+              </div>
+            </td>
+          </div>
         </tr>
         {% empty %}
         <tr>
@@ -87,7 +88,7 @@
   <div class="row">
     <div class="m-3 text-left">
       <p><strong>Total: </strong>${{ basket_total }}</p>
-      <a href="#" class="btn btn-success">Checkout</a>
+      <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
       <a href="{% url 'products' %}" class="btn btn-primary my-2">Continue Shopping</a>
     </div>
   </div>
