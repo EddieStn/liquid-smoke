@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
 
+
 from .forms import OrderForm
 from catalog.models import Product
 from basket.models import Basket, BasketItem
@@ -95,6 +96,7 @@ def order_detail(request, order_number):
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
+
     order_items = order.items.all()
     basket = get_object_or_404(Basket, user=request.user)
     basket_items = basket.items.all()
@@ -105,3 +107,12 @@ def order_detail(request, order_number):
         'order_items': order_items,
     }
     return render(request, 'checkout/order_detail.html', context)
+
+
+@login_required
+def orders(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {
+        'orders': orders
+    }
+    return render(request, 'checkout/orders.html', context)

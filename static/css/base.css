@@ -97,6 +97,18 @@ body {
     cursor: pointer;
 }
 
+.btn-checkout {
+    
+    background-color: white;
+    color: rgb(33, 52, 58);
+    border: 1px solid black !important;
+}
+
+.btn-checkout:hover {
+    background-color: rgb(33, 52, 58);
+    color: white;
+}
+
 
 /* ********** BOOTSTRAP TOASTS *********** */
 

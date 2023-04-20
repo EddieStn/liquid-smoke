@@ -24,8 +24,7 @@
   </div>
 </div>
 <div class="container mt-5">
-  <h1>Your Shopping Basket</h1>
-  <hr>
+  <h1 class="mb-5">Your Shopping Basket</h1>
   <div class="table-container">
     <table class="table table-striped">
       <thead>
@@ -79,6 +78,7 @@
         </tr>
         {% empty %}
         <tr>
+          <td></td>
           <td colspan="5">Your basket is empty.</td>
         </tr>
         {% endfor %}
@@ -88,8 +88,8 @@
   <div class="row">
     <div class="m-3 text-left">
       <p><strong>Total: </strong>${{ basket_total }}</p>
-      <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
-      <a href="{% url 'products' %}" class="btn btn-primary my-2">Continue Shopping</a>
+      <a href="{% url 'checkout' %}" class="btn btn-checkout my-2">Secure Checkout <span class="icon"><i class="fas fa-lock"></i></span></a>
+      <a href="{% url 'products' %}" class="btn btn-checkout my-2">Continue Shopping <span><i class="fa-solid fa-angles-right"></i></span></a>
     </div>
   </div>
 </div>
