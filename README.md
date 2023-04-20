@@ -81,6 +81,13 @@ As a website administrator, I want to ensure that the website is always function
 
 # Bugs
 
+### Checkout
+* Hitting the back button from the order_detail page leads to an error in the browser
+```
+InvalidRequestError at /checkout/
+stripe.error.InvalidRequestError: Request req_upHWpena88utjx: This value must be greater than or equal to 1.
+```
+
 ### Basket 
 * Adding an offer item will not add it with the discounted price
     * Fixed by changing the model to include a discounted_price field and the view_basket to check for the discounted_price

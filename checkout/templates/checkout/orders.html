@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Your Orders</h1>
-  {% if orders %}
-    <ul>
-      {% for order in orders %}
-        <li><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>You have no orders.</p>
-  {% endif %}
+  <div class="container mt-4">
+    <h1>Your Orders</h1>
+    {% if orders %}
+      <ul class="list-group">
+        {% for order in orders %}
+          <li class="list-group-item">
+            <a href="{% url 'order_detail' order.order_number %}">Order number - {{ order.order_number }}</a>
+            <p>Ordered on: {{ order.created_at }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="mt-4">You have no orders.</p>
+    {% endif %}
+  </div>
 {% endblock %}
