@@ -82,11 +82,23 @@ As a website administrator, I want to ensure that the website is always function
 # Bugs
 
 ### Checkout
-* Hitting the back button from the order_detail page leads to an error in the browser
+* After a successful order, hitting the back button from the order_detail page leads to an error in the browser
+    * Fixed by adding an exception to the stripe intent
 ```
 InvalidRequestError at /checkout/
 stripe.error.InvalidRequestError: Request req_upHWpena88utjx: This value must be greater than or equal to 1.
+
+
+try:
+    intent = stripe.PaymentIntent.create(
+        amount=stripe_total,
+        currency=settings.STRIPE_CURRENCY,
+    )
+    except stripe.error.InvalidRequestError as e:
+    # Invalid parameters were supplied to Stripe's API
+    return redirect(reverse('home'))
 ```
+
 
 ### Basket 
 * Adding an offer item will not add it with the discounted price

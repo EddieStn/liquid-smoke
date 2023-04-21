@@ -53,6 +53,31 @@
           </div>
         </div>
         {% endfor %}
+        <hr class="my-4">
+        <form method="post" action="{% url 'apply_coupon' %}">
+          {% csrf_token %}
+          <div class="form-group row">
+            <div class="col-8">
+              {{ coupon_form }}
+            </div>
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Apply Coupon</button>
+            </div>
+          </div>
+        </form>
+        {{ order.coupon }}
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% if coupon %}
+        <div class="col-12 text-right">
+          <p>Coupon Applied. Discount {{ coupon.discount }}% . You saved ${{ coupon_saved }}</p>
+        </div>
+        {% endif %}
         <hr class="my-0">
         <div class="row text-black">
           <div class="col-10 offset-2 text-right">
