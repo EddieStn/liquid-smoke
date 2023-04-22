@@ -81,7 +81,8 @@ def checkout_view(request):
                 order_item.save()
             if coupon:
                 order.coupon = coupon
-                order.discount = order.get_total_cost() * (coupon.discount / 100)
+                order.discount = order.get_total_cost() * (
+                    coupon.discount / 100)
                 order.save()
                 messages.success(request, "Coupon applied successfully!")
                 messages.success(request, "Order created successfully!")
@@ -106,7 +107,8 @@ def checkout_view(request):
         if coupon:
             total = sum(item.get_total_price() for item in basket_items)
             print(total)
-            basket_total = total - round(total * Decimal(coupon.discount / 100),2)
+            basket_total = total - round(
+                total * Decimal(coupon.discount / 100), 2)
             coupon_saved = total - basket_total
         else:
             basket_total = sum(item.get_total_price() for item in basket_items)

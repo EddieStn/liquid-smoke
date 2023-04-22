@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from django.contrib.auth.models import User
 from catalog.models import Product
+from profiles.models import UserProfile
 
 
 class Coupon(models.Model):
@@ -31,6 +32,9 @@ class Order(models.Model):
         ('D', 'Delivered'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.SET_NULL,
+                                     null=True, blank=True,
+                                     related_name='orders')
     order_number = models.UUIDField(default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
