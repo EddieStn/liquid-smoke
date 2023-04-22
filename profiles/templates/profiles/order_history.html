@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block extra_title %}Order History{% endblock %}
+
 {% block content %}
   <div class="container mt-4">
     <h1>Your Orders</h1>
@@ -7,7 +9,7 @@
       <ul class="list-group">
         {% for order in orders %}
           <li class="list-group-item">
-            <a href="{% url 'order_detail' order.order_number %}">Order number - {{ order.order_number }}</a>
+            <a href="{% url 'order_detail' order.order_number %}">Order number - {{ order.order_number|truncatechars:8 }}</a>
             <p>Ordered on: {{ order.created_at }}</p>
           </li>
         {% endfor %}

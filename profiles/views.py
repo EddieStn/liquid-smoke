@@ -33,7 +33,8 @@ def profile(request):
 @login_required
 def order_history(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    messages.info(request, 'You are looking at past order confirmations')
     context = {
-        'orders': orders
+        'orders': orders,
     }
     return render(request, 'profiles/order_history.html', context)

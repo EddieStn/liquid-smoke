@@ -3,13 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
+from decimal import Decimal
 from django.views.decorators.http import require_POST
 
 from .forms import OrderForm, CouponForm
 from catalog.models import Product
 from basket.models import Basket, BasketItem
 from .models import Order, OrderItem, Coupon
-from decimal import Decimal
+from profiles.forms import UserProfileForm
+from profiles.models import UserProfile
 
 import stripe
 
@@ -39,10 +41,26 @@ def apply_coupon(request):
     return redirect('checkout')
 
 
+@require_POST
+def cache_checkout_data(request):
+    try:
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+        stripe.PaymentIntent.modify(metadata={
+            'save_info': request.POST.get('save_info'),
+            'username': request.user,
+        })
+        return HttpResponse(status=200)
+    except Exception as e:
+        messages.error(request, 'Sorry, your payment cannot be \
+            processed right now. Please try again later.')
+        return HttpResponse(content=e, status=400)
+
+
 @login_required
 def checkout_view(request):
     stripe_public_key = settings.STRIPE_PUBLIC_KEY
     stripe_secret_key = settings.STRIPE_SECRET_KEY
+    order_form = OrderForm()
     coupon_id = request.session.get('coupon_id')
     coupon = None
     if coupon_id:
@@ -65,7 +83,6 @@ def checkout_view(request):
         }
 
         order_form = OrderForm(request.POST)
-        print(coupon)
         if order_form.is_valid():
             order = order_form.save(commit=False)
             order.user = request.user
@@ -88,7 +105,6 @@ def checkout_view(request):
             else:
                 messages.success(request, "Order created successfully!")
 
-            # Save the info to the user's profile if all is well
             request.session['save_info'] = 'save-info' in request.POST
             return redirect(reverse(
                 'order_detail', args=[order.order_number]))
@@ -99,18 +115,19 @@ def checkout_view(request):
     else:
         basket = get_object_or_404(Basket, user=request.user)
         basket_items = basket.items.all()
+        coupon_saved = 0
 
         if not basket:
             messages.error(request, "Your basket is empty")
             return redirect(reverse('products'))
         if coupon:
             total = sum(item.get_total_price() for item in basket_items)
-            print(total)
             basket_total = total - round(
                 total * Decimal(coupon.discount / 100), 2)
             coupon_saved = total - basket_total
         else:
             basket_total = sum(item.get_total_price() for item in basket_items)
+
         stripe_total = round(basket_total * 100)
         stripe.api_key = stripe_secret_key
         try:
@@ -119,14 +136,40 @@ def checkout_view(request):
                 currency=settings.STRIPE_CURRENCY,
             )
         except stripe.error.InvalidRequestError as e:
-            # Invalid parameters were supplied to Stripe's API
+            messages.info(request, "You basket is empty")
             return redirect(reverse('home'))
 
-        order_form = OrderForm()
+        if request.user.is_authenticated:
+            try:
+                profile = UserProfile.objects.get(user=request.user)
+                last_order = Order.objects.filter(user=request.user).order_by('-created_at').first()
+
+                if last_order:
+                    initial_data = {
+                        'first_name': last_order.first_name,
+                        'last_name': last_order.last_name,
+                        'email': last_order.email,
+                        'phone_number': profile.phone_number,
+                        'address_line_1': profile.address_line_1,
+                        'address_line_2': profile.address_line_2,
+                        'city': profile.city,
+                        'country': profile.country,
+                        'postcode': profile.postcode,
+                    }
+                    order_form = OrderForm(initial=initial_data)
+            except UserProfile.DoesNotExist:
+                order_form = OrderForm()
+        else:
+            order_form = OrderForm()
+
         coupon_form = CouponForm()
 
     if coupon_id:
         del request.session['coupon_id']
+
+    if not stripe_public_key:
+        messages.warning(request, 'Stripe public key is missing. \
+            Did you forget to set it in your environment?')
 
     context = {
         'order_form': order_form,
@@ -136,6 +179,7 @@ def checkout_view(request):
         'stripe_public_key': stripe_public_key,
         'client_secret': intent.client_secret,
         'coupon': coupon,
+        'coupon_saved': coupon_saved,
     }
     return render(request, 'checkout/checkout.html', context)
 
@@ -145,6 +189,25 @@ def order_detail(request, order_number):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number,
                               user=request.user)
+
+    if request.user.is_authenticated:
+        profile = UserProfile.objects.get(user=request.user)
+        order.user_profile = profile
+        order.save()
+
+        if save_info:
+            profile_data = {
+                'phone_number': order.phone_number,
+                'country': order.country,
+                'postcode': order.postcode,
+                'city': order.city,
+                'address_line_1': order.address_line_1,
+                'address_line_2': order.address_line_2,
+            }
+            user_profile_form = UserProfileForm(profile_data, instance=profile)
+            if user_profile_form.is_valid():
+                user_profile_form.save()
+
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
