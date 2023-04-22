@@ -156,23 +156,14 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12 col-lg-7 text-right">
-      {% if from_profile %}
-      <a href="{% url 'profile' %}" class="btn btn-black rounded-0 my-2">
+    <div class="col-12 col-lg-7">
+      <a href="{% url 'profile' %}" class="btn btn-checkout">
         <span class="icon mr-2">
           <i class="fas fa-angle-left"></i>
         </span>
-        <span class="text-uppercase">Back to Profile</span>
+        <span class="text-uppercase">Go to Profile</span>
       </a>
-      {% else %}
-      <a href="{% url 'specials' %}" class="btn btn-black rounded-0 my-2">
-        <span class="icon mr-2">
-          <i class="fas fa-gifts"></i>
-        </span>
-        <span class="text-uppercase">Now check out the latest deals!</span>
-      </a>
-      {% endif %}
-      <a href="{% url 'orders' %}" class="btn btn-checkout">Order history</a>
+      <a href="{% url 'order_history' %}" class="btn btn-checkout text-uppercase">Order history</a>
     </div>
   </div>
 </div>

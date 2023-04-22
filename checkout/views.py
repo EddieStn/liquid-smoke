@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
-from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 from .forms import OrderForm, CouponForm
@@ -160,12 +159,3 @@ def order_detail(request, order_number):
         'order_items': order_items,
     }
     return render(request, 'checkout/order_detail.html', context)
-
-
-@login_required
-def orders(request):
-    orders = Order.objects.filter(user=request.user).order_by('-created_at')
-    context = {
-        'orders': orders
-    }
-    return render(request, 'checkout/orders.html', context)
