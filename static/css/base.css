@@ -21,15 +21,18 @@ body {
     padding-top: 20px;
 }
 
+.hero-text {
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 .links {
     background-color: rgb(81, 124, 128);
     padding: 20px;
 }
 
-.newsletter {
-    background-color: rgb(81, 124, 128);
-    padding: 20px;
-    color: white;
+footer a {
+    color: #fff;
 }
 
 .bg-nav {
@@ -101,11 +104,19 @@ body {
     background-color: white;
     color: rgb(33, 52, 58);
     border: 1px solid black !important;
+    border-radius: 15%;
 }
 
 .btn-checkout:hover {
     background-color: rgb(33, 52, 58);
     color: white;
+}
+
+#mc_embed_signup {
+    background: #fff;
+    clear: left;
+    font: 14px Helvetica, Arial, sans-serif;
+    width: 600px;
 }
 
 
@@ -128,7 +139,7 @@ body {
 
 /* ********** BASKET PAGE *********** */
 
-.jumbotron {
+.specials {
     /* background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-5650048.jpeg'); */
     background-image: url('/media/product_images/pexels-photo-5650048.jpeg');
     background-size: cover;
