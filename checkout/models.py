@@ -47,6 +47,9 @@ class Order(models.Model):
     country = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    original_bag = models.TextField(null=False, blank=False, default='')
+    stripe_pid = models.CharField(max_length=255, null=False,
+                                  blank=False, default='')
     status = models.CharField(max_length=1, choices=STATUS_CHOICES,
                               default='P')
     coupon = models.ForeignKey(Coupon, related_name='orders', null=True,

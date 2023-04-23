@@ -1,19 +1,22 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.utils import timezone
 from django.conf import settings
 from decimal import Decimal
-from django.views.decorators.http import require_POST
 
 from .forms import OrderForm, CouponForm
+from profiles.forms import UserProfileForm
+from profiles.models import UserProfile
 from catalog.models import Product
 from basket.models import Basket, BasketItem
 from .models import Order, OrderItem, Coupon
-from profiles.forms import UserProfileForm
-from profiles.models import UserProfile
 
 import stripe
+import json
 
 
 @login_required
@@ -41,19 +44,12 @@ def apply_coupon(request):
     return redirect('checkout')
 
 
-@require_POST
-def cache_checkout_data(request):
-    try:
-        stripe.api_key = settings.STRIPE_SECRET_KEY
-        stripe.PaymentIntent.modify(metadata={
-            'save_info': request.POST.get('save_info'),
-            'username': request.user,
-        })
-        return HttpResponse(status=200)
-    except Exception as e:
-        messages.error(request, 'Sorry, your payment cannot be \
-            processed right now. Please try again later.')
-        return HttpResponse(content=e, status=400)
+def send_confirmation_email(order):
+    subject = f"Order Confirmation - {order.order_number}"
+    message = render_to_string('checkout/send_confirmation_email.html',
+                               {'order': order})
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [order.email],
+              fail_silently=False)
 
 
 @login_required
@@ -87,6 +83,9 @@ def checkout_view(request):
             order = order_form.save(commit=False)
             order.user = request.user
             order.save()
+
+            send_confirmation_email(order)
+
             basket_items = basket.items.all()
             for item in basket_items:
                 order_item = order.items.create(
@@ -97,8 +96,8 @@ def checkout_view(request):
                 order_item.save()
             if coupon:
                 order.coupon = coupon
-                order.discount = order.get_total_cost() * (
-                    coupon.discount / 100)
+                order.discount = order.get_total_cost() * (Decimal(
+                    coupon.discount / 100))
                 order.save()
                 messages.success(request, "Coupon applied successfully!")
                 messages.success(request, "Order created successfully!")
@@ -165,9 +164,6 @@ def checkout_view(request):
 
         coupon_form = CouponForm()
 
-    if coupon_id:
-        del request.session['coupon_id']
-
     if not stripe_public_key:
         messages.warning(request, 'Stripe public key is missing. \
             Did you forget to set it in your environment?')
@@ -190,6 +186,13 @@ def order_detail(request, order_number):
     save_info = request.session.get('save_info')
     order = get_object_or_404(Order, order_number=order_number,
                               user=request.user)
+    coupon_id = request.session.get('coupon_id')
+    coupon = None
+    if coupon_id:
+        coupon = get_object_or_404(Coupon, id=coupon_id, active=True,
+                                   valid_from__lte=timezone.now(),
+                                   valid_to__gte=timezone.now())
+        del request.session['coupon_id']
 
     if request.user.is_authenticated:
         profile = UserProfile.objects.get(user=request.user)
@@ -221,5 +224,6 @@ def order_detail(request, order_number):
     context = {
         'order': order,
         'order_items': order_items,
+        'coupon': coupon
     }
     return render(request, 'checkout/order_detail.html', context)

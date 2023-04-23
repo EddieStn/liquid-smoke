@@ -78,7 +78,7 @@ As a website administrator, I want to ensure that the website is always function
 # Testing
 
 - To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, for testing
-
+- Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
 # Bugs
 
 ### Checkout

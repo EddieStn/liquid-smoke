@@ -6,6 +6,4 @@ urlpatterns = [
     path('order_detail/<order_number>', views.order_detail,
          name='order_detail'),
     path('apply_coupon/', views.apply_coupon, name='apply_coupon'),
-    path('cache_checkout_data/', views.cache_checkout_data,
-         name='cache_checkout_data'),
 ]

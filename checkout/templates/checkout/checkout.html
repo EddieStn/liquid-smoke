@@ -70,7 +70,7 @@
         {{ order.coupon }}
         {% if coupon %}
         <div class="col-12 text-right">
-          <p>Coupon applied with <strong>{{ coupon.discount }}%</strong> discount. You saved <strong>${{ coupon_saved }}</strong></p>
+          <p>Coupon <strong>{{ coupon }}</strong> applied with <strong>{{ coupon.discount }}%</strong> discount. You saved <strong>${{ coupon_saved }}</strong></p>
         </div>
         {% endif %}
         <hr class="my-0">
