@@ -260,3 +260,8 @@ def delete_product(request, product_id):
     product.delete()
     messages.success(request, 'Product deleted!')
     return redirect(reverse('products'))
+
+
+def faq(request):
+    """ Display the frequently asked questions page """
+    return render(request, 'home/faq.html')

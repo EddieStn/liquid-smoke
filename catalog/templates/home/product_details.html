@@ -43,7 +43,7 @@
                     <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="btn btn-primary">Add to Basket</button>
+                <button type="submit" class="btn btn-checkout">Add to Basket</button>
             </form>
             {% else %}
             <h5>You need to be logged in to add products in your basket. Please <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Register</a> first.</h5>
@@ -97,7 +97,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary" name="review_form">Submit</button>
+                <button type="submit" class="btn btn-checkout" name="review_form">Submit</button>
             </form>
             {% else %}
             <p>Please <a href="{% url 'account_login' %}">log in</a> to leave a review.</p>

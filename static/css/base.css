@@ -104,13 +104,14 @@ footer a {
     background-color: white;
     color: rgb(33, 52, 58);
     border: 1px solid black !important;
-    border-radius: 15%;
 }
 
 .btn-checkout:hover {
     background-color: rgb(33, 52, 58);
     color: white;
 }
+
+/* MAILCHIMP */
 
 #mc_embed_signup {
     background: #fff;
