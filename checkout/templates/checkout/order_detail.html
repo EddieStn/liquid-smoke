@@ -145,7 +145,11 @@
             <small class="text-muted">Billing Info:</small>
           </div>
         </div>
-
+        {% if coupon %}
+        <div class="col-12 text-right">
+          <p>Coupon applied with <strong>{{ coupon.discount }}%</strong> discount. You saved <strong>${{ coupon_saved }}</strong></p>
+        </div>
+        {% endif %}
         <div class="row">
           <div class="col-12 col-md-4">
             <p class="mb-0 text-black font-weight-bold">Order Total</p>
@@ -169,14 +173,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block postloadjs %}
-<script>
-  window.onpopstate = function(event) {
-    event.preventDefault();
-    history.pushState(null, null, 'home'); // replace '/' with your home page URL
-    location.reload(); // reload the page to go to the home page
-  }
-</script>
 {% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
@@ -142,7 +142,8 @@ def checkout_view(request):
         if request.user.is_authenticated:
             try:
                 profile = UserProfile.objects.get(user=request.user)
-                last_order = Order.objects.filter(user=request.user).order_by('-created_at').first()
+                last_order = Order.objects.filter(
+                    user=request.user).order_by('-created_at').first()
 
                 if last_order:
                     initial_data = {
