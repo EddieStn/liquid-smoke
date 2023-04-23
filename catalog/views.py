@@ -43,8 +43,16 @@ def product(request):
     essential_oils = EssentialOil.objects.all()
     categories = None
     query = None
-    sortkey = None
-    direction = None
+    sort = request.GET.get('sort')
+
+    if sort == 'name_asc':
+        products = products.order_by('name')
+    elif sort == 'name_desc':
+        products = products.order_by('-name')
+    elif sort == 'price_asc':
+        products = products.order_by('price')
+    elif sort == 'price_desc':
+        products = products.order_by('-price')
 
     if request.GET:
         if 'category' in request.GET:
@@ -70,8 +78,6 @@ def product(request):
         'essential_oils': essential_oils,
         'current_categories': categories,
         'search_term': query,
-        'sortkey': sortkey,
-        'direction': direction,
     }
     return render(request, 'home/products.html', context)
 

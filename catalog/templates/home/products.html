@@ -7,16 +7,19 @@
   <div class="container mt-3">
     <div class="row mt-1 mb-2">
       <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-        <div class="sort-select-wrapper w-50">
-            <select id="sort-selector" class="form-select">
-              <option value="reset" {% if not request.GET.q and not request.GET.sort %} selected {% endif %}>Sort by</option>
-              <option value="name_asc" {% if request.GET.sort == 'name' and request.GET.direction == 'asc' %} selected {% endif %}>Name (A-Z)</option>
-              <option value="name_desc" {% if request.GET.sort == 'name' and request.GET.direction == 'desc' %} selected {% endif %}>Name (Z-A)</option>
-              <option value="price_asc" {% if request.GET.sort == 'price' and request.GET.direction == 'asc' %} selected {% endif %}>Price (Low to High)</option>
-              <option value="price_desc" {% if request.GET.sort == 'price' and request.GET.direction == 'desc' %} selected {% endif %}>Price (High to Low)</option>
-              <option value="rating_desc" {% if request.GET.sort == 'avg_rating' and request.GET.direction == 'desc' %} selected {% endif %}>Rating (High to Low)</option>
-          </select>
-        </div>
+        <div class="col-md-3">
+          <form id="sort-form" action="{% url 'products' %}" method="GET">
+              <div class="form-group">
+                  <label for="sort-by">Sort by:</label>
+                  <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
+                      <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+                      <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
+                      <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to High)</option>
+                      <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to Low)</option>
+                  </select>
+              </div>
+          </form>
+      </div>
       </div>
       <div class="col-12 col-md-6 order-md-first">
         <p class="text-muted mt-3 text-center text-md-left">
@@ -106,27 +109,4 @@
 			window.scrollTo(0,0)
 		})
 	  </script>
-    
-    <script type="text/javascript">
-        $('#sort-selector').change(function() {
-            var selector = $(this);
-            var currentUrl = new URL(window.location);
-
-            var selectedVal = selector.val();
-            if(selectedVal != "reset"){
-                var sort = selectedVal.split("_")[0];
-                var direction = selectedVal.split("_")[1];
-
-                currentUrl.searchParams.set("sort", sort);
-                currentUrl.searchParams.set("direction", direction);
-
-                window.location.replace(currentUrl);
-            } else {
-                currentUrl.searchParams.delete("sort");
-                currentUrl.searchParams.delete("direction");
-
-                window.location.replace(currentUrl);
-            }
-        })
-    </script>
 {% endblock %}
