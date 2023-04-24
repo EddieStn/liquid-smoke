@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://liquid-smoke.herokuapp.com/sitemap.xml

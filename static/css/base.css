@@ -13,8 +13,8 @@ body {
 /* ********** HOME PAGE *********** */
 
 .hero {
-    /* background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-6954560.jpeg'); */
-    background-image: url('/media/product_images/pexels-photo-6954560.jpeg');
+    background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-6954560.jpeg');
+    /* background-image: url('/media/product_images/pexels-photo-6954560.jpeg'); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

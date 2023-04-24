@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/login/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/signup/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/login/?next=/basket/basket/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/candles/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/essential_oils/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/specials/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/products/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/catalog/faq/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/password/reset/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/signup/?next=%2Fbasket%2Fbasket%2F</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/4/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/5/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/6/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/7/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/8/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/10/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/11/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/12/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/9/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/3/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/13/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/15/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/16/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/17/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/18/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/20/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/21/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/22/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/19/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/product/14/</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://liquid-smoke.herokuapp.com/accounts/login/?next=%2Fbasket%2Fbasket%2F</loc>
+  <lastmod>2023-04-24T18:16:48+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
