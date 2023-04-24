@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <h1 class="hero-text text-uppercase">The page you are looking for isn't available</h1>
+        <div class="my-5">
+            <h4>
+                <a href="{% url 'home' %}" 
+                    class="btn btn-checkout text-uppercase">
+                        Return to shop
+                </a>
+            </h4>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
