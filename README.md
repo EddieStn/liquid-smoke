@@ -1,4 +1,116 @@
-## Epics Breakdown
+# [Liquid Smoke](https://liquid-smoke.herokuapp.com/)
+## Shop for high-quality candles and essential oils at our online store. We offer a wide selection of scents to suit any taste.
+
+<img src="static/images/amiresponsive"> 
+
+# Table of contents
+* [Design and Build](#design-and-build)
+    * [Planning](#the-planning-for-this-project-was-based-on-this-idea)
+    * [Model diagrams](#model-diagrams)
+    * [Marketing](#marketing-has-been-made-by-a-facebook-page)
+    * [Agile methodology](#agile-methodology)
+* [Features](#features-ux-design)
+    * [Navbar](#navbar)
+    * [Footer](#footer)
+    * [Products](#products)
+    * [Candles](#candles)
+    * [Essential oils](#essential-oils)
+    * [Specials](#specials)
+    * [Basket](#basket)
+    * [Checkout](#checkout)
+    * [Order detail](#order-detail)
+    * [Profile](#profile)
+    * [Sign in/ Register](#sign-inregister)
+    * [Product management](#product-management)
+    * [FAQ](#faq)
+    * [404](#404-page)
+* [Future Features](#features-to-be-implemented)
+* [Technology used](#technology-used)
+* [Framerowks and libraries](#frameworks-and-libraries-used)
+* [User stories](#user-stories)
+* [Epics breakdown](#epics-breakdown)
+* [Testing](#testing)
+    * [Lighthouse](#lighthouse)
+    * [Validation](#validation)
+    * [Unit testing](#automated-testing-tdd)
+    * [Manual testing](#manual-testing)
+    * [Responsive](#responsive)
+* [Bugs](#bugs)
+    * [Django notes](#django-notes)
+* [Development and deployment](#development-and-deployment)
+    * [Local development](#local-development)
+    * [Heroku deployment](#heroku-deployment)
+    * [Deployment checklist](#deployment-checklist)
+    * [Forking and cloning](#forking-a-repository)
+* [Credits](#credits)
+* [Acknowledgements](#acknowledgements)
+* [Other sources](#other-sources)
+
+
+
+
+# Design and build
+### This is a Business to Customer( B2C ) focused application. The intent of this website is to sell candles and essential oils to customers for a single payment at checkout.
+
+## The planning for this project was based on this idea: 
+
+* As a customer: 
+    * Open the app to see the products,
+    * Add items to the basket,
+    * Checkout,
+    * Pay and provide delivery details,
+    * Get a confirmation email with my order.
+    * See past orders
+    * Repeat
+
+## Wireframes
+
+## Model diagrams
+
+## Marketing has been made via a [Facebook page](https://www.facebook.com/profile.php?id=100092371081770)
+
+<img src="static/images/fb-page.png"> 
+
+## Agile Methodology 
+### This Project was built following agile methodology and practices
+
+
+# Features UX design
+## Navbar
+## Footer
+## Products
+## Candles
+## Essential Oils
+## Specials
+## Basket
+## Checkout
+## Order detail
+## Profile
+## Sign in/Register
+## Product management
+## FAQ
+## 404 Page
+
+## Features to be implemented
+
+# Technology used
+* HTML
+* CSS
+* Javascript
+* Python
+
+# Frameworks and libraries used
+* Django
+* Jquery
+* Bootstrap 4
+* ElephantSQL
+* Amazon web services
+
+## User Stories
+
+## Could have User Stories
+
+# Epics Breakdown
 ### EPIC 1 Product Catalog and Search
 
 As a customer, I want to be able to easily find the candles and essential oils that I'm interested in, so that I can quickly make a purchase without any issues.
@@ -77,8 +189,35 @@ As a website administrator, I want to ensure that the website is always function
 
 # Testing
 
+## Lighthouse
+* Desktop before and after
+
+* Mobile before and after
+
+## Validation
+* HTML
+* CSS
+* JShint
+* pep8online
+
+## Automated testing TDD
 - To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, for testing
+
+## Manual testing
 - Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
+
+## Responsive
+
+### No problems found when building the app and manually checking for responsiveness with chrome dev tools
+
+To generate a multi device mockup I used [Techsini](https://techsini.com/multi-mockup/index.php)
+To ensure my website is fully responsive I used [responsivedesignchecker](https://responsivedesignchecker.com/)
+
+* Mobile
+* Tablet
+* Laptop
+* Desktop
+
 # Bugs
 
 ### Checkout
@@ -131,3 +270,41 @@ try:
     * If you don't have any data stored
         * Simply comment out your models or delete your migrations files (except __init__.py) and migrate again
         * rm db.sqlite3 > python manage.py makemigrations > python manage.py migrate
+
+# Development and Deployment
+## Local development
+
+## Heroku deployment
+### The site was deployed via Heroku. The live link can be found here - [Liquid Smoke](https://liquid-smoke.herokuapp.com/)
+
+## Deployment checklist
+
+## Forking a repository
+### A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
+1. On GitHub.com, navigate to https://github.com/EddieStn/liquid-smoke.
+2. In the top-right corner of the page, click Fork.
+
+## Cloning your forked repository
+### Right now, you have a fork of the liquid-smoke repository, but you do not have the files in that repository locally on your computer.
+1. On GitHub.com, navigate to your fork of the liquid-smoke repository.
+2. Above the list of files, click Code.
+3. Copy the URL for the repository.
+4. Open Git Bash.
+5. Change the current working directory to the location where you want the cloned directory.
+6. Type git clone, and then paste the URL you copied earlier. It will look like this, with your GitHub username instead of YOUR-USERNAME:
+   - git clone https://github.com/YOUR-USERNAME/liquid-smoke
+7. Press Enter. Your local clone will be created.
+
+# Credits 
+
+* Search form is inspired from the Boutique-Ado project
+
+# Acknowledgements
+
+* Thanks to my mentor Chris Quinn for guidance and for providing me with the resources needed to expand my Django knowledge
+* Thanks to Code Institute tutors Jason and Sarah for helping me with bug fixes
+
+## Other sources
+
+* [Code with mosh - full Python and Django courses](https://codewithmosh.com/courses)
+* [Code institute](https://learn.codeinstitute.net/)
