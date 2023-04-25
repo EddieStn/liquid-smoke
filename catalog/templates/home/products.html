@@ -13,23 +13,17 @@
             <label for="sort-by">Sort by:</label>
             <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
               <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
-              <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
-              </option>
-              <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to
-                High)</option>
-              <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to
-                Low)</option>
-              <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to
-                High)</option>
-              <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High
-                to Low)</option>
+              <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
+              <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to High)</option>
+              <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to Low)</option>
+              <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to High)</option>
+              <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High to Low)</option>
             </select>
             <label for="filter-by">Filter by:</label>
             <select class="form-control" id="filter-by" name="type" onchange="this.form.submit()">
               <option value="">All</option>
               <option value="candles" {% if request.GET.type == 'candles' %} selected {% endif %}>Candles</option>
-              <option value="essential_oils" {% if request.GET.type == 'essential_oils' %} selected {% endif %}>
-                Essential Oils</option>
+              <option value="essential_oils" {% if request.GET.type == 'essential_oils' %} selected {% endif %}>Essential Oils</option>
             </select>
           </div>
         </form>
@@ -37,7 +31,7 @@
     </div>
     <div class="col-12 col-md-6 order-md-first">
       <p class="text-muted mt-3 text-center text-md-left">
-        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'products' %}">All products</a> |
         {{ products|length }} Products.
       </p>
     </div>

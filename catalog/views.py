@@ -72,8 +72,6 @@ def product(request):
     query = None
 
     if request.GET:
-        products = sort_products(request, products)
-        products = search_products(request, products)
 
         if 'category' in request.GET:
             category = request.GET['category']
@@ -87,6 +85,8 @@ def product(request):
             elif p_type == 'essential_oils':
                 products = products.filter(
                     categories__name='Essential Oils').order_by('name')
+        products = sort_products(request, products)
+        products = search_products(request, products)
 
     context = {
         'products': products,
@@ -132,12 +132,12 @@ def candles(request):
     candles = Candle.objects.all()
 
     if request.GET:
-        candles = sort_products(request, candles)
-        candles = search_products(request, candles)
 
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             candles = candles.filter(category__name__in=categories)
+        candles = sort_products(request, candles)
+        candles = search_products(request, candles)
 
     num_products = candles.count()
 
@@ -153,13 +153,13 @@ def essential_oils(request):
     essential_oils = EssentialOil.objects.all()
 
     if request.GET:
-        essential_oils = sort_products(request, essential_oils)
-        essential_oils = search_products(request, essential_oils)
 
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             essential_oils = essential_oils.filter(
                 category__name__in=categories)
+        essential_oils = sort_products(request, essential_oils)
+        essential_oils = search_products(request, essential_oils)
 
     num_products = essential_oils.count()
 
