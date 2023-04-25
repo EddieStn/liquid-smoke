@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.contrib import messages
 from django.utils import timezone
@@ -46,10 +46,14 @@ def apply_coupon(request):
 
 def send_confirmation_email(order):
     subject = f"Order Confirmation - {order.order_number}"
-    message = render_to_string('checkout/send_confirmation_email.html',
-                               {'order': order})
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [order.email],
-              fail_silently=False)
+    text_content = 'Thank you for your order.'
+    html_content = render_to_string('checkout/send_confirmation_email.html', {'order': order})
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [order.email]
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email, recipient_list)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
 
 @login_required
@@ -135,8 +139,8 @@ def checkout_view(request):
                 currency=settings.STRIPE_CURRENCY,
             )
         except stripe.error.InvalidRequestError as e:
-            messages.info(request, "You basket is empty")
-            return redirect(reverse('home'))
+            messages.info(request, "Your basket is empty")
+            return redirect(reverse('products'))
 
         if request.user.is_authenticated:
             try:

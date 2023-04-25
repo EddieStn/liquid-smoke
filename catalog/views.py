@@ -111,6 +111,8 @@ def product_details(request, product_id):
                     rating=form.cleaned_data['rating']
                 )
                 review.save()
+                messages.info(request, "Your review has been submitted.\
+                     It will be displayed once it's been approved.")
         else:
             form = ReviewForm()
 

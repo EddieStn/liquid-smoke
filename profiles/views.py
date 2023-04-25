@@ -25,6 +25,10 @@ def profile(request):
     context = {
         'form': form,
         'orders': orders,
+        'user_profile': user_profile,
+        'user_first_name': request.user.first_name,
+        'user_last_name': request.user.last_name,
+        'user_email': request.user.email,
     }
 
     return render(request, 'profiles/profiles.html', context)

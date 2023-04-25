@@ -13,7 +13,7 @@ body {
 /* ********** HOME PAGE *********** */
 
 .hero {
-    background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-6954560.jpeg');
+    background-image: url('https://eddiestn-liquid-smoke.s3.eu-west-2.amazonaws.com/media/product_images/pexels-photo-6954560.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -139,7 +139,7 @@ footer a {
 }
 
 .specials {
-    background-image: url('s3://eddiestn-liquid-smoke/media/product_images/pexels-photo-5650048.jpeg');
+    background-image: url('https://eddiestn-liquid-smoke.s3.eu-west-2.amazonaws.com/media/pexels-photo-5650048.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -159,6 +159,13 @@ table th {
 .btn-qty {
     font-size: .9rem;
     padding: 3px 8.5px;
+}
+
+@media (max-width: 367px) {
+    .navbar {
+        padding: 0 !important;
+        flex-wrap: nowrap !important;
+    }
 }
 
 @media (max-width: 530px) {
