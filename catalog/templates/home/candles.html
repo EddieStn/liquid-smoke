@@ -5,14 +5,36 @@
 {% block extra_title %} Candles {% endblock %}
 
 {% block content %}
-  <div class="container mt-5">
-    <div class="col-12 col-md-6 order-md-first">
-      <p class="text-muted mt-3 text-center text-md-left">
-          {% if search_term or current_categories or current_sorting != 'None_None' %}
-              <span class="small"><a href="{% url 'products' %}">All products</a> | </span>
-          {% endif %}
-          {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-      </p>
+  <div class="container mt-3">
+    <div class="row mt-1 mb-2">
+      <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+        <div class="w-30">
+          <form id="sort-form" action="{% url 'candles' %}" method="GET">
+            <div class="form-group">
+              <label for="sort-by">Sort by:</label>
+              <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
+                <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+                <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
+                </option>
+                <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to
+                  High)</option>
+                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to
+                  Low)</option>
+                <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to
+                  High)</option>
+                <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High
+                  to Low)</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 order-md-first">
+        <p class="text-muted mt-3 text-center text-md-left">
+            <a href="{% url 'products' %}">All products</a> |
+            {{ num_products }} Candles.
+        </p>
+      </div>
     </div>
     <h2 class="mb-4">Candles</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
@@ -47,4 +69,29 @@
       {% endfor %}
     </div>
   </div>
+{% endblock %}
+
+{% block postloadjs %}
+<script type="text/javascript">
+  $('#sort-selector').change(function() {
+      var selector = $(this);
+      var currentUrl = new URL(window.location);
+
+      var selectedVal = selector.val();
+      if(selectedVal != "reset"){
+          var sort = selectedVal.split("_")[0];
+          var direction = selectedVal.split("_")[1];
+
+          currentUrl.searchParams.set("sort", sort);
+          currentUrl.searchParams.set("direction", direction);
+
+          window.location.replace(currentUrl);
+      } else {
+          currentUrl.searchParams.delete("sort");
+          currentUrl.searchParams.delete("direction");
+
+          window.location.replace(currentUrl);
+      }
+  })
+</script>
 {% endblock %}

@@ -46,7 +46,8 @@
                 <button type="submit" class="btn btn-checkout">Add to Basket</button>
             </form>
             {% else %}
-            <h5>You need to be logged in to add products in your basket. Please <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Register</a> first.</h5>
+            <h2>Want to make a purchase?</h2>
+            <h5>Please <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Create an account.</a></h5>
             {% endif %}
             {% if request.user.is_authenticated and request.user.is_superuser %}
             <div class="mt-3">

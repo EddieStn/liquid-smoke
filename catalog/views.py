@@ -3,48 +3,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Avg, Count
 from django.db.models.functions import Lower
-from .models import Candle, EssentialOil, Review, Product
+from .models import Candle, EssentialOil, Review, Product, Category
 from .forms import ReviewForm, CandleForm, \
     EssentialOilForm, ProductForm
 
 
-def index(request):
-    """ A view to return the index page """
-    products = Product.objects.all()
-    candles = Candle.objects.all()
-    essential_oils = EssentialOil.objects.all()
-    query = None
-
-    if 'q' in request.GET:
-        query = request.GET['q']
-        if not query:
-            messages.error(request, "You didn't enter any search criteria")
-            return redirect(reverse('home'))
-
-        queries = Q(name__icontains=query) | Q(
-                    description__icontains=query)
-        products = products.filter(queries)
-        candles = candles.filter(queries)
-        essential_oils = essential_oils.filter(queries)
-
-    context = {
-        'products': products,
-        'search_term': query,
-        'candles': candles,
-        'essential_oils': essential_oils,
-    }
-    return render(request, 'home/index.html', context)
-
-
-def product(request):
-    """ A view to display the store products page """
-    products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
-    candles = Candle.objects.all()
-    essential_oils = EssentialOil.objects.all()
-    categories = None
-    query = None
-    sort = request.GET.get('sort')
-
+def sort_products(request, products):
+    """ A function to sort products based on user input """
+    sort = request.GET.get('sort', '')
     if sort == 'name_asc':
         products = products.order_by('name')
     elif sort == 'name_desc':
@@ -53,31 +19,78 @@ def product(request):
         products = products.order_by('price')
     elif sort == 'price_desc':
         products = products.order_by('-price')
+    elif sort == 'rating_asc':
+        products = products.annotate(
+            avg_rating=Avg('reviews__rating')).order_by('avg_rating')
+    elif sort == 'rating_desc':
+        products = products.annotate(
+            avg_rating=Avg('reviews__rating')).order_by('-avg_rating')
+
+    return products
+
+
+def search_products(request, products):
+    """
+    A function to search products based on user input.
+    It accepts a request and a queryset of products,
+    and returns a filtered queryset.
+    """
+    query = request.GET.get('q')
+
+    if query:
+        queries = Q(name__icontains=query) | Q(
+            description__icontains=query) | Q(
+            categories__name__icontains=query)
+        products = products.filter(queries)
+
+        if not products.exists():
+            messages.warning(request, f"No results found for '{query}'.")
+        else:
+            messages.success(request, f"Products found for '{query}'.")
+
+    return products
+
+
+def index(request):
+    """ A view to return the index page """
+    products = Product.objects.all()
+    query = None
 
     if request.GET:
-        if 'category' in request.GET:
-            categories = request.GET['category'].split(',')
-            products = products.filter(category__name__in=categories)
-            categories = Category.objects.filter(name__in=categories)
-
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria")
-                return redirect(reverse('products'))
-
-            queries = Q(name__icontains=query) | Q(
-                        description__icontains=query)
-            products = products.filter(queries)
-            candles = candles.filter(queries)
-            essential_oils = essential_oils.filter(queries)
+        products = search_products(request, products)
 
     context = {
         'products': products,
-        'candles': candles,
-        'essential_oils': essential_oils,
-        'current_categories': categories,
-        'search_term': query,
+    }
+    return render(request, 'home/index.html', context)
+
+
+def product(request):
+    """ A view to display the store products page """
+    products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
+    categories = Category.objects.all()
+    query = None
+
+    if request.GET:
+        products = sort_products(request, products)
+        products = search_products(request, products)
+
+        if 'category' in request.GET:
+            category = request.GET['category']
+            products = products.filter(categories__name=category)
+
+        if 'type' in request.GET:
+            p_type = request.GET['type']
+            if p_type == 'candles':
+                products = products.filter(
+                    categories__name='Candles').order_by('name')
+            elif p_type == 'essential_oils':
+                products = products.filter(
+                    categories__name='Essential Oils').order_by('name')
+
+    context = {
+        'products': products,
+        'categories': categories,
     }
     return render(request, 'home/products.html', context)
 
@@ -88,7 +101,6 @@ def product_details(request, product_id):
 
     if request.method == 'POST':
         if 'review_form' in request.POST:
-            # Handle ReviewForm submission
             form = ReviewForm(request.POST)
             if form.is_valid():
                 review = Review(
@@ -118,29 +130,20 @@ def product_details(request, product_id):
 def candles(request):
     """ A view to display only candles """
     candles = Candle.objects.all()
-    query = None
 
     if request.GET:
+        candles = sort_products(request, candles)
+        candles = search_products(request, candles)
+
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             candles = candles.filter(category__name__in=categories)
-
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria")
-                return redirect(reverse('candles'))
-
-            queries = Q(name__icontains=query) | Q(
-                        description__icontains=query)
-            candles = candles.filter(queries)
 
     num_products = candles.count()
 
     context = {
         'candles': candles,
-        'search_term': query,
-        'num_products': num_products
+        'num_products': num_products,
     }
     return render(request, 'home/candles.html', context)
 
@@ -148,29 +151,20 @@ def candles(request):
 def essential_oils(request):
     """ A view to display only essential_oils """
     essential_oils = EssentialOil.objects.all()
-    query = None
 
     if request.GET:
+        essential_oils = sort_products(request, essential_oils)
+        essential_oils = search_products(request, essential_oils)
+
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
             essential_oils = essential_oils.filter(
                 category__name__in=categories)
 
-        if 'q' in request.GET:
-            query = request.GET['q']
-            if not query:
-                messages.error(request, "You didn't enter any search criteria")
-                return redirect(reverse('essential_oils'))
-
-            queries = Q(name__icontains=query) | Q(
-                        description__icontains=query)
-            essential_oils = essential_oils.filter(queries)
-
     num_products = essential_oils.count()
 
     context = {
         'essential_oils': essential_oils,
-        'search_term': query,
         'num_products': num_products
     }
     return render(request, 'home/essential_oils.html', context)

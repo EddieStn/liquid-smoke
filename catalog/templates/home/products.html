@@ -4,109 +4,100 @@
 {% block extra_title %} All Products {% endblock %}
 
 {% block content %}
-  <div class="container mt-3">
-    <div class="row mt-1 mb-2">
-      <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-        <div class="col-md-3">
-          <form id="sort-form" action="{% url 'products' %}" method="GET">
-              <div class="form-group">
-                  <label for="sort-by">Sort by:</label>
-                  <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
-                      <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
-                      <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
-                      <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to High)</option>
-                      <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to Low)</option>
-                  </select>
-              </div>
-          </form>
+<div class="container mt-3">
+  <div class="row mt-1 mb-2">
+    <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+      <div class="w-30">
+        <form id="sort-form" action="{% url 'products' %}" method="GET">
+          <div class="form-group">
+            <label for="sort-by">Sort by:</label>
+            <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
+              <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+              <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
+              </option>
+              <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to
+                High)</option>
+              <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to
+                Low)</option>
+              <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to
+                High)</option>
+              <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High
+                to Low)</option>
+            </select>
+            <label for="filter-by">Filter by:</label>
+            <select class="form-control" id="filter-by" name="type" onchange="this.form.submit()">
+              <option value="">All</option>
+              <option value="candles" {% if request.GET.type == 'candles' %} selected {% endif %}>Candles</option>
+              <option value="essential_oils" {% if request.GET.type == 'essential_oils' %} selected {% endif %}>
+                Essential Oils</option>
+            </select>
+          </div>
+        </form>
       </div>
-      </div>
-      <div class="col-12 col-md-6 order-md-first">
-        <p class="text-muted mt-3 text-center text-md-left">
-            {% if search_term or current_categories or current_sorting != 'None_None' %}
-                <span class="small"><a href="{% url 'products' %}">All products</a> | </span>
+    </div>
+    <div class="col-12 col-md-6 order-md-first">
+      <p class="text-muted mt-3 text-center text-md-left">
+        <a href="{% url 'home' %}">Home</a> |
+        {{ products|length }} Products.
+      </p>
+    </div>
+  </div>
+  <h2 class="my-4">All Products</h2>
+  {% if products %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    {% for product in products %}
+    <div class="col mb-5">
+      <div class="card h-100">
+        <a href="{% url 'product_details' product.id %}">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
+        </a>
+        <div class="card-body">
+          {% if product.candle %}
+          <p class="card-text">Scent: {{ product.candle.scent }}</p>
+          <p class="card-text">Burn time: {{ product.candle.burn_time }}</p>
+          {% elif product.essentialoil %}
+          <p class="card-text">Scent: {{ product.essentialoil.scent }}</p>
+          <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
+          {% endif %}
+          {% if product.discounted_price %}
+          <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
+          {% else %}
+          ${{ product.price }}
+          {% endif %}
+          <p class="text-muted">
+            <i class="fas fa-star mr-1"></i>
+            {% if product.avg_rating %}
+            {{ product.avg_rating|floatformat:1 }} / 5
+            {% else %}
+            No rating
             {% endif %}
-            {{ products|length }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-        </p>
+          </p>
+        </div>
       </div>
     </div>
-    <h2 class="mb-4">Candles</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for candle in candles %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' candle.id %}">
-              <img src="{{ candle.image.url }}" class="card-img-top" alt="{{ candle.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ candle.name }}</h5>
-            </a>
-              <div class="card-body">
-                <p class="card-text">Scent: {{ candle.scent }}</p>
-                <p class="card-text">Burn time: {{ candle.burn_time }}</p>
-                {% if candle.discounted_price %}
-                <del>${{ candle.price }}</del> <span class="discount">${{ candle.discounted_price }}</span>
-                {% else %}
-                ${{ candle.price }}
-                {% endif %}
-                <p class="text-muted">
-                  <i class="fas fa-star mr-1"></i>
-                  {% if candle.avg_rating %}
-                    {{ candle.avg_rating|floatformat:1 }} / 5
-                  {% else %}
-                    No rating
-                  {% endif %}
-                </p>
-              </div>
-          </div>
-        </div>    
-      {% empty %}
-        <p>No candles found.</p>
-      {% endfor %}
-    </div>
-    <h2 class="my-4">Essential Oils</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for oil in essential_oils %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' oil.id %}">
-              <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ oil.name }}</h5>
-            </a>
-            <div class="card-body">
-              <p class="card-text">Scent: {{ oil.scent }}</p>
-              <p class="card-text">Volume: {{ oil.volume }}</p>
-              {% if oil.discounted_price %}
-              <del>${{ oil.price }}</del> <span class="discount">${{ oil.discounted_price }}</span>
-              {% else %}
-              ${{ oil.price }}
-              {% endif %}
-              <p class="text-muted">
-                <i class="fas fa-star mr-1"></i>
-                {% if oil.avg_rating %}
-                  {{ oil.avg_rating|floatformat:1 }} / 5
-                {% else %}
-                  No rating
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        </div>
-      {% empty %}
-        <p>No essential oils found.</p>
-      {% endfor %}
-    </div>
+    {% empty %}
+    <p>No products found.</p>
+    {% endfor %}
   </div>
-  <div class="btt-button shadow-sm rounded-0 border border-black">
-    <a class="btt-link d-flex h-100">
-        <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
-    </a>	
-  </div>
+  {% else %}
+  <p>No products found.</p>
+  {% endif %}
+</div>
+
+</div>
+<div class="btt-button shadow-sm rounded-0 border border-black">
+  <a class="btt-link d-flex h-100">
+    <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+  </a>
+</div>
 {% endblock %}
 
 {% block postloadjs %}
-    {{ block.super }}
-    <script type="text/javascript">
-		$('.btt-link').click(function(e) {
-			window.scrollTo(0,0)
-		})
-	  </script>
+{{ block.super }}
+<script type="text/javascript">
+  $('.btt-link').click(function (e) {
+    window.scrollTo(0, 0)
+  })
+</script>
 {% endblock %}
