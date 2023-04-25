@@ -47,11 +47,13 @@ def apply_coupon(request):
 def send_confirmation_email(order):
     subject = f"Order Confirmation - {order.order_number}"
     text_content = 'Thank you for your order.'
-    html_content = render_to_string('checkout/send_confirmation_email.html', {'order': order})
+    html_content = render_to_string('checkout/send_confirmation_email.html',
+                                    {'order': order})
     from_email = settings.DEFAULT_FROM_EMAIL
     recipient_list = [order.email]
 
-    msg = EmailMultiAlternatives(subject, text_content, from_email, recipient_list)
+    msg = EmailMultiAlternatives(subject, text_content, from_email,
+                                 recipient_list)
     msg.attach_alternative(html_content, "text/html")
     msg.send()
 
