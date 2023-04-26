@@ -96,30 +96,43 @@ def product(request):
 
 
 def product_details(request, product_id):
-    """A view to display an individual product details"""
+    """A view to display an individual product details
+    and to handle the review form
+    """
     product = get_object_or_404(Product, pk=product_id)
+    user_review = Review.objects.filter(
+        product=product, user=request.user).first()
+    form = ReviewForm()
 
     if request.method == 'POST':
         if 'review_form' in request.POST:
-            form = ReviewForm(request.POST)
-            if form.is_valid():
-                review = Review(
-                    product=product,
-                    user=request.user,
-                    title=form.cleaned_data['title'],
-                    body=form.cleaned_data['body'],
-                    rating=form.cleaned_data['rating']
-                )
-                review.save()
-                messages.info(request, "Your review has been submitted.\
-                     It will be displayed once it's been approved.")
-        else:
-            form = ReviewForm()
+            if user_review:
+                messages.error(
+                    request, "You have already submitted \
+                    a review for this product.")
+                return redirect('product_details', product_id=product_id)
+            else:
+                form = ReviewForm(request.POST)
+                if form.is_valid():
+                    review = Review(
+                        product=product,
+                        user=request.user,
+                        title=form.cleaned_data['title'],
+                        body=form.cleaned_data['body'],
+                        rating=form.cleaned_data['rating']
+                    )
+                    review.save()
+                    messages.success(request, "Your review has been submitted.\
+                        It will be displayed once it's been approved.")
+                    return redirect('product_details', product_id=product_id)
 
     else:
         form = ReviewForm()
 
-    reviews = Review.objects.filter(product=product, approved=True)
+    if request.user.is_superuser:
+        reviews = Review.objects.filter(product=product)
+    else:
+        reviews = Review.objects.filter(product=product, approved=True)
 
     context = {
         'product': product,
