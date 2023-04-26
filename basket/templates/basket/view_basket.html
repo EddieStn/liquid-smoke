@@ -88,7 +88,9 @@
   <div class="row">
     <div class="m-3 text-left">
       <p><strong>Total: </strong>${{ basket_total }}</p>
+      {% if basket_items %}
       <a href="{% url 'checkout' %}" class="btn btn-checkout my-2">Secure Checkout <span class="icon"><i class="fas fa-lock"></i></span></a>
+      {% endif %}
       <a href="{% url 'products' %}" class="btn btn-checkout my-2">Continue Shopping <span><i class="fa-solid fa-angles-right"></i></span></a>
     </div>
   </div>

@@ -13,7 +13,7 @@ body {
 /* ********** HOME PAGE *********** */
 
 .hero {
-    background-image: url('/media/pexels-photo-6954560.jpeg');
+    background-image: url('/media/hero.jpeg');
     background-size: cover;
     -o-background-size:cover; 
     -moz-background-size:cover; 
@@ -142,7 +142,7 @@ footer a {
 }
 
 .specials {
-    background-image: url('/media/pexels-photo-5650048.jpeg');
+    background-image: url('/media/specials.jpeg');
     background-size: cover;
     -o-background-size:cover; 
     -moz-background-size:cover; 

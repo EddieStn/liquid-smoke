@@ -37,25 +37,25 @@
   </div>
   <h2 class="my-4">Essential Oils</h2>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-    {% for oil in essential_oils %}
+    {% for product in products %}
     <div class="col mb-5">
       <div class="card h-100">
-        <a href="{% url 'product_details' oil.id %}">
-          <img src="{{ oil.image.url }}" class="card-img-top" alt="{{ oil.name }}">
-          <h5 class="card-title py-3 text-dark text-center">{{ oil.name }}</h5>
+        <a href="{% url 'product_details' product.id %}">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
         </a>
         <div class="card-body">
-          <p class="card-text">Scent: {{ oil.scent }}</p>
-          <p class="card-text">Volume: {{ oil.volume }}</p>
-          {% if oil.discounted_price %}
-          <del>${{ oil.price }}</del> <span class="discount">${{ oil.discounted_price }}</span>
+          <p class="card-text">Scent: {{ product.scent }}</p>
+          <p class="card-text">Volume: {{ product.volume }}</p>
+          {% if product.discounted_price %}
+          <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
           {% else %}
-          ${{ oil.price }}
+          ${{ product.price }}
           {% endif %}
           <p class="text-muted">
             <i class="fas fa-star mr-1"></i>
-            {% if oil.avg_rating %}
-            {{ oil.avg_rating|floatformat:1 }} / 5
+            {% if product.avg_rating %}
+            {{ product.avg_rating|floatformat:1 }} / 5
             {% else %}
             No rating
             {% endif %}

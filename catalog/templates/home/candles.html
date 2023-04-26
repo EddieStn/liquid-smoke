@@ -14,16 +14,11 @@
               <label for="sort-by">Sort by:</label>
               <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
                 <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
-                <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
-                </option>
-                <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to
-                  High)</option>
-                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to
-                  Low)</option>
-                <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to
-                  High)</option>
-                <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High
-                  to Low)</option>
+                <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
+                <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to High)</option>
+                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to Low)</option>
+                <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to High)</option>
+                <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High to Low)</option>
               </select>
             </div>
           </form>
@@ -38,25 +33,25 @@
     </div>
     <h2 class="mb-4">Candles</h2>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for candle in candles %}
+      {% for product in products %}
         <div class="col mb-5">
           <div class="card h-100">
-            <a href="{% url 'product_details' candle.id %}">
-              <img src="{{ candle.image.url }}" class="card-img-top" alt="{{ candle.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ candle.name }}</h5>
+            <a href="{% url 'product_details' product.id %}">
+              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+              <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>
               <div class="card-body">
-                <p class="card-text">Scent: {{ candle.scent }}</p>
-                <p class="card-text">Burn time: {{ candle.burn_time }}</p>
-                {% if candle.discounted_price %}
-                <del>${{ candle.price }}</del> <span class="discount">${{ candle.discounted_price }}</span>
+                <p class="card-text">Scent: {{ product.scent }}</p>
+                <p class="card-text">Burn time: {{ product.burn_time }}</p>
+                {% if product.discounted_price %}
+                <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
                 {% else %}
-                ${{ candle.price }}
+                ${{ product.price }}
                 {% endif %}
                 <p class="text-muted">
                   <i class="fas fa-star mr-1"></i>
-                  {% if candle.avg_rating %}
-                    {{ candle.avg_rating|floatformat:1 }} / 5
+                  {% if product.avg_rating %}
+                    {{ product.avg_rating|floatformat:1 }} / 5
                   {% else %}
                     No rating
                   {% endif %}
@@ -72,26 +67,4 @@
 {% endblock %}
 
 {% block postloadjs %}
-<script type="text/javascript">
-  $('#sort-selector').change(function() {
-      var selector = $(this);
-      var currentUrl = new URL(window.location);
-
-      var selectedVal = selector.val();
-      if(selectedVal != "reset"){
-          var sort = selectedVal.split("_")[0];
-          var direction = selectedVal.split("_")[1];
-
-          currentUrl.searchParams.set("sort", sort);
-          currentUrl.searchParams.set("direction", direction);
-
-          window.location.replace(currentUrl);
-      } else {
-          currentUrl.searchParams.delete("sort");
-          currentUrl.searchParams.delete("direction");
-
-          window.location.replace(currentUrl);
-      }
-  })
-</script>
 {% endblock %}

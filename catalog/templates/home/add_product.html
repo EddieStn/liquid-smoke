@@ -1,116 +1,45 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block extra_title %}Add product{% endblock %}
 
 {% block content %}
-<div class="container col my-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6 justify-content-center">
-      <h1 class="mb-4">Add a Candle</h1>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="mb-4 d-flex justify-content-center">Add a Candle</h1>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-          {{ candle_form.name.label_tag }}
-          {{ candle_form.name }}
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-12">
-              {{ candle_form.description.label_tag }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              {{ candle_form.description }}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          {{ candle_form.price.label_tag }}
-          {{ candle_form.price }}
-        </div>
-        <div>
-          {{ candle_form.discounted_price.label_tag }}
-          {{ candle_form.discounted_price }}
-        </div>
-
-        <div>
-          {{ candle_form.image.label_tag }}
-          {{ candle_form.image }}
-        </div>
-
-
-        <div>
-          {{ candle_form.scent.label_tag }}
-          {{ candle_form.scent }}
-        </div>
-
-
-        <div>
-          {{ candle_form.burn_time.label_tag }}
-          {{ candle_form.burn_time }}
-        </div>
-        <div>
-          {{ candle_form.is_available.label_tag }}
-          {{ candle_form.is_available }}
-        </div>
+        <fieldset class="rounded px-3 mb-5">
+          <legend class="fieldset-label small text-black px-2 w-auto"></legend>
+          {{ candle_form.name | as_crispy_field }}
+          {{ candle_form.description | as_crispy_field }}
+          {{ candle_form.price | as_crispy_field }}
+          {{ candle_form.discounted_price | as_crispy_field }}
+          {{ candle_form.image | as_crispy_field }}
+          {{ candle_form.scent | as_crispy_field }}
+          {{ candle_form.burn_time | as_crispy_field }}
+          {{ candle_form.is_available | as_crispy_field }}
+        </fieldset>
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
       </form>
     </div>
-
-    <div class="col-md-6 justify-content-center">
-      <h1 class="mb-4">Add an Essential Oil</h1>
+    <div class="col-md-6">
+      <h1 class="mb-4 d-flex justify-content-center">Add an Oil</h1>
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-          {{ oil_form.name.label_tag }}
-          {{ oil_form.name }}
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-12">
-              {{ oil_form.description.label_tag }}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              {{ oil_form.description }}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          {{ oil_form.price.label_tag }}
-          {{ oil_form.price }}
-        </div>
-        <div>
-          {{ oil_form.discounted_price.label_tag }}
-          {{ oil_form.discounted_price }}
-        </div>
-
-        <div>
-          {{ oil_form.image.label_tag }}
-          {{ oil_form.image }}
-        </div>
-
-
-        <div>
-          {{ oil_form.scent.label_tag }}
-          {{ oil_form.scent }}
-        </div>
-
-
-        <div>
-          {{ oil_form.volume.label_tag }}
-          {{ oil_form.volume }}
-        </div>
-        <div>
-          {{ oil_form.is_available.label_tag }}
-          {{ oil_form.is_available }}
-        </div>
-
+        <fieldset class="rounded px-3 mb-5">
+          <legend class="fieldset-label small text-black px-2 w-auto"></legend>
+          {{ oil_form.name | as_crispy_field }}
+          {{ oil_form.description | as_crispy_field }}
+          {{ oil_form.price | as_crispy_field }}
+          {{ oil_form.discounted_price | as_crispy_field }}
+          {{ oil_form.image | as_crispy_field }}
+          {{ oil_form.scent | as_crispy_field }}
+          {{ oil_form.volume | as_crispy_field }}
+          {{ oil_form.is_available | as_crispy_field }}
+        </fieldset>
         <button type="submit" class="btn btn-primary mt-3">Submit</button>
       </form>
     </div>

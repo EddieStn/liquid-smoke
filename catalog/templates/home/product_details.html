@@ -67,12 +67,12 @@
             <ul class="list-unstyled">
                 {% for review in reviews %}
                 <li class="mb-4">
-                    <div class="">
+                    <div>
                         <p><i class="fas fa-star mr-1"></i>{{ review.rating }} / 5</p>
                         <h4 class="my-3">Title: {{ review.title }}</h4>
-                        <p>Body: {{ review.body }}</p>
+                        <p>{{ review.body }}</p>
                         <small>Posted by {{ review.user.username }} on {{ review.created_at }}</small>
-                        {% if request.user.is_authenticated and request.user.is_staff %}
+                        {% if request.user.is_authenticated and request.user.is_superuser %}
                         {% if review.approved %}
                         <p class="text-success my-2">Approved</p>
                         {% else %}

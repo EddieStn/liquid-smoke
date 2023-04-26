@@ -67,7 +67,8 @@ def index(request):
 
 def product(request):
     """ A view to display the store products page """
-    products = Product.objects.annotate(avg_rating=Avg('reviews__rating'))
+    products = Product.objects.annotate(
+        avg_rating=Avg('reviews__rating', filter=Q(reviews__approved=True)))
     categories = Category.objects.all()
     query = None
 
@@ -100,8 +101,10 @@ def product_details(request, product_id):
     and to handle the review form
     """
     product = get_object_or_404(Product, pk=product_id)
-    user_review = Review.objects.filter(
-        product=product, user=request.user).first()
+    user_review = None
+    if request.user.is_authenticated:
+        user_review = Review.objects.filter(
+            product=product, user=request.user).first()
     form = ReviewForm()
 
     if request.method == 'POST':
@@ -129,7 +132,7 @@ def product_details(request, product_id):
     else:
         form = ReviewForm()
 
-    if request.user.is_superuser:
+    if request.user.is_staff:
         reviews = Review.objects.filter(product=product)
     else:
         reviews = Review.objects.filter(product=product, approved=True)
@@ -144,20 +147,20 @@ def product_details(request, product_id):
 
 def candles(request):
     """ A view to display only candles """
-    candles = Candle.objects.all()
+    products = Product.objects.filter(categories__name='Candles')
 
     if request.GET:
 
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
-            candles = candles.filter(category__name__in=categories)
-        candles = sort_products(request, candles)
-        candles = search_products(request, candles)
+            products = products.filter(category__name__in=categories)
+        products = sort_products(request, products)
+        products = search_products(request, products)
 
-    num_products = candles.count()
+    num_products = products.count()
 
     context = {
-        'candles': candles,
+        'products': products,
         'num_products': num_products,
     }
     return render(request, 'home/candles.html', context)
@@ -165,21 +168,21 @@ def candles(request):
 
 def essential_oils(request):
     """ A view to display only essential_oils """
-    essential_oils = EssentialOil.objects.all()
+    products = Product.objects.filter(categories__name='Essential Oils')
 
     if request.GET:
 
         if 'category' in request.GET:
             categories = request.GET.getlist('category')
-            essential_oils = essential_oils.filter(
+            products = products.filter(
                 category__name__in=categories)
-        essential_oils = sort_products(request, essential_oils)
-        essential_oils = search_products(request, essential_oils)
+        products = sort_products(request, products)
+        products = search_products(request, products)
 
-    num_products = essential_oils.count()
+    num_products = products.count()
 
     context = {
-        'essential_oils': essential_oils,
+        'products': products,
         'num_products': num_products
     }
     return render(request, 'home/essential_oils.html', context)
@@ -245,12 +248,17 @@ def edit_product(request, product_id):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES, instance=product)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Successfully updated product!')
-            return redirect(reverse('product_details', args=[product.id]))
+            product = form.save()
+            categories = product.categories.all()
+            if any(category.name == 'Candles' for category in categories):
+                return redirect(reverse('candles'))
+            elif any(category.name == 'Essential Oils' for category in categories):
+                return redirect(reverse('essential_oils'))
+            else:
+                return redirect(reverse('home'))
         else:
-            messages.error(request, 'Failed to update product. \
-                Please ensure the form is valid.')
+            messages.error(request, 'Failed to update product.\
+            Please ensure the form is valid.')
     else:
         form = ProductForm(instance=product)
         messages.info(request, f'You are editing {product.name}')

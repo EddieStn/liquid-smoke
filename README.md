@@ -92,6 +92,7 @@
 ## 404 Page
 
 ## Features to be implemented
+* If a user is admin, Approve reviews from front-end
 
 # Technology used
 * HTML
@@ -220,23 +221,62 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
 
 # Bugs
 
+### CSS
+* The header is covering the body of the website
+    * having `html {height: 100%}` and `body {height: calc(100vh - any size)}` doesn't fix it.
+    * Fixed by addig `padding-top: 145px;` to the body element
+* Clicking an `<a>` tag (eg. "All products") wouldn`t open the link, but right click > "open in a new tab" works
+    * Fixed by removing `data-toggle="dropdown"` that was needed for the account dropdown menu
+
+### Products
+* During final testing, I noticed that editing a product's category doesn't update it in the individual template. Looking back now I realize I shouldn't have created separate views for candles and oils, but instead make better use of filtering and provide my pages this way. However, being short of time I updated the current views.
+    * Fixed by rebuilding my views to get the filtered products instead of candles/oils from Candle/EssentialOil models
+    ```
+    Before: candles = Candle.objects.all()
+    After: products = Product.objects.filter(categories__name='Candles')
+    // same for oils
+    ```
+
+### Product detail page
+* A user resubmitting the review form a second time will throw a Server error(500)
+    * To prevent this, I added a check in the view, this also allows users that are not logged in to view the reviews
+    ```
+    user_review = None
+    if request.user.is_authenticated:
+        user_review = Review.objects.filter(
+            product=product, user=request.user).first()  // to prevent asking for "Confirm form submission" when reloading the page
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        if 'review_form' in request.POST:
+            if user_review:
+                messages.error(
+                    request, "You have already submitted \
+                    a review for this product.")
+                return redirect('product_details', product_id=product_id)  // to prevent asking for "Confirm form submission" when reloading the page
+    ```
+* Submitting a review form will trigger error from the basket form (quantity field required)
+    * Fixed by wrapping both form handlers in an if statement `if request.method == 'POST':`
+    * Added a hidden input field to both forms `if 'review_form' in request.POST:` & `if 'basket_form' in request.POST:`
+    * Added to each form button tag the name attribute to check for hidden input `<button type="submit" name="review_form ( / basket_form)">Submit</button>`
+
 ### Checkout
 * After a successful order, hitting the back button from the order_detail page leads to an error in the browser
     * Fixed by adding an exception to the stripe intent
-```
-InvalidRequestError at /checkout/
-stripe.error.InvalidRequestError: Request req_upHWpena88utjx: This value must be greater than or equal to 1.
+    ```
+    InvalidRequestError at /checkout/
+    stripe.error.InvalidRequestError: Request req_upHWpena88utjx: This value must be greater than or equal to 1.
 
 
-try:
-    intent = stripe.PaymentIntent.create(
-        amount=stripe_total,
-        currency=settings.STRIPE_CURRENCY,
-    )
-    except stripe.error.InvalidRequestError as e:
-    # Invalid parameters were supplied to Stripe's API
-    return redirect(reverse('home'))
-```
+    try:
+        intent = stripe.PaymentIntent.create(
+            amount=stripe_total,
+            currency=settings.STRIPE_CURRENCY,
+        )
+        except stripe.error.InvalidRequestError as e:
+        # Invalid parameters were supplied to Stripe's API
+        return redirect(reverse('home'))
+    ```
 
 
 ### Basket 
@@ -250,16 +290,6 @@ try:
 * First added item to the basket will always be 1 regardless of set quantity
     * Fixed by modifying the add_to_basket to check if the BasketItem object already exists, and update its quantity accordingly.
 
-
-* Submitting a review form will trigger error from the basket form (quantity field required)
-    * Fixed by wrapping both form handlers in an if statement `if request.method == 'POST':`
-    * Added a hidden input field to both forms `if 'review_form' in request.POST:` & `if 'basket_form' in request.POST:`
-    * Added to each form button tag the name attribute to check for hidden input `<button type="submit" name="review_form ( / basket_form)">Submit</button>`
-* Clicking an <a> tag (eg. "All products") wouldn`t open the link, but right click > "open in a new tab" works
-    * Fixed by removing `data-toggle="dropdown"` that was needed for the account dropdown menu
-* The header is covering the body of the website
-    * having `html {height: 100%}` and `body {height: calc(100vh - any size)}` doesn't fix it.
-    * Fixed by addig `padding-top: 145px;` to the body element
 
 
 ## Django notes
