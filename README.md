@@ -76,7 +76,18 @@
 
 
 # Features UX design
+
+## Landing page
+
+<img src="static/images/landing-page.png">
+
 ## Navbar
+<img src="static/images/desktop-nav.png">
+
+<img src="static/images/mobile-nav.png">
+
+<img src="static/images/dropdown-nav.png">
+
 ## Footer
 ## Products
 ## Candles
