@@ -89,18 +89,77 @@
 <img src="static/images/dropdown-nav.png">
 
 ## Footer
+
+<img src="static/images/footer.png">
+
 ## Products
+
+<img src="static/images/products-page.png">
+
+<img src="static/images/product-detail.png">
+
+<img src="static/images/product-edit.png">
+
+<img src="static/images/product-management.png">
+
 ## Candles
+
+<img src="static/images/candles-page.png">
+
 ## Essential Oils
+
+<img src="static/images/oils-page.png">
+
 ## Specials
+
+<img src="static/images/specials-page.png">
+
 ## Basket
+
+<img src="static/images/basket-empty.png">
+
+<img src="static/images/basket.png">
+
+<img src="static/images/remove-from-basket.png">
+
 ## Checkout
-## Order detail
+
+<img src="static/images/checkout-page.png">
+
+## Orders
+
+<img src="static/images/order.png">
+
+<img src="static/images/order-history.png">
+
 ## Profile
+
+<img src="static/images/profile-page.png">
+
 ## Sign in/Register
-## Product management
+
+<img src="static/images/sign-in.png">
+
+<img src="static/images/sign-up.png">
+
+<img src="static/images/log-out.png">
+
 ## FAQ
+
+<img src="static/images/faq-page.png">
+
 ## 404 Page
+
+<img src="static/images/404.png">
+
+## Messages / Toasts
+
+<img src="static/images/message-1.png">
+<img src="static/images/message-2.png">
+<img src="static/images/message-3.png">
+<img src="static/images/message-4.png">
+<img src="static/images/message-5.png">
+
 
 ## Features to be implemented
 * If a user is admin, Approve reviews from front-end
