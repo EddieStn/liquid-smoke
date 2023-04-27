@@ -8,7 +8,7 @@
     * [Planning](#the-planning-for-this-project-was-based-on-this-idea)
     * [Model diagrams](#model-diagrams)
     * [Marketing](#marketing-has-been-made-by-a-facebook-page)
-    * [Agile methodology](#agile-methodology)
+    * [Agile](#agile)
 * [Features](#features-ux-design)
     * [Navbar](#navbar)
     * [Footer](#footer)
@@ -27,8 +27,9 @@
 * [Future Features](#features-to-be-implemented)
 * [Technology used](#technology-used)
 * [Framerowks and libraries](#frameworks-and-libraries-used)
-* [User stories](#user-stories)
-* [Epics breakdown](#epics-breakdown)
+* [Agile methodoloy](#agile-methodology)
+    * [User stories](#agile-user-stories)
+    * [Tasks](#agile-tasks)
 * [Testing](#testing)
     * [Lighthouse](#lighthouse)
     * [Validation](#validation)
@@ -76,9 +77,9 @@
 
 <img src="static/images/fb-page.png"> 
 
-## Agile Methodology 
+## Agile
 ### This Project was built following agile methodology and practices
-[User stories](#user-stories) further down.
+[User stories](#agile-user-stories) further down.
 
 # Features UX design
 
@@ -225,14 +226,10 @@
 * ElephantSQL
 * Amazon web services
 
-## User Stories
+# Agile methodology
 
-
-
-## Could have User Stories
-
-# Epics Breakdown
-### EPIC 1 Product Catalog and Search
+## Epics Breakdown
+### [#1 EPIC 1 Product Catalog and Search](https://github.com/EddieStn/liquid-smoke/issues/1)
 
 As a customer, I want to be able to easily find the candles and essential oils that I'm interested in, so that I can quickly make a purchase without any issues.
 
@@ -247,7 +244,7 @@ A smooth and seamless user experience throughout the entire browsing and purchas
 As a user, I expect the product catalog and search functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
 
-### EPIC 2 Shopping Cart and Checkout
+### [#2 EPIC 2 Shopping Cart and Checkout](https://github.com/EddieStn/liquid-smoke/issues/2) 
 
 As a customer, I want to be able to easily add products to my shopping cart, check out, and complete my purchase, without encountering any issues or errors.
 
@@ -261,7 +258,7 @@ To achieve this goal, I expect the following functionality:
 
 As a user, I expect the shopping cart and checkout functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-### EPIC 3 Order Management and Shipping
+### [#3 EPIC 3 Order Management and Shipping](https://github.com/EddieStn/liquid-smoke/issues/3)
 
 As a customer, I want to be able to place an order, receive email notifications regarding my order status, and track my shipment, so that I can easily and efficiently receive the products I have purchased.
 
@@ -276,7 +273,7 @@ To achieve this goal, I expect the following functionality:
 
 As a user, I expect the order management and shipping functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
-### EPIC 4 Customer Accounts and Personalization
+### [#4 EPIC 4 Customer Accounts and Personalization](https://github.com/EddieStn/liquid-smoke/issues/4)
 
 As a customer, I want to be able to create an account, save my shipping and payment information, view my order history, and receive personalized product recommendations, so that I can easily manage my purchases and discover new products that I might like.
 
@@ -291,7 +288,7 @@ To achieve this goal, I expect the following functionality:
 As a user, I expect the account management and personalization functionality to meet all of these requirements, and to provide me with a positive and hassle-free shopping experience. During testing, I will be looking for any issues or errors that may prevent me from achieving these goals
 
 
-### EPIC 5 Customer Support and Feedback
+### [#5 EPIC 5 Customer Support and Feedback](https://github.com/EddieStn/liquid-smoke/issues/5)
 
 As a customer, I want to be able to contact customer support through various channels, leave reviews and ratings for products, and receive promotional offers and discounts, so that I can feel confident and supported during my shopping experience. During testing, I want to ensure that each of these features is easy to use and works as expected. Specifically, I want to be able to:
 
@@ -301,12 +298,108 @@ As a customer, I want to be able to contact customer support through various cha
 * Manage my communication preferences and opt-out of certain channels if desired, to ensure that I only receive relevant and useful information.
 * Overall, have a positive and streamlined shopping experience that makes it easy to find and purchase products, get help if needed, and receive personalized recommendations and offers.
 
-### EPIC 6 Website Administration and Maintenance
+###  [#23 EPIC 6 Website Administration and Maintenance](https://github.com/EddieStn/liquid-smoke/issues/23)
 
 As a website administrator, I want to ensure that the website is always functioning properly, so that customers have a seamless shopping experience. I want to be able to regularly test the website's features and functionalities, and quickly identify and resolve any issues that are found. This will ensure that customers can browse, search, and purchase products without any disruptions, and that the website remains a reliable and trusted source for candles and essential oils.
 
-* Navbar changes
-    * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado 
+
+## Agile User Stories
+
+## For [#1 Epic 1: Product Catalog and Search](https://github.com/EddieStn/liquid-smoke/issues/1)
+Epic for the user stories related to products management, browsing, filtering, and searching
+
+### [#39 USER STORY: Homepage structure](https://github.com/EddieStn/liquid-smoke/issues/39)
+As a customer, I want to be able to see a clear, concise, and user-friendly menu structure, so that I can navigate easily through different sections of the website.
+
+
+### [#6 USER STORY: Browsing](https://github.com/EddieStn/liquid-smoke/issues/6)
+As a customer, I want to be able to browse through different categories of candles and essential oils, so that I can easily find products that meet my needs.
+
+### [#7 USER STORY: Filtering by category](https://github.com/EddieStn/liquid-smoke/issues/7)
+As a customer, I want to be able to filter my search results by factors such as scent, price, and product type, so that I can quickly find the products that meet my specific preferences.
+
+### [#8 USER STORY: View Product Details](https://github.com/EddieStn/liquid-smoke/issues/8)
+As a customer, I want to be able to view product details and images, so that I can make informed purchasing decisions.
+
+### [#9 USER STORY: Manage Products](https://github.com/EddieStn/liquid-smoke/issues/9)
+As a website administrator, I want to be able to manage product descriptions and images, so that I can ensure that product information is accurate and appealing to customers.
+
+### [#37 USER STORY: Website feedback](https://github.com/EddieStn/liquid-smoke/issues/37)
+As a customer, I want to be able to receive automated feedback as I use the website, so that I won't worry if my actions have not been processed.
+
+## For [#2 Epic 2: Shopping Cart and Checkout](https://github.com/EddieStn/liquid-smoke/issues/2)
+This epic includes all the features related to the shopping cart and checkout process, such as allowing users to add items to their cart, adjust quantities, and remove items; displaying a summary of the cart with the total price and any applicable discounts or taxes; providing a form for users to enter their shipping and billing information; and processing payment securely.
+
+### [#10 USER STORY: Add products to cart](https://github.com/EddieStn/liquid-smoke/issues/10)
+As a customer, I want to be able to add products to my shopping cart, so that I can easily purchase multiple items at once.
+
+### [#11 USER STORY: Checkout and Payment](https://github.com/EddieStn/liquid-smoke/issues/11)
+As a customer, I want to be able to easily check out and pay for my purchases, using a variety of payment options.
+
+### [#12 USER STORY: Shipping and fees](https://github.com/EddieStn/liquid-smoke/issues/12)
+As a website administrator, I want to be able to manage shipping and handling fees, so that I can ensure that these costs are accurate and fair for customers.
+
+## For [#3 Epic 3: Order Management and Shipping](https://github.com/EddieStn/liquid-smoke/issues/3)
+This epic includes all the features related to order management, such as allowing admins to view and manage orders placed by customers; providing an interface for admins to change the order status (such as "processing," "shipped," or "delivered"); and sending email notifications to customers when their order status changes.
+
+### [#13 USER STORY: Order notifications](https://github.com/EddieStn/liquid-smoke/issues/13)
+As a customer, I want to receive email notifications when my order is processed and shipped, so that I can track my shipment and know when to expect it.
+
+### [#14 USER STORY: Manage inventory](https://github.com/EddieStn/liquid-smoke/issues/14)
+As a website administrator, I want to be able to manage inventory levels, so that I can ensure that products are available for customers to purchase.
+
+### [#15 USER STORY: Manage orders](https://github.com/EddieStn/liquid-smoke/issues/15)
+As a website administrator, I want to be able to manage customer orders and shipping information, so that I can ensure that orders are processed and shipped accurately and efficiently.
+
+## For [#4 Epic 4: User Accounts and Authentication](https://github.com/EddieStn/liquid-smoke/issues/4)
+This epic includes all the features related to user accounts and authentication, such as allowing users to register for an account with their email address and password, or sign in with an existing account; allowing users to view their order history and saved addresses; and providing options for users to reset their password or log out.
+
+### [#16 USER STORY: Create account](https://github.com/EddieStn/liquid-smoke/issues/16)
+As a customer, I want to be able to create an account and save my shipping and payment information, so that I can easily make future purchases without having to re-enter my information every time.
+
+### [#17 USER STORY: Order history](https://github.com/EddieStn/liquid-smoke/issues/17)
+As a customer, I want to be able to view my order history and track my past purchases, so that I can keep track of my spending and remember what products I've tried in the past.
+
+## For [#5 Epic 5: Customer Support, Subscription and Feedback](https://github.com/EddieStn/liquid-smoke/issues/5)
+This epic includes all the features related to customer support; subscriptions, such as allowing users to sign up for the newsletter to receive promotional offers; and customer reviews and feedback, such as allowing users to leave reviews and ratings for products they have purchased; displaying reviews on the product page; and allowing admins to moderate reviews (such as by approving or rejecting them, or flagging them for spam).
+
+### [#19 USER STORY: Customer support](https://github.com/EddieStn/liquid-smoke/issues/19)
+As a customer, I want to be able to contact customer support through various channels (such as email, phone, or chat), so that I can get help with any issues or questions that arise during my shopping experience.
+
+### [#20 USER STORY: Customer reviews](https://github.com/EddieStn/liquid-smoke/issues/20)
+As a customer, I want to be able to leave reviews and ratings for products I've purchased, so that I can share my feedback with other customers and help them make informed purchasing decisions.
+
+### [#22 USER STORY: Moderate reviews](https://github.com/EddieStn/liquid-smoke/issues/22)
+As a website administrator, I want to be able to approve or reject customer reviews, so that I can make sure every review is appropriate and not spam.
+
+## For [#23 Epic 6: Website Administration and Maintenance](https://github.com/EddieStn/liquid-smoke/issues/23)
+This epic focuses on the ongoing maintenance and upkeep of the website to ensure that it continues to function properly and remain relevant to customers. This includes tasks related to testing website functionality and performance, updating and maintaining website content, and managing customer data in compliance with data privacy regulations.
+
+Regular testing of the website's features and functionalities is necessary to identify and address any issues that may arise, such as broken links, slow loading times, or errors in the shopping cart and checkout process. Updating and maintaining website content is also important to keep the website engaging and informative for customers, and to ensure that product information and pricing is accurate and up-to-date.
+
+### [#24 USER STORY: Website testing](https://github.com/EddieStn/liquid-smoke/issues/24)
+As a website administrator, I want to be able to test website functionality and performance regularly, so that I can identify and address any issues that may arise.
+
+### [#25 USER STORY: Website and content update](https://github.com/EddieStn/liquid-smoke/issues/25)
+As a website administrator, I want to be able to regularly update and maintain website content, so that the website remains engaging and relevant to customers.
+
+### [#26 USER STORY: Customer privacy](https://github.com/EddieStn/liquid-smoke/issues/26)
+As a website administrator, I want to be able to manage customer data in compliance with data privacy regulations, so that I can protect customer privacy and avoid legal issues.
+
+* We don't use customer's data for anything else other than sending orders and email confirmations
+
+## Agile Tasks
+
+## Could have User Stories
+
+### [#18 USER STORY: Personalised reccomendations](https://github.com/EddieStn/liquid-smoke/issues/18)
+As a customer, I want to be able to receive personalized recommendations for products based on my past purchases and browsing history, so that I can discover new products that I might like.
+
+### [#21 USER STORY: Promotional offers](https://github.com/EddieStn/liquid-smoke/issues/21)
+As a customer, I want to be able to receive promotional offers and discounts through email and other channels, so that I can save money on products that I want to buy
+
+### [#40 USER STORY: Navigation path](https://github.com/EddieStn/liquid-smoke/issues/40)
+As a customer, I want to be able to see the path I have taken from the home page to the current page I am on, so that I can navigate back to previous pages or sections of the website easily.
 
 # Testing
 
@@ -447,7 +540,9 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
 
 # Credits 
 
-* Search form is inspired from the Boutique-Ado project
+* Search form/checkout design is inspired from Boutique-Ado ( Code institute walkthrough project )
+* Navbar changes
+    * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado, as it fit the purpose.
 
 # Acknowledgements
 
