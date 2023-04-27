@@ -19,6 +19,21 @@ import stripe
 import json
 
 
+def send_confirmation_email(order, coupon):
+    subject = f"Order Confirmation - {order.order_number}"
+    text_content = 'Thank you for your order.'
+    html_content = render_to_string('checkout/send_confirmation_email.html',
+                                    {'order': order,
+                                     'coupon': coupon})
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [order.email]
+
+    msg = EmailMultiAlternatives(subject, text_content, from_email,
+                                 recipient_list)
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+
+
 @login_required
 @require_POST
 def apply_coupon(request):
@@ -41,22 +56,20 @@ def apply_coupon(request):
             messages.error(request, 'Coupon is not active')
         except Coupon.ExpiredCoupon:
             messages.error(request, 'Coupon has expired')
+
+    coupon_id = request.session.get('coupon_id')
+    if coupon_id:
+        try:
+            coupon = Coupon.objects.get(id=coupon_id,
+                                        active=True,
+                                        valid_from__lte=now,
+                                        valid_to__gte=now)
+        except Coupon.DoesNotExist:
+            del request.session['coupon_id']
+            messages.error(request, 'The coupon used in checkout \
+                 has become inactive')
+
     return redirect('checkout')
-
-
-def send_confirmation_email(order, coupon):
-    subject = f"Order Confirmation - {order.order_number}"
-    text_content = 'Thank you for your order.'
-    html_content = render_to_string('checkout/send_confirmation_email.html',
-                                    {'order': order,
-                                     'coupon': coupon})
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = [order.email]
-
-    msg = EmailMultiAlternatives(subject, text_content, from_email,
-                                 recipient_list)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
 
 
 @login_required
@@ -70,6 +83,13 @@ def checkout_view(request):
         coupon = get_object_or_404(Coupon, id=coupon_id, active=True,
                                    valid_from__lte=timezone.now(),
                                    valid_to__gte=timezone.now())
+        if not coupon:
+            del request.session['coupon_id']
+            coupon_id = None
+            messages.warning(request, "The coupon you applied is no longer \
+                valid. Try logging out and back in")
+            return redirect('basket')
+
     if request.method == 'POST':
         basket = get_object_or_404(Basket, user=request.user)
 

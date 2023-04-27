@@ -1,7 +1,7 @@
 # [Liquid Smoke](https://liquid-smoke.herokuapp.com/)
 ## Shop for high-quality candles and essential oils at our online store. We offer a wide selection of scents to suit any taste.
 
-<img src="static/images/amiresponsive"> 
+<img src="static/images/multy-device.png"> 
 
 # Table of contents
 * [Design and Build](#design-and-build)
@@ -577,11 +577,14 @@ As a customer, I want to be able to see the path I have taken from the home page
 
         <img src="static/images/card-invalid.png">
     
-    * Tested checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
+    * Tested checkout functionality with coupons expired/invalid/active to be rendered in the order_details view
+        * Check with coupon "123123"
         * Applying an invalid coupon triggers alert Error!
         * Applying an active coupon triggers alert Success!
         * Applying an invalid coupon AFTER a valid coupon does not remove the active from the session
+        * Making a coupon inactive while I have it applied in my checkout, It redirects to 404.html after refreshing/completing the order or accessing the checkout again
             * A coupon is only removed form the session after a successful order or after logging out
+            * So after a coupon becomes inactive, logging out and back in removes the coupon from your order
         * The total basket price is correctly updated after taking into account the coupon and displays the amount saved and the coupon
 
         <img src="static/images/coupon-empty.png">
@@ -603,6 +606,9 @@ As a customer, I want to be able to see the path I have taken from the home page
 * Clicking the back button on the browser redirects to the products page and triggers alert "Your basket is empty"
 * When an order has been placed, we get a confirmation email
 
+<img src="static/images/order_success.png">
+
+
 ### My Profile
 
 * A basic page, where we can easily reset the password and see/update our delivery information
@@ -610,9 +616,7 @@ As a customer, I want to be able to see the path I have taken from the home page
     * Clicking the reset password link redirects to reset password page
     * Clicking Order history redirects to order history and triggers Info alert
         * Clicking each order brings up the order confirmation page
-
-
-- Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
+* The delivery fields are in sync with the checkout page, if the profile is updated, next time you checkout you will be the new details prefilled
 
 
 ## Responsive
@@ -622,10 +626,55 @@ As a customer, I want to be able to see the path I have taken from the home page
 To generate a multi device mockup I used [Techsini](https://techsini.com/multi-mockup/index.php)
 To ensure my website is fully responsive I used [responsivedesignchecker](https://responsivedesignchecker.com/)
 
-* Mobile
+* Mobile 
+    * Iphone 5
+
+    <img src="static/images/iphone-5.png">
+
+    <img src="static/images/iphone-5s.png">
+
+    * iphone 6
+
+    <img src="static/images/iphone-5.png">
+
+    * Google pixel
+
+    <img src="static/images/google-pixel.png">
+
+    * Nexus 5
+
+    <img src="static/images/nexus-5.png">
+    
 * Tablet
+    * fire-hd
+    
+    <img src="static/images/fire-hd.png">
+
+    * nexus
+
+    <img src="static/images/nexus.png">
+
+    * ipad
+
+    <img src="static/images/ipad.png">
+
 * Laptop
+    * notebook-10"
+    
+    <img src="static/images/notebook-10in.png">
+
+    * notebook 15"
+
+    <img src="static/images/notebook-15in.png">
+
 * Desktop
+    * Desktop 20"
+
+    <img src="static/images/desktop-20in.png">
+
+    * Desktop 24"
+
+    <img src="static/images/desktop-24in.png">
 
 # Bugs
 
@@ -684,7 +733,55 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
         # Invalid parameters were supplied to Stripe's API
         return redirect(reverse('home'))
     ```
+* If I make a coupon inactive while I have it applied in my checkout, It redirects me to 404.html
+    * Tried and failed 
+    * If I make a coupon inactive from the admin panel, triggers InactiveCoupon, so I deleted that
+    * Looking back now I see that I could've handle the coupon functionality better and maybe use is_valid better
+    * So this bug is left unfixed due to lack of time
+    ``` 
+    Coupon(models.Model)
+    ---
+    class InactiveCoupon(Exception):
+        pass
 
+    def clean(self):
+        if not self.active:
+            raise Coupon.InactiveCoupon('This coupon is inactive.')
+    ---
+
+    apply_coupon view
+    ---
+    coupon_id = request.session.get('coupon_id')
+    if coupon_id:
+        try:
+            coupon = Coupon.objects.get(id=coupon_id,
+                                        active=True,
+                                        valid_from__lte=now,
+                                        valid_to__gte=now)
+        except Coupon.DoesNotExist:
+            request.session['coupon_id'] = None
+            messages.error(request, 'The coupon used in checkout has become inactive')
+        except Coupon.InactiveCoupon:
+            request.session['coupon_id'] = None
+            messages.error(request, 'Coupon is not active')
+    ---
+
+    checkout view
+    ---
+    coupon_id = request.session.get('coupon_id')
+    coupon = None
+    if coupon_id:
+        coupon = get_object_or_404(Coupon, id=coupon_id, active=True,
+                                   valid_from__lte=timezone.now(),
+                                   valid_to__gte=timezone.now())
+        if not coupon:
+            del request.session['coupon_id']
+            coupon_id = None
+            messages.warning(request, "The coupon you applied is no longer \
+                valid. Try logging out and back in")
+            return redirect('basket')
+    ---
+    ```
 
 ### Basket 
 * Adding an offer item will not add it with the discounted price

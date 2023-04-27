@@ -14,13 +14,13 @@
             <h1>Thank you for your order!</h1>
             <hr>
             <p>Hi {{ order.first_name }},</p>
-            <p>We are pleased to confirm that your order has been received and is being processed.</p>
+            <p>We are pleased to confirm that your order has been received and it is being processed.</p>
             <p>Please allow 2-4 working days for your items to be delivered. You will receive a tracking number from the courier.</p>
             <hr>
             <div class="order-confirmation-wrapper p-2 border">
                 <div class="row">
                     <div class="col">
-                        <h5 class="text-muted">Order Info:</h5>
+                        <h2 class="text-muted">Order Info:</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <h6 class="text-muted">Order Details:</h6>
+                        <h2 class="text-muted">Order Details:</h2>
                     </div>
                 </div>
                 {% for item in order.items.all %}
@@ -55,7 +55,7 @@
                 {% endfor %}
                 <div class="row">
                     <div class="col">
-                        <small class="text-muted">Delivering To:</small>
+                        <h2 class="text-muted">Delivering To:</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -114,8 +114,8 @@
                 </div>
             </div>
         </div>
-        <h6>Thank you for shopping with us!</h6>
         <hr>
+        <h2>Thank you for shopping with us!</h2>
         <p>Liquid Smoke</p>
         <hr>
     </div>
