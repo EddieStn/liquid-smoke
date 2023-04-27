@@ -1,0 +1,276 @@
+forms.py
+
+class ProductForm(forms.ModelForm):
+    TYPES = [
+        ('candle', 'Candle'),
+        ('oil', 'Essential Oil'),
+    ]
+    type = forms.ChoiceField(choices=TYPES, widget=forms.RadioSelect)
+
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'price', 'discounted_price', 'image', 'is_available', 'categories', 'type')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'discounted_price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'is_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'categories': forms.CheckboxSelectMultiple(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['scent'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}))
+        self.fields['burn_time'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}))
+        self.fields['volume'] = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'display:none;'}))
+        self.fields['type'].required = True
+
+    def clean(self):
+        cleaned_data = super().clean()
+        type = cleaned_data.get('type')
+
+        if type == 'candle':
+            self.fields['scent'].widget.attrs['style'] = 'display:block;'
+            self.fields['burn_time'].widget.attrs['style'] = 'display:block;'
+            self.fields['volume'].widget.attrs['style'] = 'display:none;'
+            self.fields['scent'].required = True
+            self.fields['burn_time'].required = True
+            self.fields['volume'].required = False
+        elif type == 'oil':
+            self.fields['scent'].widget.attrs['style'] = 'display:block;'
+            self.fields['burn_time'].widget.attrs['style'] = 'display:none;'
+            self.fields['volume'].widget.attrs['style'] = 'display:block;'
+            self.fields['scent'].required = True
+            self.fields['burn_time'].required = False
+            self.fields['volume'].required = True
+
+        return cleaned_data
+
+
+class CandleForm(ProductForm):
+    class Meta(ProductForm.Meta):
+        model = Candle
+        fields = ProductForm.Meta.fields + ('scent', 'burn_time',)
+        widgets = {
+            **ProductForm.Meta.widgets,
+            'scent': forms.TextInput(attrs={'class': 'form-control'}),
+            'burn_time': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class EssentialOilForm(ProductForm):
+    class Meta(ProductForm.Meta):
+        model = EssentialOil
+        fields = ProductForm.Meta.fields + ('scent', 'volume',)
+        widgets = {
+            **ProductForm.Meta.widgets,
+            'scent': forms.TextInput(attrs={'class': 'form-control'}),
+            'volume': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+
+class ProductForm(forms.ModelForm):
+    PRODUCT_TYPES = (
+        ('candle', 'Candle'),
+        ('oil', 'Essential Oil'),
+    )
+
+    product_type = forms.ChoiceField(choices=PRODUCT_TYPES)
+    
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'price', 'discounted_price', 'image',
+                  'is_available', 'categories', 'scent', 'burn_time', 'volume')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['scent'].required = False
+        self.fields['burn_time'].required = False
+        self.fields['volume'].required = False
+        self.fields['categories'].widget.attrs.update({'class': 'form-select'})
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'price', 'discounted_price', 'image',
+                  'is_available', 'categories', 'scent', 'burn_time', 'volume')
+
+    product_type = forms.ChoiceField(choices=[('candle', 'Candle'), ('oil', 'Essential Oil')])
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        categories = Category.objects.all()
+
+        # Set the required fields based on the selected product type
+        if self.instance.pk:
+            if isinstance(self.instance, Candle):
+                self.fields['product_type'].initial = 'candle'
+                self.fields['volume'].required = False
+            elif isinstance(self.instance, EssentialOil):
+                self.fields['product_type'].initial = 'oil'
+                self.fields['burn_time'].required = False
+
+        # Set the choices for categories based on the selected product type
+        self.fields['categories'].queryset = Category.objects.filter(
+            Q(candles__isnull=True) if self.instance.pk else Q(),
+            Q(oils__isnull=True) if self.instance.pk else Q(),
+            Q(pk__in=self.instance.categories.all()) if self.instance.pk else Q(),
+            Q(name__startswith=self.cleaned_data.get('product_type')) | Q(pk__in=self.instance.categories.all())
+        ).distinct()
+
+    def save(self, commit=True):
+        product_type = self.cleaned_data.get('product_type')
+        if product_type == 'candle':
+            product = Candle(**self.cleaned_data)
+        elif product_type == 'oil':
+            product = EssentialOil(**self.cleaned_data)
+        if commit:
+            product.save()
+            self.save_m2m()
+        return product
+
+
+views.py
+def add_product(request):
+    if request.method == 'POST':
+        if 'candle_form' in request.POST:
+            form = CandleForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        elif 'oil_form' in request.POST:
+            form = EssentialOilForm(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+    else:
+        form = CandleForm()
+        oil_form = EssentialOilForm()
+    return render(request, 'home/add_product.html', {'form': form, 'oil_form': oil_form})
+
+
+def add_product(request):
+    """ Add a product to the store """
+    if not request.user.is_superuser:
+        messages.error(request, "Sorry, you don't have permission \
+             to access this page.")
+        return redirect(reverse('home'))
+
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            product_type = form.cleaned_data['product_type']
+            if product_type == 'candle':
+                candle = Candle()
+                candle.scent = form.cleaned_data['scent']
+                candle.burn_time = form.cleaned_data['burn_time']
+                product = candle
+            else:
+                oil = EssentialOil()
+                oil.volume = form.cleaned_data['volume']
+                product = oil
+
+            product.name = form.cleaned_data['name']
+            product.description = form.cleaned_data['description']
+            product.price = form.cleaned_data['price']
+            product.discounted_price = form.cleaned_data['discounted_price']
+            product.image = form.cleaned_data['image']
+            product.is_available = form.cleaned_data['is_available']
+            product.save()
+            product.categories.set(form.cleaned_data['categories'])
+            messages.success(request, 'Successfully added product!')
+            return redirect('add_product')
+        else:
+            messages.error(request, 'Failed to add product. \
+            Please ensure the form is valid.')
+    else:
+        form = ProductForm()
+
+    context = {
+        'form': form,
+        'button_text': 'Add Product'
+    }
+
+    return render(request, 'home/add_product.html', context)
+
+template
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset class="rounded px-3 mb-5">
+        <legend class="fieldset-label small text-black px-2 w-auto"></legend>
+        {{ form.as_p }}
+
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">
+                    {{ button_text }}
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+
+
+<script>
+    const scent = document.querySelector('#id_scent');
+    const burnTime = document.querySelector('#id_burn_time');
+    const volume = document.querySelector('#id_volume');
+    const type = document.querySelector('#id_type');
+
+    function showHideFields() {
+        if (type.value === 'candle') {
+            scent.style.display = 'block';
+            burnTime.style.display = 'block';
+            volume.style.display = 'none';
+        } else if (type.value === 'oil') {
+            scent.style.display = 'block';
+            burnTime.style.display = 'none';
+            volume.style.display = 'block';
+        } else {
+            scent.style.display = 'none';
+            burnTime.style.display = 'none';
+            volume.style.display = 'none';
+        }
+    }
+
+    type.addEventListener('change', showHideFields);
+
+    // Call the function on page load to set initial field visibility
+    showHideFields();
+
+
+function showHideFields() {
+    console.log("showHideFields called");
+    console.log("type value:", type.value);
+    if (type.value === 'candle') {
+        scent.style.display = 'block';
+        burnTime.style.display = 'block';
+        volume.style.display = 'none';
+    } else if (type.value === 'oil') {
+        scent.style.display = 'block';
+        burnTime.style.display = 'none';
+        volume.style.display = 'block';
+    } else {
+        scent.style.display = 'none';
+        burnTime.style.display = 'none';
+        volume.style.display = 'none';
+    }
+}
+
+function showHideFields() {
+    if (type.value === 'candle') {
+        $('#id_scent, #id_burn_time').show();
+        $('#id_volume').hide();
+    } else if (type.value === 'oil') {
+        $('#id_scent, #id_volume').show();
+        $('#id_burn_time').hide();
+    } else {
+        $('#id_scent, #id_burn_time, #id_volume').hide();
+    }
+}
+
+</script>

@@ -44,11 +44,12 @@ def apply_coupon(request):
     return redirect('checkout')
 
 
-def send_confirmation_email(order):
+def send_confirmation_email(order, coupon):
     subject = f"Order Confirmation - {order.order_number}"
     text_content = 'Thank you for your order.'
     html_content = render_to_string('checkout/send_confirmation_email.html',
-                                    {'order': order})
+                                    {'order': order,
+                                     'coupon': coupon})
     from_email = settings.DEFAULT_FROM_EMAIL
     recipient_list = [order.email]
 
@@ -89,8 +90,6 @@ def checkout_view(request):
             order = order_form.save(commit=False)
             order.user = request.user
             order.save()
-
-            send_confirmation_email(order)
 
             basket_items = basket.items.all()
             for item in basket_items:
@@ -221,6 +220,8 @@ def order_detail(request, order_number):
     messages.success(request, f'Order successfully processed! \
         Your order number is {order_number}. A confirmation \
         email will be sent to {order.email}.')
+
+    send_confirmation_email(order, coupon)
 
     order_items = order.items.all()
     basket = get_object_or_404(Basket, user=request.user)

@@ -21,6 +21,7 @@
           {{ candle_form.scent | as_crispy_field }}
           {{ candle_form.burn_time | as_crispy_field }}
           {{ candle_form.is_available | as_crispy_field }}
+          {{ candle_form.categories | as_crispy_field }}
         </fieldset>
         <button type="submit" class="btn btn-primary mt-3" aria-label="submit the form">Submit</button>
       </form>
@@ -39,6 +40,7 @@
           {{ oil_form.scent | as_crispy_field }}
           {{ oil_form.volume | as_crispy_field }}
           {{ oil_form.is_available | as_crispy_field }}
+          {{ oil_form.categories | as_crispy_field }}
         </fieldset>
         <button type="submit" class="btn btn-primary mt-3" aria-label="submit the form">Submit</button>
       </form>

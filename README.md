@@ -529,8 +529,91 @@ As a customer, I want to be able to see the path I have taken from the home page
 
         <img src="static/images/review-error.png">
 
+### Product management 
+
+* I know that having 2 forms is very redundant, but because I started with 2 separate models for candle and oils, I found it quite difficult to merge the 2 forms into 1 and only display one form on the page and I didn't have the time to complete it(could not pass the scent/volume/burn_time field to the product form). Made a note of all my attempts in merge_forms_attemts.txt
+* No form will submit with invalid inputs such as a blank input for required fields, wrong image format or price not in the correct parameters
+* Category field is not required by design, but choosing each one or both will pass the category(ies) to the product
+
+### Basket
+
+* On an empty basket we see the message "Your basket is empty" and the button "Continue Shopping"
+    * clicking the button redirects to products page
+* Adding an item to the basket triggers Success! alert
+* Updating the quantity triggers alert Success! on any action
+    * Typing another number or clicking the buttons - / + updates the quantity and triggers alert Success!
+    * Typing a number above and below 10 resets the quantity to 1
+    * Cannot reduce the quantity below 1 / Cannot increase above 10
+    * letters are not being read by the form
+    * typing a float number triggers form validation
+* Removing an item from the basket triggers confirmation modal
+    * Clicking Cancel closes modal 
+    * Clicking Remove removes the item completely from the basket
+* If a product has discounted price it is correctly calculated to display the total price
+    * Any quantity updates correctly the total
+* Now that we have items in our basket, we see the "Secure Checkout" button
+    * Clicking it redirects to checkout page
+* Deleting an item after it's been added to the basket removes it from the basket too, without affecting the other items in the basket
+
+
+### Checkout
+
+* Here we see the products we're about to purchase, a coupon field and the delivery details and payment forms
+    * Ordering for the first time will have the fields empty, but a having "Save info" checkbox ticket will save our delivery address to our profile
+    * All fields are required expect for address line 2
+        * A form will not submit if there are any invalid inputs
+        * If the fields in "My profile" are filled, we will see our checkout fields prefilled next time we checkout
+    * Payment form is handled by stripe 
+        * The basket total is also displayed and updated correctly below the form
+        
+        <img src="static/images/payment-form.png">
+
+        * Tested using the card details provided by stripe
+
+        <img src="static/images/card-details.png">
+
+        * An invalid card will not submit the form
+
+
+        <img src="static/images/card-invalid.png">
+    
+    * Tested checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
+        * Applying an invalid coupon triggers alert Error!
+        * Applying an active coupon triggers alert Success!
+        * Applying an invalid coupon AFTER a valid coupon does not remove the active from the session
+            * A coupon is only removed form the session after a successful order or after logging out
+        * The total basket price is correctly updated after taking into account the coupon and displays the amount saved and the coupon
+
+        <img src="static/images/coupon-empty.png">
+
+        <img src="static/images/coupon.png">
+    
+    * Clicking Adjust basket redirects to basket 
+    * Clicking Complete Order redirects to order detail page, triggers alert Success! 
+
+### Order success
+
+* Now that we have a successful order we get to the order detal page
+* We get the order number for that order, 
+* All the order details are correct
+* Clicking "Go to profile" redirects to "My profile"
+* Clicking "Order history" redirects to "Order history"
+    * Here we have laid out all past orders in form of a table 
+    * Clicking any order brings up the past order detail of that order 
+* Clicking the back button on the browser redirects to the products page and triggers alert "Your basket is empty"
+* When an order has been placed, we get a confirmation email
+
+### My Profile
+
+* A basic page, where we can easily reset the password and see/update our delivery information
+    * Updating info triggers Success! alert and updates the form with no errors
+    * Clicking the reset password link redirects to reset password page
+    * Clicking Order history redirects to order history and triggers Info alert
+        * Clicking each order brings up the order confirmation page
+
 
 - Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
+
 
 ## Responsive
 
