@@ -14,7 +14,7 @@
             <h2 class="mb-4">My Profile</h2>
             <hr class="">
             <h5 class="">Hello {{ user_profile.user }}!</h5>
-            <p class="">Click <a href="{% url 'account_set_password' %}">HERE </a>to set a new password.</p>
+            <p class="">Click <a href="{% url 'account_set_password' %}" aria-label="reset password">HERE </a>to set a new password.</p>
             <hr>
         </div>
     </div>
@@ -26,7 +26,7 @@
                 {{ form|crispy }}
                 <button class="btn btn-checkout btn-sm text-uppercase float-left">Update Info</button>
             </form>
-            <a href="{% url 'order_history' %}" class="btn btn-checkout btn-sm text-uppercase float-right">
+            <a href="{% url 'order_history' %}" class="btn btn-checkout btn-sm text-uppercase float-right" aria-label="order history">
                 Order history <span class="icon mr-2"><i class="fas fa-angle-right"></i></span></a>
         </div>
     </div>

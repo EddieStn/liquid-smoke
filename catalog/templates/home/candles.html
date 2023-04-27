@@ -26,7 +26,7 @@
       </div>
       <div class="col-12 col-md-6 order-md-first">
         <p class="text-muted mt-3 text-center text-md-left">
-            <a href="{% url 'products' %}">All products</a> |
+            <a href="{% url 'products' %}" aria-label="go to all products page">All products</a> |
             {{ num_products }} Candles.
         </p>
       </div>
@@ -36,7 +36,7 @@
       {% for product in products %}
         <div class="col mb-5">
           <div class="card h-100">
-            <a href="{% url 'product_details' product.id %}">
+            <a href="{% url 'product_details' product.id %}" aria-label="go to this product's detail page">
               <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
               <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>

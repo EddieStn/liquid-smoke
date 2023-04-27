@@ -7,7 +7,7 @@
     <div class="col-12 col-md-6 order-md-first">
       <p class="text-muted mt-3 text-center text-md-left">
           {% if search_term or current_categories or current_sorting != 'None_None' %}
-              <span class="small"><a href="{% url 'products' %}">All products</a> | </span>
+              <span class="small"><a href="{% url 'products' %}" aria-label="link to all products page">All products</a> | </span>
           {% endif %}
           {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
       </p>
@@ -21,7 +21,7 @@
       {% for product in discounted_products %}
         <div class="col mb-5">
           <div class="card h-100">
-            <a href="{% url 'product_details' product.id %}">
+            <a href="{% url 'product_details' product.id %}" aria-label="open the page for this product detail">
               <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
               <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>

@@ -2,14 +2,6 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block page_header %}
-    <div class="container header-container">
-        <div class="row">
-            <div class="col"></div>
-        </div>
-    </div>
-{% endblock %}
-
 {% block extra_title %}Edit product{% endblock %}
 
 {% block content %}
@@ -36,8 +28,8 @@
                         {% endif %}
                     {% endfor %}
                     <div class="text-right">
-                        <a class="btn btn-danger rounded-0" href="{% url 'products' %}">Cancel</a>
-                        <button class="btn btn-primary rounded-0" type="submit">Update Product</button>
+                        <a class="btn btn-danger rounded-0" href="{% url 'products' %}" aria-label="go to all products page">Cancel</a>
+                        <button class="btn btn-primary rounded-0" type="submit" aria-label="update the product">Update Product</button>
                     </div>
                 </form>
             </div>            

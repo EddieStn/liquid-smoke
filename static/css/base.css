@@ -99,8 +99,6 @@ footer a {
 }
 
 .card-img-top {
-    width: 100%;
-    height: 300px;
     object-fit: cover;
 }
 
@@ -120,6 +118,7 @@ footer a {
     background-color: white;
     color: rgb(33, 52, 58);
     border: 1px solid black !important;
+    width: fit-content;
 }
 
 .btn-checkout:hover {

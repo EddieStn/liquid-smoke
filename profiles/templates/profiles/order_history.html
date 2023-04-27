@@ -9,7 +9,7 @@
       <ul class="list-group">
         {% for order in orders %}
           <li class="list-group-item">
-            <a href="{% url 'order_detail' order.order_number %}">Order number - {{ order.order_number|truncatechars:8 }}</a>
+            <a href="{% url 'order_detail' order.order_number %}" aria-label="order confirmation">Order number - {{ order.order_number|truncatechars:8 }}</a>
             <p>Ordered on: {{ order.created_at }}</p>
           </li>
         {% endfor %}

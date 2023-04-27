@@ -7,7 +7,7 @@
     <div class="container container-hero">
         <h1 class="hero-text">Welcome to our candle and essential oils store</h1>
         <h4 class="py-3 hero-text hero-subtext">Shop from our selection of hand-poured candles and pure essential oils</h4>
-        <h4><span class="hero-text hero-subtext">Check out our latest</span> <a href="{% url 'specials' %}" class="btn btn-checkout p-2 hero-button">Offers</a></h4>
+        <h4><span class="hero-text hero-subtext">Check out our latest</span> <a href="{% url 'specials' %}" aria-label="Link to specials page" class="btn btn-checkout p-2 hero-button">Offers</a></h4>
     </div>
 </section>
 
@@ -17,26 +17,26 @@
         <div class="row p-2">
             <div class="col-md-6">
                 <div class="card">
-                    <img src="https://eddiestn-liquid-smoke.s3.amazonaws.com/media/product_images/pexels-photo-6311974.jpeg" class="card-img-top"
+                    <img src="{{ MEDIA_URL }}pexels-photo-6311974.jpeg" class="card-img-top" width="200" height="150"
                         alt="Candles">
                     <div class="card-body">
                         <h4 class="card-title">Candles</h4>
                         <p class="card-text">Explore our selection of hand-poured candles made with 100% soy wax and
                             pure essential oils.</p>
-                        <a href="{% url 'candles' %}" class="btn btn-checkout">Shop Now</a>
+                        <a href="{% url 'candles' %}" aria-label="link to candles page" class="btn btn-checkout">Shop Now</a>
                     </div>
                 </div>
                 <hr class="d-none">
             </div>
             <div class="col-md-6">
                 <div class="card">
-                    <img src="https://eddiestn-liquid-smoke.s3.amazonaws.com/media/product_images/pexels-photo-932577.jpeg" class="card-img-top"
+                    <img src="{{ MEDIA_URL }}pexels-photo-932577.jpeg" class="card-img-top" width="200" height="150"
                         alt="Essential Oils">
                     <div class="card-body">
                         <h4 class="card-title">Essential Oils</h4>
                         <p class="card-text">Discover our collection of pure essential oils, perfect for aromatherapy
                             and natural healing.</p>
-                        <a href="{% url 'essential_oils' %}" class="btn btn-checkout">Shop Now</a>
+                        <a href="{% url 'essential_oils' %}" aria-label="link to essential oils page" class="btn btn-checkout">Shop Now</a>
                     </div>
                 </div>
             </div>

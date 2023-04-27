@@ -33,7 +33,7 @@
         {% for item in basket_items %}
         <div class="row">
           <div class="col-2 mb-1">
-            <a href="{% url 'product_details' item.product.id %}">
+            <a href="{% url 'product_details' item.product.id %}" aria-label="go to this product's detail page">
               {% if item.product.image %}
               <img class="w-100" src="{{ item.product.image.url }}" alt="{{ product.name }}">
               {% else %}
@@ -63,7 +63,7 @@
               {{ coupon_form }}
             </div>
             <div class="col-4">
-              <button type="submit" class="btn btn-checkout">Apply Coupon</button>
+              <button type="submit" class="btn btn-checkout" aria-label="apply coupon">Apply Coupon</button>
             </div>
           </div>
         </form>
@@ -105,8 +105,8 @@
               <input class="form-check-input ml-2 mr-0" type="checkbox" id="id-save-info" name="save-info" checked>
               {% else %}
               <label class="form-check-label" for="id-save-info">
-                <a class="text-info" href="{% url 'account_signup' %}">Create an account</a> or
-                <a class="text-info" href="{% url 'account_login' %}">login</a> to save this information
+                <a class="text-info" href="{% url 'account_signup' %}" aria-label="create account">Create an account</a> or
+                <a class="text-info" href="{% url 'account_login' %}" aria-label="login">login</a> to save this information
               </label>
               {% endif %}
             </div>
@@ -119,13 +119,13 @@
           </fieldset>
 
           <div class="submit-button text-right mt-5 mb-2">
-            <a href="{% url 'view_basket' %}" class="btn btn-checkout">
+            <a href="{% url 'view_basket' %}" class="btn btn-checkout" aria-label="adjust basket">
               <span class="icon">
                 <i class="fas fa-chevron-left"></i>
               </span>
               <span class="font-weight-bold">Adjust Basket</span>
             </a>
-            <button id="submit-button" class="btn btn-checkout">
+            <button id="submit-button" class="btn btn-checkout" aria-label="complete order">
               <span class="font-weight-bold">Complete Order</span>
               <span class="icon">
                 <i class="fas fa-lock"></i>

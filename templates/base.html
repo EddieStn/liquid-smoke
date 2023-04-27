@@ -50,7 +50,7 @@
   <header class="container-fluid fixed-top bg-nav">
     <div id="topnav" class="row pt-lg-2 d-none d-lg-flex">
       <div class="col-12 col-lg-4 my-auto pl-5 py-lg-0 text-center text-lg-left">
-        <a href="{% url 'home' %}" class="nav-link logo">
+        <a href="{% url 'home' %}" class="nav-link logo" aria-label="home page">
           <h2 class="text-white my-0">Liquid Smoke</h2>
         </a>
       </div>
@@ -60,7 +60,7 @@
             <input class="form-control border border-black rounded-0" type="text" name="q"
               placeholder="Search our site">
             <div class="input-group-append">
-              <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+              <button class="form-control btn btn-black border border-black rounded-0" type="submit" aria-label="search">
                 <span class="icon">
                   <i class="fas fa-search text-white"></i>
                 </span>
@@ -73,7 +73,7 @@
         <ul class="list-inline list-unstyled text-center text-lg-right my-0">
           <li class="list-inline-item dropdown">
             <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
+              aria-expanded="false" aria-label="my account">
               <div class="text-center">
                 <div><i class="fas fa-user fa-lg text-white"></i></div>
                 <p class="my-0 text-white">My Account</p>
@@ -82,18 +82,18 @@
             <div class="dropdown-menu bg-nav" aria-labelledby="user-options">
               {% if request.user.is_authenticated %}
               {% if request.user.is_superuser %}
-              <a href="{% url 'add_product' %}" class="dropdown-item text-white">Product Management</a>
+              <a href="{% url 'add_product' %}" class="dropdown-item text-white" aria-label="add product">Product Management</a>
               {% endif %}
-              <a href="{% url 'profile' %}" class="dropdown-item text-white">My Profile</a>
-              <a href="{% url 'account_logout' %}" class="dropdown-item text-white">Logout</a>
+              <a href="{% url 'profile' %}" class="dropdown-item text-white" aria-label="my profile">My Profile</a>
+              <a href="{% url 'account_logout' %}" class="dropdown-item text-white" aria-label="logout">Logout</a>
               {% else %}
-              <a href="{% url 'account_login' %}" class="dropdown-item text-white">Login</a>
-              <a href="{% url 'account_signup' %}" class="dropdown-item text-white">Register</a>
+              <a href="{% url 'account_login' %}" class="dropdown-item text-white" aria-label="login">Login</a>
+              <a href="{% url 'account_signup' %}" class="dropdown-item text-white" aria-label="register">Register</a>
               {% endif %}
             </div>
           </li>
           <li class="list-inline-item">
-            <a class="nav-link" href="{% url 'view_basket' %}">
+            <a class="nav-link" href="{% url 'view_basket' %}" aria-label="view basket">
               <div class="text-center">
                 <div>
                   <i class="fas fa-shopping-bag fa-lg text-white"></i>
@@ -113,7 +113,7 @@
     </div>
     <div class="row">
       <div class="mx-auto">
-        <a href="{% url 'home' %}" class="nav-link">
+        <a href="{% url 'home' %}" class="nav-link" aria-label="home page">
           <h3 class="text-white my-0 text-center text-align-center d-lg-none py-2">Liquid Smoke</h3>
         </a>
       </div>
@@ -183,7 +183,7 @@
                   name="b_66ded1542002e4945d4cc9bfe_f535030be4" tabindex="-1" value=""></div>
               <div class="optionalParent">
                 <div class="clear foot">
-                  <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+                  <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn btn-checkout w-10">
                   <p class="brandingLogo"><a href="http://eepurl.com/ipHWb-"
                       title="Mailchimp - email marketing made easy and fun"><img
                         src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"></a>
@@ -208,14 +208,14 @@
         <div class="col-md-4 mt-3 text-white">
           <h5>Follow Us</h5>
           <ul class="list-unstyled list-inline">
-            <li class="list-inline-item"><a href="https://www.facebook.com/profile.php?id=100092371081770" target="_blank"><i class="fab fa-facebook"></i></a></li>
-            <li class="list-inline-item"><a href="https://www.twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a></li>
-            <li class="list-inline-item"><a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-            <li class="list-inline-item"><a href="https://www.pinterest.com/" target="_blank"><i class="fab fa-pinterest"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.facebook.com/profile.php?id=100092371081770" target="_blank" aria-label="open facebook page"><i class="fab fa-facebook"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.twitter.com/" target="_blank" aria-label="open twitter"><i class="fab fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.instagram.com/" target="_blank" aria-label="open instagram"><i class="fab fa-instagram"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.pinterest.com/" target="_blank" aria-label="open pinterest"><i class="fab fa-pinterest"></i></a></li>
           </ul>
         </div>
         <div class="col-md-4 mt-3 text-white">
-          <a href="{% url 'faq' %}">FAQ</a>
+          <a href="{% url 'faq' %}" aria-label="open Faq page">FAQ</a>
         </div>
       </div>
     </div>
