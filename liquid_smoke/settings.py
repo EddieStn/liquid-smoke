@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'profiles',
     'storages',
     'crispy_forms',
-    "crispy_bootstrap4",
+    'crispy_bootstrap4',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -227,3 +228,8 @@ else:
 STRIPE_CURRENCY = 'usd'
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}

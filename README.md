@@ -72,6 +72,10 @@
 
 
 ## Model diagrams
+### Graphviz diagram
+<img src="static/images/models.png"> 
+
+[Graphviz SVG file](https://github.com/EddieStn/liquid-smoke/tree/main/static/images/models.svg)
 
 ## Marketing has been made via a [Facebook page](https://www.facebook.com/profile.php?id=100092371081770)
 
