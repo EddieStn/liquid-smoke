@@ -430,14 +430,54 @@ As a customer, I want to be able to see the path I have taken from the home page
 * pep8online
 
 ## Automated testing TDD
-- To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, for testing
+* To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, while testing
+
+### Created unit tests for the Order form 
+* All tests passed
+### Created unit tests for the ChackoutView 
+* It did not pass all the tests. As the view being fairly complicated it would've taken me more time to create it all using TDD
 
 ## Manual testing
+
+### Manual testing performed based on the order of the flow (following the user's journey)
+
+### Landing page
+
+* As a first time user, I see the landing page with a background image and nothing looks out of place ( both desktop and mobile )
+* followed by the collections section with a small description of the store's products, Candles and Essential oils
+* followed by the "About us" and footer with the newsletter form and, contact info and links to social media/ faq
+    * The navigation/collection/faq links all perform the actions that their designed to do, internal links that all lead to their expected destination with no errors
+    * social links open in a new page to the expected destination
+    * The newsletter form:
+        * If submitted without input triggers a "field required" alert
+        * The correct input triggers "Thank you for subscribing!" alert
+        * Invalid input triggers "Please enter a valid email address." alert
+        * Invalid email triggers "ddaw@test.com is an invalid email address and cannot be imported." alert
+    * The search bar works the same on all pages of the website and it always redirects to "products" page
+        * Searching with no input brings up all the products
+        * Searching with input that cannot be found in the products triggers warning alert "No results found for 'input'." and displays the products page with No products
+        * Searching with input that can be found in the products triggers success alert "Products found for 'input'." and displays the products page with all the products found
+        * Searching by category brings up products in that category, eg. "candles" displays all the candles found
+    * "My account" dropdown displays:
+        * If not logged in: "Login" & "Register" links
+        * if logged in: "My profile" & "Logout" & "Product Management"(admin only)
+    * Basket (bag icon) redirects a user not logged in to the "Sign In" page
+
+### Register / Login / Logout
+
+* To perform any basket/checkout actions a user needs to be logged in
+* Registering is only possible with a valid email as email confirmation is required 
+    * The form will not submit if any inputs are incorrect, an email/username is already taken or the password is too common
+
+    <img src="static/images/register-form.png" width="400" height="500">
+
+    * 
+
 - Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
 
 ## Responsive
 
-### No problems found when building the app and manually checking for responsiveness with chrome dev tools
+### No problems were found when building the app and manually checking for responsiveness with chrome dev tools
 
 To generate a multi device mockup I used [Techsini](https://techsini.com/multi-mockup/index.php)
 To ensure my website is fully responsive I used [responsivedesignchecker](https://responsivedesignchecker.com/)
