@@ -65,6 +65,11 @@
 
 ## Wireframes
 
+<img src="static/images/wireframe.png"> 
+
+<img src="static/images/wireframe-products.png"> 
+
+
 ## Model diagrams
 
 ## Marketing has been made via a [Facebook page](https://www.facebook.com/profile.php?id=100092371081770)
@@ -73,7 +78,7 @@
 
 ## Agile Methodology 
 ### This Project was built following agile methodology and practices
-
+[User stories](#user-stories) further down.
 
 # Features UX design
 
@@ -81,60 +86,96 @@
 
 <img src="static/images/landing-page.png">
 
+<img src="static/images/landing-page-2.png">
+
+### When a user first enters the website this is what they see, the landing page containing the navigation panel, footer and a hero image with links to the offers page that is just long enough so users can see there's further content down the page, the collections and the footer
+
 ## Navbar
 <img src="static/images/desktop-nav.png">
+
+### Navbar on desktop has all the links to other pages on display. The Logo is also a link to the landing page. "My account" is a dropdown menu with links to "My profile/Sign in/Register". The Bag icon is a link to the basket.
 
 <img src="static/images/mobile-nav.png">
 
 <img src="static/images/dropdown-nav.png">
 
+### On smaller devices, the products links are turned into a dropdown(hamburger) menu.
+
 ## Footer
 
 <img src="static/images/footer.png">
+
+### In the footer we have the newsletter subscription form, Contact Us address, links to social media, including our facebook page, and FAQ page.
 
 ## Products
 
 <img src="static/images/products-page.png">
 
+### On all products page we see candles and oils combined, we can sort by name/price/rating and filter to see only candles/oils
+
 <img src="static/images/product-detail.png">
+
+### In the product detail page, we can add to basket (up to 10 products), submit a review and edit/delete a product(Admin only).
 
 <img src="static/images/product-edit.png">
 
 <img src="static/images/product-management.png">
 
+### The admin has to option to enter the product management form the account dropdown where they can add more products to the store.
+
 ## Candles
 
 <img src="static/images/candles-page.png">
+
+### The candles page is only for products in the Candles category, we can see each candle with it's scent, burn time and rating(if any) and can perform sorting.
 
 ## Essential Oils
 
 <img src="static/images/oils-page.png">
 
+### The Oils page is only for products in the Oils category, we can see each oil with it's scent, volume and rating(if any) and can perform sorting.
+
 ## Specials
 
 <img src="static/images/specials-page.png">
+
+### In the specials page we have the products on sale ( with discounted price ).
 
 ## Basket
 
 <img src="static/images/basket-empty.png">
 
+### On an empty basket, we cannot see the Secure checkout button.
+
 <img src="static/images/basket.png">
 
+### The products added to the basket are laid out as a table. The quantity is updated instant on any whole number (up to 10)
+
 <img src="static/images/remove-from-basket.png">
+
+### Removing an item from the basket triggers a modal for confirmation
 
 ## Checkout
 
 <img src="static/images/checkout-page.png">
 
+### Once you have items in your basket you can then go to the checkout page, where you add your delivery details, apply coupon if any, and pay.
+
 ## Orders
 
 <img src="static/images/order.png">
 
+### The order success confirmation is triggered after a successful order has been placed, and a very similar email will be sent to your inbox.
+
 <img src="static/images/order-history.png">
+
+### In the order history page, all orders are laid out as a list displaying the order numbare and the date it's been made. Each link will bring up the order success page for that order
 
 ## Profile
 
 <img src="static/images/profile-page.png">
+
+### The fields in the profile page are in sync with the checkout page, once you put an order in, meaning that they update every time they a new input is provided. You can also set a new password if you wish so.
 
 ## Sign in/Register
 
@@ -144,6 +185,8 @@
 
 <img src="static/images/log-out.png">
 
+### Account creation is provided by django allauth, meaning everything from registering to loggin' out to resetting password.
+
 ## FAQ
 
 <img src="static/images/faq-page.png">
@@ -151,6 +194,8 @@
 ## 404 Page
 
 <img src="static/images/404.png">
+
+### The 404 page is triggered when a user tries to enter a link that's not connected with this website.
 
 ## Messages / Toasts
 
@@ -160,9 +205,12 @@
 <img src="static/images/message-4.png">
 <img src="static/images/message-5.png">
 
+### Messages are triggered as website feedback for users performing actions such as adding to basket/ successful order/ submitting forms...
 
 ## Features to be implemented
-* If a user is admin, Approve reviews from front-end
+* If the logged in user is the admin/staff, review and approve reviews from the front-end.
+* Provide recommendations to users based on their search/order history.
+* Update product management to see how many products are in stock; get notified if a stock is running low.
 
 # Technology used
 * HTML
@@ -178,6 +226,8 @@
 * Amazon web services
 
 ## User Stories
+
+
 
 ## Could have User Stories
 

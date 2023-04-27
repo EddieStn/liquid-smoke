@@ -41,8 +41,10 @@
               <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
             </a>
               <div class="card-body">
-                <p class="card-text">Scent: {{ product.scent }}</p>
-                <p class="card-text">Burn time: {{ product.burn_time }}</p>
+                {% if product.candle %}
+                <p class="card-text">Scent: {{ product.candle.scent }}</p>
+                <p class="card-text">Burn time: {{ product.candle.burn_time }}</p>
+                {% endif %}
                 {% if product.discounted_price %}
                 <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
                 {% else %}
