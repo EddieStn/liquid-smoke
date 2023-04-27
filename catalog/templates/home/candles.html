@@ -5,67 +5,72 @@
 {% block extra_title %} Candles {% endblock %}
 
 {% block content %}
-  <div class="container mt-3">
-    <div class="row mt-1 mb-2">
-      <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
-        <div class="w-30">
-          <form id="sort-form" action="{% url 'candles' %}" method="GET">
-            <div class="form-group">
-              <label for="sort-by">Sort by:</label>
-              <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
-                <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
-                <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)</option>
-                <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to High)</option>
-                <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to Low)</option>
-                <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to High)</option>
-                <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High to Low)</option>
-              </select>
-            </div>
-          </form>
-        </div>
+<div class="container mt-3">
+  <div class="row mt-1 mb-2">
+    <div class="col-12 col-md-6 my-auto order-md-last d-flex justify-content-center justify-content-md-end">
+      <div class="w-30">
+        <form id="sort-form" action="{% url 'candles' %}" method="GET">
+          <div class="form-group">
+            <label for="sort-by">Sort by:</label>
+            <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
+              <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
+              <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
+              </option>
+              <option value="price_asc" {% if request.GET.sort == 'price_asc' %} selected {% endif %}>Price (Low to
+                High)</option>
+              <option value="price_desc" {% if request.GET.sort == 'price_desc' %} selected {% endif %}>Price (High to
+                Low)</option>
+              <option value="rating_asc" {% if request.GET.sort == 'rating_asc' %} selected {% endif %}>Rating (Low to
+                High)</option>
+              <option value="rating_desc" {% if request.GET.sort == 'rating_desc' %} selected {% endif %}>Rating (High
+                to Low)</option>
+            </select>
+          </div>
+        </form>
       </div>
-      <div class="col-12 col-md-6 order-md-first">
-        <p class="text-muted mt-3 text-center text-md-left">
-            <a href="{% url 'products' %}" aria-label="go to all products page">All products</a> |
-            {{ num_products }} Candles.
+    </div>
+    <div class="col-12 col-md-6 order-md-first">
+      <p class="text-muted mt-3 text-center text-md-left">
+        <a href="{% url 'products' %}" aria-label="go to all products page">All products</a> |
+        {{ num_products }} Candles.
+      </p>
+    </div>
+  </div>
+  <h2 class="mb-4">Candles</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    {% for product in products %}
+    <div class="col mb-5">
+      <div class="card h-100">
+        <a href="{% url 'product_details' product.id %}" aria-label="go to this product's detail page">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
+        </a>
+        {% if product.discounted_price %}
+        <p class="text-center"><small><del>${{ product.price }}</del> <span
+              class="discount">${{ product.discounted_price }}</span></small></p>
+        {% else %}
+        <p class="text-center"><small>${{ product.price }}</small></p>
+        {% endif %}
+        <p class="text-muted text-center">
+          <i class="fas fa-star mr-1"></i>
+          {% if product.avg_rating %}
+          {{ product.avg_rating|floatformat:1 }} / 5
+          {% else %}
+          No rating
+          {% endif %}
+        </p>
+        {% if product.candle %}
+        <p class="text-center">Scent: {{ product.candle.scent }}</p>
+        <p class="text-center">Burn time: {{ product.candle.burn_time }}</p>
+        {% endif %}
         </p>
       </div>
     </div>
-    <h2 class="mb-4">Candles</h2>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for product in products %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' product.id %}" aria-label="go to this product's detail page">
-              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
-            </a>
-              <div class="card-body">
-                {% if product.candle %}
-                <p class="card-text">Scent: {{ product.candle.scent }}</p>
-                <p class="card-text">Burn time: {{ product.candle.burn_time }}</p>
-                {% endif %}
-                {% if product.discounted_price %}
-                <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
-                {% else %}
-                ${{ product.price }}
-                {% endif %}
-                <p class="text-muted">
-                  <i class="fas fa-star mr-1"></i>
-                  {% if product.avg_rating %}
-                    {{ product.avg_rating|floatformat:1 }} / 5
-                  {% else %}
-                    No rating
-                  {% endif %}
-                </p>
-              </div>
-          </div>
-        </div>    
-      {% empty %}
-        <p>No candles found.</p>
-      {% endfor %}
-    </div>
+    {% empty %}
+    <p>No candles found.</p>
+    {% endfor %}
   </div>
+</div>
 {% endblock %}
 
 {% block postloadjs %}

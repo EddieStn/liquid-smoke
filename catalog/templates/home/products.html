@@ -46,28 +46,28 @@
           <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
           <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
         </a>
-        <div class="card-body">
-          {% if product.candle %}
-          <p class="card-text">Scent: {{ product.candle.scent }}</p>
-          <p class="card-text">Burn time: {{ product.candle.burn_time }}</p>
-          {% elif product.essentialoil %}
-          <p class="card-text">Scent: {{ product.essentialoil.scent }}</p>
-          <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
-          {% endif %}
-          {% if product.discounted_price %}
-          <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span>
+        {% if product.discounted_price %}
+        <p class="text-center"><small><del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span></small></p>
+        {% else %}
+        <p class="text-center"><small>${{ product.price }}</small></p>
+        {% endif %}
+        <p class="text-muted text-center">
+          <i class="fas fa-star mr-1"></i>
+          {% if product.avg_rating %}
+          {{ product.avg_rating|floatformat:1 }} / 5
           {% else %}
-          ${{ product.price }}
+          No rating
           {% endif %}
-          <p class="text-muted">
-            <i class="fas fa-star mr-1"></i>
-            {% if product.avg_rating %}
-            {{ product.avg_rating|floatformat:1 }} / 5
-            {% else %}
-            No rating
-            {% endif %}
-          </p>
-        </div>
+        </p>
+        
+        {% if product.candle %}
+        <p class="text-center">Scent: {{ product.candle.scent }}</p>
+        <p class="text-center">Burn time: {{ product.candle.burn_time }}</p>
+        {% elif product.essentialoil %}
+        <p class="text-center">Scent: {{ product.essentialoil.scent }}</p>
+        <p class="text-center">Volume: {{ product.essentialoil.volume }}</p>
+        {% endif %}
+        
       </div>
     </div>
     {% empty %}

@@ -77,6 +77,16 @@
 
 [Graphviz SVG file](https://github.com/EddieStn/liquid-smoke/tree/main/static/images/models.svg)
 
+To generate the diagram follow the next steps:
+* pip install django_extensions
+* sudo apt-get install graphviz 
+* pip install graphviz
+* add django_extensions to installed apps in settings.py
+* generate a dot file with all your models `python3 manage.py graph_models -a > models.dot`
+* convert it into a png `dot -Tpng models.dot -o models.png`
+
+NOTE* Gitpod doesn't run on your machine, it runs on a Linux virtual server, so you can use the Linux commands in the gitpod console.
+
 ## Marketing has been made via a [Facebook page](https://www.facebook.com/profile.php?id=100092371081770)
 
 <img src="static/images/fb-page.png"> 
@@ -216,6 +226,7 @@
 * If the logged in user is the admin/staff, review and approve reviews from the front-end.
 * Provide recommendations to users based on their search/order history.
 * Update product management to see how many products are in stock; get notified if a stock is running low.
+* As the products list grows larger, pagination will be needed
 
 # Technology used
 * HTML

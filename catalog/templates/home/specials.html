@@ -3,52 +3,52 @@
 {% load custom_filters %}
 {% block extra_title %} Specials {% endblock %}
 {% block content %}
-  <div class="container mt-5">
-    <div class="col-12 col-md-6 order-md-first">
-      <p class="text-muted mt-3 text-center text-md-left">
-          {% if search_term or current_categories or current_sorting != 'None_None' %}
-              <span class="small"><a href="{% url 'products' %}" aria-label="link to all products page">All products</a> | </span>
-          {% endif %}
-          {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
-      </p>
-    </div>
-    <div class="jumbotron specials text-center mb-5">
-      <h1 class="display-4">Specials</h1>
-      <h4>Check out our latest offers and discounts</h4>
-    </div>
-    <hr>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-      {% for product in discounted_products %}
-        <div class="col mb-5">
-          <div class="card h-100">
-            <a href="{% url 'product_details' product.id %}" aria-label="open the page for this product detail">
-              <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-              <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
-            </a>
-            <div class="card-body">
-              {% if product.candle %}
-                <p class="card-text">Scent: {{ product.candle.scent }}</p>
-                <p class="card-text">Burn Time: {{ product.candle.burn_time }}</p>
-              {% elif product.essentialoil %}
-                <p class="card-text">Scent: {{ product.essentialoil.scent }}</p>
-                <p class="card-text">Volume: {{ product.essentialoil.volume }}</p>
-              {% endif %}
-              <p class="card-text"><small class="text-muted">Price: <del>${{ product.price }}</del> <span class="discount">${{ product.discounted_price }}</span></small></p>
-              <p class="text-muted">
-                <i class="fas fa-star mr-1"></i>
-                {% if product.avg_rating %}
-                  {{ product.avg_rating|floatformat:1 }} / 5
-                {% else %}
-                  No rating
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        </div>    
-      {% empty %}
-        <p>No Offers at the moment</p>
-      {% endfor %}
-
-    </div>
+<div class="container mt-5">
+  <div class="col-12 col-md-6 order-md-first">
+    <p class="text-muted mt-3 text-center text-md-left">
+      {% if search_term or current_categories or current_sorting != 'None_None' %}
+      <span class="small"><a href="{% url 'products' %}" aria-label="link to all products page">All products</a> |
+      </span>
+      {% endif %}
+      {{ num_products }} Products{% if search_term %} found for <strong>"{{ search_term }}"</strong>{% endif %}
+    </p>
   </div>
+  <div class="jumbotron specials text-center mb-5">
+    <h1 class="display-4">Specials</h1>
+    <h4>Check out our latest offers and discounts</h4>
+  </div>
+  <hr>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    {% for product in discounted_products %}
+    <div class="col mb-5">
+      <div class="card h-100">
+        <a href="{% url 'product_details' product.id %}" aria-label="open the page for this product detail">
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          <h5 class="card-title py-3 text-dark text-center">{{ product.name }}</h5>
+        </a>
+        <p class="text-center"><small class="text-muted">Price: <del>${{ product.price }}</del> <span
+              class="discount">${{ product.discounted_price }}</span></small></p>
+        <p class="text-muted text-center">
+          <i class="fas fa-star mr-1"></i>
+          {% if product.avg_rating %}
+          {{ product.avg_rating|floatformat:1 }} / 5
+          {% else %}
+          No rating
+          {% endif %}
+        </p>
+        {% if product.candle %}
+        <p class="text-center">Scent: {{ product.candle.scent }}</p>
+        <p class="text-center">Burn Time: {{ product.candle.burn_time }}</p>
+        {% elif product.essentialoil %}
+        <p class="text-center">Scent: {{ product.essentialoil.scent }}</p>
+        <p class="text-center">Volume: {{ product.essentialoil.volume }}</p>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <p>No Offers at the moment</p>
+    {% endfor %}
+
+  </div>
+</div>
 {% endblock %}

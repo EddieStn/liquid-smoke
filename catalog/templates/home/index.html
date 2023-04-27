@@ -12,35 +12,34 @@
 </section>
 
 <section>
-    <div class="container links border my-3">
+    <div class="container links mt-0">
         <h2 class="text-center hero-text">Discover our collection</h2>
         <div class="row p-2">
-            <div class="col-md-6">
-                <div class="card">
-                    <img src="/media/candles-image.jpeg" class="card-img-top"
-                        alt="Candles">
-                    <div class="card-body">
-                        <h4 class="card-title">Candles</h4>
-                        <p class="card-text">Explore our selection of hand-poured candles made with 100% soy wax and
-                            pure essential oils.</p>
-                        <a href="{% url 'candles' %}" aria-label="link to candles page" class="btn btn-checkout">Shop Now</a>
-                    </div>
+            <div class="col-md-6 d-flex mt-2">
+              <div class="card flex-fill d-flex flex-column">
+                <img src="https://eddiestn-liquid-smoke.s3.eu-west-2.amazonaws.com/media/candles-image.jpeg" class="card-img-top" alt="Candles">
+                <div class="card-body d-flex flex-column">
+                  <h4 class="card-title">Candles</h4>
+                  <p class="card-text">Explore our selection of hand-poured candles made with 100% soy wax and pure essential oils.</p>
+                  <div class="mt-auto">
+                    <a href="{% url 'candles' %}" aria-label="link to candles page" class="btn btn-checkout">Shop Now</a>
+                  </div>
                 </div>
-                <hr class="d-none">
+              </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <img src="/media/oils-image.png" class="card-img-top"
-                        alt="Essential Oils">
-                    <div class="card-body">
-                        <h4 class="card-title">Essential Oils</h4>
-                        <p class="card-text">Discover our collection of pure essential oils, perfect for aromatherapy
-                            and natural healing.</p>
-                        <a href="{% url 'essential_oils' %}" aria-label="link to essential oils page" class="btn btn-checkout">Shop Now</a>
-                    </div>
+            <div class="col-md-6 d-flex mt-2">
+              <div class="card flex-fill d-flex flex-column">
+                <img src="https://eddiestn-liquid-smoke.s3.eu-west-2.amazonaws.com/media/oils-image.png" class="card-img-top" alt="Essential Oils">
+                <div class="card-body d-flex flex-column">
+                  <h4 class="card-title">Essential Oils</h4>
+                  <p class="card-text">Discover our collection of pure essential oils, perfect for aromatherapy and natural healing.</p>
+                  <div class="mt-auto">
+                    <a href="{% url 'essential_oils' %}" aria-label="link to essential oils page" class="btn btn-checkout">Shop Now</a>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
     </div>
 </section>
 
