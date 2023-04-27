@@ -471,7 +471,64 @@ As a customer, I want to be able to see the path I have taken from the home page
 
     <img src="static/images/register-form.png" width="400" height="500">
 
-    * 
+    * The corect form will send a confirmation email
+    * In the email there's a link to confirm the email and redirect back to shop
+* Signing in either by email or username and password
+    * Wrong inputs triller alerts to notify the user
+    * Successful login returns back to homepage and triggers alert Success! "Successfully signed in as 'username'!"
+* Sign out redirects to the logout page where asked for confirmation. You can either Sign out or cancel and both redirects to homepage
+
+
+### Candles / Essential oils pages / Specials / All products
+
+* At the top of the page there is the link to all products, the product count on that page and the sorting/filtering
+    * Filtering is only available in the products page
+    * No errors or bugs:
+        * when clicking the products link 
+        * when sorting by any option (price/name/rating)
+        * when filtering by any category (candle/essential oil)
+* Candles page will display only products in the Candle category
+* Essential oils page will only display products in the Essential Oil category
+* Specials page will only display products with a discounted price
+* Clicking on the image/name of any products in any of the pages will redirect the user to that product's detail page
+
+### Product detail page
+
+* On top of the details we see in the card of the product as displayed in the products page, here we also have:
+    * The product`s description 
+    * The add to basket form with quantity and "Add to basket" input
+    * Edit/Delete product buttons if logged in as admin
+        * Edit button will open the edit product page where we can edit all the fields
+            * Can only edit with the fields not blank,
+            * Price less than 6 digits, max 4 before the decimal point, max 2 decimals
+            
+            <img src="static/images/edit-price.png">
+
+            <img src="static/images/edit-price-2.png">
+
+            * Successful updating will redirect to the product's category page
+
+        * Deleting the product will trigger a modal to ask for confirmation
+            * The cancel button closes the modal
+            * The delete button deletes the product
+
+        <img src="static/images/delete-modal.png" widht="300" height="400">
+        
+    * Review form with Title/Body/Rating(1-5)
+        * Submitting a review with any blank fields will not submit the form and point the user to the input at fault
+        * Submitting a review will trigger Success! alert
+
+        <img src="static/images/success-review.png">
+
+        * Only admins will be able to see reviews that have been submitted but not approved
+
+        <img src="static/images/review.png">
+
+        * Once a review has been approved, other users will be able to see it, and the rating will start counting towards the average rating of the product
+        * If a user tries to submit a review again, the Error! alert is triggered
+
+        <img src="static/images/review-error.png">
+
 
 - Testing checkout functionality with coupons expired/invalid/active to be rendered in the order_details view, then deleted from the session
 
@@ -504,7 +561,6 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
     After: products = Product.objects.filter(categories__name='Candles')
     // same for oils
     ```
-
 ### Product detail page
 * A user resubmitting the review form a second time will throw a Server error(500)
     * To prevent this, I added a check in the view, this also allows users that are not logged in to view the reviews

@@ -11,8 +11,8 @@
       <div class="w-30">
         <form id="sort-form" action="{% url 'candles' %}" method="GET">
           <div class="form-group">
-            <label for="sort-by">Sort by:</label>
             <select class="form-control" id="sort-by" name="sort" onchange="this.form.submit()">
+              <option value="">--Sort by:--</option>
               <option value="name_asc" {% if request.GET.sort == 'name_asc' %} selected {% endif %}>Name (A-Z)</option>
               <option value="name_desc" {% if request.GET.sort == 'name_desc' %} selected {% endif %}>Name (Z-A)
               </option>
