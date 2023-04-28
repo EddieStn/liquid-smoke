@@ -7,7 +7,7 @@
         </div>
     </a>
     <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
-        <form class="form" method="GET" action="">
+        <form class="form" method="GET">
             <div class="input-group w-100">
                 <input class="form-control border border-black rounded-0" type="text" name="q"
                     placeholder="Search our site">
@@ -24,14 +24,14 @@
 </li>
 
 <li class="list-inline-item dropdown">
-    <a class="text-black nav-link d-block d-lg-none" href="#" id="user-options" data-toggle="dropdown" aria-label="my account"
+    <a class="text-black nav-link d-block d-lg-none" href="#" id="user-options-mobile" data-toggle="dropdown" aria-label="my account"
         aria-haspopup="true" aria-expanded="false">
         <div class="text-center">
             <div><i class="fas fa-user fa-lg text-white mobile-nav-item"></i></div>
             <p class="my-0 text-white mobile-nav-item  bg-nav">My Account</p>
         </div>
     </a>
-    <div class="dropdown-menu border-0 bg-nav" aria-labelledby="user-options">
+    <div class="dropdown-menu border-0 bg-nav" aria-labelledby="user-options-mobile">
         {% if request.user.is_authenticated %}
             {% if request.user.is_superuser %}
                 <a href="{% url 'add_product' %}" class="dropdown-item text-white" aria-label="product management page">Product Management</a>

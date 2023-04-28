@@ -186,22 +186,42 @@ table th {
 }
 
 @media (max-width: 367px) {
+    html {
+        letter-spacing: 0;
+    }
     .navbar {
+        display: block;
         padding: 0 !important;
         flex-wrap: nowrap !important;
     }
+
+    .hero {
+        margin-top: -25px;
+    }
+    .btn {
+        padding: 0.1rem 0.2rem;
+        font-size: 0.9rem;
+    }
+    .nav-link {
+        padding: 0;
+    }
+    
 }
 
 @media (max-width: 530px) {
-    table {
-      font-size: 14px;
+    .table {
+        padding: 0;
+        font-size: 12px;
+    }
+    .table td, .table th{
+        padding: 0;
     }
     table thead th:nth-child(1), 
     table tbody td:nth-child(1) {
       display: none;
     }
     table thead th:nth-child(2) {
-      width: 40%;
+      width: 30%;
     }
     table thead th:nth-child(3), 
     table tbody td:nth-child(3),

@@ -61,10 +61,12 @@ class TestCheckoutView(TestCase):
     LOGIN_URL = '/accounts/login/'
 
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass')
         self.product = Product.objects.create(name='Test Product', price=10)
         self.basket = Basket.objects.create(user=self.user)
-        self.basket_item = BasketItem.objects.create(basket=self.basket, product=self.product, quantity=1)
+        self.basket_item = BasketItem.objects.create(
+            basket=self.basket, product=self.product, quantity=1)
 
     def test_checkout_view_get(self):
         self.client.login(username='testuser', password='testpass')
@@ -88,7 +90,8 @@ class TestCheckoutView(TestCase):
         }
         response = self.client.post(reverse('checkout'), data=data)
         order = Order.objects.get(first_name='John')
-        self.assertRedirects(response, reverse('order_confirmation', kwargs={'order_number': order.order_number}))
+        self.assertRedirects(response, reverse(
+            'order_confirmation', kwargs={'order_number': order.order_number}))
         self.assertEqual(Order.objects.count(), 1)
 
         new_order = Order.objects.last()

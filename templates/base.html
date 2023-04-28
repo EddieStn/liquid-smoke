@@ -124,7 +124,8 @@
           aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span><i class="fa-solid fa-bars text-white"></i></span>
         </button>
-        {% include 'includes/mobile-top-header.html' %}
+        <menu style="all: unset">{% include 'includes/mobile-top-header.html' %}</menu>
+        
         {% include 'includes/desktop-top-header.html' %}
       </nav>
     </div>
@@ -181,7 +182,7 @@
                   <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button bg-nav">
                   <p class="brandingLogo"><a href="http://eepurl.com/ipHWb-"
                       title="Mailchimp - email marketing made easy and fun"><img
-                        src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg"></a>
+                        src="https://eep.io/mc-cdn-images/template_images/branding_logo_text_dark_dtp.svg" alt="mailchimp logo"></a>
                   </p>
                 </div>
               </div>
@@ -217,12 +218,12 @@
   </footer>
 
   {% block postloadjs %}
-  <script type="text/javascript">
+  <script>
     $('.toast').toast('show');
   </script>
   <!-- Mailchimp scripts -->
-  <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
-  <script type='text/javascript'>
+  <script src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script>
+  <script>
     (function ($) {
       window.fnames = new Array();
       window.ftypes = new Array();

@@ -252,7 +252,9 @@ def edit_product(request, product_id):
             categories = product.categories.all()
             if any(category.name == 'Candles' for category in categories):
                 return redirect(reverse('candles'))
-            elif any(category.name == 'Essential Oils' for category in categories):
+            elif any(
+                category.name == 'Essential Oils' for category in categories
+            ):
                 return redirect(reverse('essential_oils'))
             else:
                 return redirect(reverse('home'))

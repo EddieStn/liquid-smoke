@@ -229,8 +229,8 @@ NOTE* Gitpod doesn't run on your machine, it runs on a Linux virtual server, so 
 * As the products list grows larger, pagination will be needed
 
 # Technology used
-* HTML
-* CSS
+* HTML5
+* CSS3
 * Javascript
 * Python
 
@@ -238,8 +238,9 @@ NOTE* Gitpod doesn't run on your machine, it runs on a Linux virtual server, so 
 * Django
 * Jquery
 * Bootstrap 4
-* ElephantSQL
-* Amazon web services
+* ElephantSQL - PostgreSQL was used as database for this project
+* Stripe for payments
+* AWS S3 bucket sstorage for storing static files and media files
 
 # Agile methodology
 
@@ -606,8 +607,9 @@ As a customer, I want to be able to see the path I have taken from the home page
 * Clicking the back button on the browser redirects to the products page and triggers alert "Your basket is empty"
 * When an order has been placed, we get a confirmation email
 
-<img src="static/images/order_success.png">
+<img src="static/images/order-success.png">
 
+<img src="static/images/email-order.png">
 
 ### My Profile
 
