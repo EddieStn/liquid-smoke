@@ -1,60 +1,62 @@
-<li class="list-inline-item">
-    <a class="text-black nav-link d-block d-lg-none" href="#" id="mobile-search" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        <div class="text-center">
-            <div><i class="fas fa-search fa-lg text-white"></i></div>
-            <p class="my-0 text-white">Search</p>
-        </div>
-    </a>
-    <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
-        <form class="form" method="GET">
-            <div class="input-group w-100">
-                <input class="form-control border border-black rounded-0" type="text" name="q"
-                    placeholder="Search our site">
-                <div class="input-group-append">
-                    <button class="form-control form-control btn btn-black border border-black rounded-0" type="submit" aria-label="search">
-                        <span class="icon">
-                            <i class="fas fa-search text-white mobile-nav-item"></i>
-                        </span>
-                    </button>
-                </div>
+<ul class="nav list-inline d-inline">
+    <li class="list-inline-item">
+        <a class="text-black nav-link d-block d-lg-none" href="#" id="mobile-search" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <div class="text-center">
+                <div><i class="fas fa-search fa-lg text-white"></i></div>
+                <p class="my-0 text-white">Search</p>
             </div>
-        </form>
-    </div>
-</li>
+        </a>
+        <div class="dropdown-menu border-0 w-100 p-3 rounded-0 my-0" aria-labelledby="mobile-search">
+            <form class="form" method="GET">
+                <div class="input-group w-100">
+                    <input class="form-control border border-black rounded-0" type="text" name="q"
+                        placeholder="Search our site">
+                    <div class="input-group-append">
+                        <button class="form-control form-control btn btn-black border border-black rounded-0" type="submit" aria-label="search">
+                            <span class="icon">
+                                <i class="fas fa-search text-white mobile-nav-item"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </li>
 
-<li class="list-inline-item dropdown">
-    <a class="text-black nav-link d-block d-lg-none" href="#" id="user-options-mobile" data-toggle="dropdown" aria-label="my account"
-        aria-haspopup="true" aria-expanded="false">
-        <div class="text-center">
-            <div><i class="fas fa-user fa-lg text-white mobile-nav-item"></i></div>
-            <p class="my-0 text-white mobile-nav-item  bg-nav">My Account</p>
-        </div>
-    </a>
-    <div class="dropdown-menu border-0 bg-nav" aria-labelledby="user-options-mobile">
-        {% if request.user.is_authenticated %}
-            {% if request.user.is_superuser %}
-                <a href="{% url 'add_product' %}" class="dropdown-item text-white" aria-label="product management page">Product Management</a>
-            {% endif %}
-                <a href="{% url 'profile' %}" class="dropdown-item text-white" aria-label="profile page">My Profile</a>
-                <a href="{% url 'account_logout' %}" class="dropdown-item text-white" aria-label="logout page">Logout</a>
-            {% else %}
-                <a href="{% url 'account_signup' %}" class="dropdown-item text-white" aria-label="register page">Register</a>
-                <a href="{% url 'account_login' %}" class="dropdown-item text-white" aria-label="login page">Login</a>
-        {% endif %}
-    </div>
-</li>
-<li class="list-inline-item">
-    <a class="nav-link d-block d-lg-none" href="{% url 'view_basket' %}" aria-label="basket page">
-        <div class="text-center">
-            <div><i class="fas fa-shopping-bag fa-lg text-white"></i></div>
-            <p class="my-0 text-white">
-                {% if basket_total %}
-                    ${{ basket_total|floatformat:2 }}
-                {% else %}
-                    $0.00
+    <li class="list-inline-item dropdown">
+        <a class="text-black nav-link d-block d-lg-none" href="#" id="user-options-mobile" data-toggle="dropdown" aria-label="my account"
+            aria-haspopup="true" aria-expanded="false">
+            <div class="text-center">
+                <div><i class="fas fa-user fa-lg text-white mobile-nav-item"></i></div>
+                <p class="my-0 text-white mobile-nav-item  bg-nav">My Account</p>
+            </div>
+        </a>
+        <div class="dropdown-menu border-0 bg-nav" aria-labelledby="user-options-mobile">
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'add_product' %}" class="dropdown-item text-white" aria-label="product management page">Product Management</a>
                 {% endif %}
-            </p>
+                    <a href="{% url 'profile' %}" class="dropdown-item text-white" aria-label="profile page">My Profile</a>
+                    <a href="{% url 'account_logout' %}" class="dropdown-item text-white" aria-label="logout page">Logout</a>
+                {% else %}
+                    <a href="{% url 'account_signup' %}" class="dropdown-item text-white" aria-label="register page">Register</a>
+                    <a href="{% url 'account_login' %}" class="dropdown-item text-white" aria-label="login page">Login</a>
+            {% endif %}
         </div>
-    </a>
-</li>
+    </li>
+    <li class="list-inline-item">
+        <a class="nav-link d-block d-lg-none" href="{% url 'view_basket' %}" aria-label="basket page">
+            <div class="text-center">
+                <div><i class="fas fa-shopping-bag fa-lg text-white"></i></div>
+                <p class="my-0 text-white">
+                    {% if basket_total %}
+                        ${{ basket_total|floatformat:2 }}
+                    {% else %}
+                        $0.00
+                    {% endif %}
+                </p>
+            </div>
+        </a>
+    </li>
+</ul>

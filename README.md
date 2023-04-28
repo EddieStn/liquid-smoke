@@ -48,8 +48,6 @@
 * [Other sources](#other-sources)
 
 
-
-
 # Design and build
 ### This is a Business to Customer( B2C ) focused application. The intent of this website is to sell candles and essential oils to customers for a single payment at checkout.
 
@@ -243,6 +241,7 @@ NOTE* Gitpod doesn't run on your machine, it runs on a Linux virtual server, so 
 * AWS S3 bucket sstorage for storing static files and media files
 
 # Agile methodology
+### Link to the project board [Liquid Smoke board](https://github.com/users/EddieStn/projects/3)
 
 ## Epics Breakdown
 ### [#1 EPIC 1 Product Catalog and Search](https://github.com/EddieStn/liquid-smoke/issues/1)
@@ -404,8 +403,6 @@ As a website administrator, I want to be able to manage customer data in complia
 
 * We don't use customer's data for anything else other than sending orders and email confirmations
 
-## Agile Tasks
-
 ## Could have User Stories
 
 ### [#18 USER STORY: Personalised reccomendations](https://github.com/EddieStn/liquid-smoke/issues/18)
@@ -417,18 +414,77 @@ As a customer, I want to be able to receive promotional offers and discounts thr
 ### [#40 USER STORY: Navigation path](https://github.com/EddieStn/liquid-smoke/issues/40)
 As a customer, I want to be able to see the path I have taken from the home page to the current page I am on, so that I can navigate back to previous pages or sections of the website easily.
 
+## Agile Tasks
+### I've set tasks for each user story, in a separate project [Tasks board](https://github.com/users/EddieStn/projects/4)
+
 # Testing
 
 ## Lighthouse
-* Desktop before and after
 
-* Mobile before and after
+| App name  |  file name | result |
+| ------ | ------ |------ |
+| Home - Desktop| index.html | [no errors](static/images/lighthouse/home-desktop.png)
+| Home - Mobile | products.html | [no errors](static/images/lighthouse/home-mobile.png)
+| Products - Desktop | index.html | [no errors](static/images/lighthouse/products-desktop.png)
+| Products - Mobile | products.html | [no errors](static/images/lighthouse/products-mobile.png)
+
+Low performance score and high loading time mostly because of the large size images, I did not have time to adjust all the products
 
 ## Validation
+
 * HTML
+
+| App name  |  file name | result |
+| ------ | ------ |------ |
+| homepage | index.html | [no errors](static/images/html/html-home.png)
+| products | products.html | [no errors](static/images/html/html-products.png)
+| candles | candles.html | [no errors](static/images/html/html-candles.png)
+| essential_oils | essential_oils.html | [no errors](static/images/html/html-oils.png)
+| product_detail | product_detail.html | [no errors](static/images/html/html-product-detail.png)
+| basket | basket.html | [no errors](static/images/html/basket.png)
+| profile | profile.html | [no errors](static/images/html/profile.png)
+
 * CSS
+
+| App name  |  file name | result |
+| ------ | ------ |------ |
+| css | base.css | [no errors](static/images/html/css-validator.png)
+
 * JShint
+
+| App name  |  file name | result |
+| ------ | ------ |------ |
+| Javascipt | propducts.html | [no errors](static/images/jshint/jshint-products.png)
+| Javascipt | basket.html | [no errors](static/images/jshint/jshint-basket.png)
+| Javascipt | stripe_elements.js | [no errors](static/images/jshint/jshint-stripe.png)
+
 * pep8online
+
+| App name  |  file name | result |
+| ------ | ------ |------ |
+|liquid-smoke | urls.py | [no errors](static/images/pep8/app-urls.png)
+|basket | forms.py | [no errors](static/images/pep8/basket-forms.png)
+|basket | models.py | [no errors](static/images/pep8/basket-models.png)
+|basket | urls.py | [no errors](static/images/pep8/basket-urls.png)
+|basket | views.py | [no errors](static/images/pep8/basket-views.png)
+|catalog | admin.py | [no errors](static/images/pep8/catalog-admin.png)
+|catalog | forms.py | [no errors](static/images/pep8/catalog-forms.png)
+|catalog | models.py | [no errors](static/images/pep8/catalog-models.png)
+|catalog | urls.py | [no errors](static/images/pep8/catalog-urls.png)
+|catalog | views.py | [no errors](static/images/pep8/catalog-views.png)
+|checkout | admin.py | [no errors](static/images/pep8/checkout-admin.png)
+|checkout | forms.py | [no errors](static/images/pep8/checkout-forms.png)
+|checkout | models.py | [no errors](static/images/pep8/checkout-models.png)
+|checkout | signals.py | [no errors](static/images/pep8/checkout-signals.png)
+|checkout | tests.py | [no errors](static/images/pep8/checkout-tests.png)
+|checkout | views.py | [no errors](static/images/pep8/checkout-views.png)
+|checkout | urls.py | [no errors](static/images/pep8/checkout-urls.png)
+|checkout | context_proccessors.py | [no errors](static/images/pep8/checkout-context_procesors.png)
+|profile | forms.py | [no errors](static/images/pep8/profile-forms.png)
+|profile | models.py | [no errors](static/images/pep8/profile-models.png)
+|profile | urls.py | [no errors](static/images/pep8/profile-urls.png)
+|profile | views.py | [no errors](static/images/pep8/profile-views.png)
+
 
 ## Automated testing TDD
 * To create automated tests, I had to comment out the postgres DATABASE_URL as I don't have permissions to create TDD, so used the django default database, sqlite3, while testing
@@ -809,11 +865,255 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
 
 # Development and Deployment
 ## Local development
+* Create your Django app. In the terminal write the following in order:
+    1. Install Django and gunicorn: `pip3 install django gunicorn`
+    2. Install database libraries dj_database_url and psycopg2 library: `pip3 install dj_database_url psycopg2`
+    4. Create file for requirements file: `pip freeze --local > requirements.txt`
+    5. Create your project: `django-admin startproject your_project_name .` ( remember the . at the end)
+    6. Create your app: `django-admin startapp your_app_name`
+    7. Migrate: `python3 manage.py makemigrations` and `python3 manage.py migrate`
+    8. Run the server to test if the app is installed: `python3 manage.py runserver`
+
+### Setting AWS bucket
+
+1. Go to [Amzon Web Services](https://aws.amazon.com/) page and login or register
+
+2. You should be redirected to AWS Managment Console, if not click onto AWS logo in top left corner or click Services icon and choose Console Home
+
+3. Below the header AWS Services click into All Services and find **S3** under Storage
+
+4. Create New Bucket using **Create Bucket** button in top right hand corner
+
+- **Configuration:** type in your chosen name for the bucket (preferably matching your heroku app name) and AWS Region closest to you
+
+
+- **Object ownership:** ACLs enabled, Bucket owner preffered
+
+- **Block Public Access settings:** Uncheck to allow public access, Acknowledge that the current settings will result that the objects within the bucket will become public
+
+- Click **Create Bucket**
+
+5. You are redirected to Amazon S3 with list of your buckets. Click into the name of the bucket you just created
+
+6. Find the tab **Properties** on the top of the page:
+**Static website hosting** at the bottom of the properties page: clik to edit, click enable, fill in index document: index.html and error.html for error
+
+7. On the **Permissions** tab:
+- Cross-origin resource sharing (**CORS**) Paste in the below code as configuration and save
+
+```
+[
+  {
+      "AllowedHeaders": [
+          "Authorization"
+      ],
+      "AllowedMethods": [
+          "GET"
+      ],
+      "AllowedOrigins": [
+          "*"
+      ],
+      "ExposeHeaders": []
+  }
+]
+```
+- **Bucket Policy** within permissions tab: Edit bucket policy
+Click AWS Policy Generator (top right conrner)
+
+Select type of policy: S3 Bucket policy
+Principal: * (allows all)
+Actions: Get object
+Amazon Resource Name (ARN): paste from the Edit bucket policy page in permissions
+Click Add statement Than Click Generate Policy and Copy the policy into bucket policy editor. 
+In the policy code find "Resource" key and add "/*" after the name of the bucket to enable all
+Save changes
+
+- **Access control list (ACL)** within permissions tab: click Edit
+
+find Everyone (public access) and check List box and save
+
+8. Identity and Access Management (IAM)
+Go back to the AWS Management Console and find IAM in AWS Services
+
+- side menu - User Groups and click **Create Group**
+name group "manage-your-app-name" and click Create group
+
+- side menu - Policies and click **Create Policy**
+Click import managed policy - find AmazonS3FullAccess
+Copy ARN again and paste into "Resource" add list containint two elements "[ "arn::..", ""arn::../*]" First element is for bucket itself, second element is for all files and foldrs in the bucket
+
+Click bottom right Add Tags, than Click bottom right Next: Review
+Add name of the policy and description
+
+Click bottom right Create policy
+
+9. Attach policy to the group we created:
+- go to User Groups on side menu
+- select your group from the list
+- go to permissions tab and add permissions drop down and choose **Attach policies**
+- find the policy created above and click button in bottom right Add permissions
+
+10. Create User to go in the group
+- **Users** in the side menu and click add users
+
+User name: your-app-staticfiles-user
+Check option: Access key - Programmatic access
+Click button at the bottom right for Next
+- Add user group and add user to the group you created earlier
+Click Next Tags and Next: review and Create user
+- Download .csv file
+
+
+11. Connect django to AWS S3 bucket
+- install boto3
+- install django-storages
+- freeze to requirements.txt
+- add storages to installed apps in settings.py
+
+```
+if 'USE_AWS' in os.environ:
+    # Cache control
+    AWS_S3_OBJECT_PARAMETERS = {
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'CacheControl': 'max-age=94608000',
+    }
+
+    # Bucket Config
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = 'eu-west-2'
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+```
+
+12. Go to heroku to set up enviromental variables
+
+open CSV file downloaded earlier and copy each variable into heroku Settings
+
+AWS_STORAGE_BUCKET_NAME
+AWS_ACCESS_KEY_ID from csv
+AWS_SECRET_ACCESS_KEY from csv
+USE_AWS = True
+remove DISABLE_COLLECTSTATIC variable from heroku
+
+13. Create file in root directory custom_storages.py
+
+```
+from django.conf import settings
+from storages.backends.s3boto3 import S3Boto3Storage
+
+
+class StaticStorage(S3Boto3Storage):
+    location = settings.STATICFILES_LOCATION
+
+
+class MediaStorage(S3Boto3Storage):
+    location = settings.MEDIAFILES_LOCATION
+```
+
+14. Go to settings.py, add the AWS settings
+
+```
+    # Static and media files
+    STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+    STATICFILES_LOCATION = 'static'
+    DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'
+    MEDIAFILES_LOCATION = 'media'
+
+    # Override static and media URLs in production
+    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
+    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+
+```
+
+15. To load the media files to S3 bucket
+
+- Go to your S3 bucket page on AWS. Create new folder "media"
+- go to the media folder and click Upload
+
 
 ## Heroku deployment
 ### The site was deployed via Heroku. The live link can be found here - [Liquid Smoke](https://liquid-smoke.herokuapp.com/)
+* To deploy the project through Heroku I followed these steps:
+
+    * Sign up / Log in to Heroku
+    * From the main Heroku Dashboard page select `New` and then `Create New App`
+    * Give the project a name - in my case liquid-smoke and select a `region`, then select `create app`.
+    * This will create the app within Heroku.
+    * For the database, I used ElephantSQL
+        * Navigate to ElephantSQL.com and log-in/sign-up.
+        * Create new instance
+        * Choose a name and the free plan, tags can be left blank
+        * Select a region and click Review and then Create
+        * From the dashboard, select the created instance and copy the URL to the clipboard
+    * In Heroku navigate to the setting tab and scroll utill you find `Reveal config vars`.
+    * Add to the config vars DATABASE_URL as the KEY and paste the URL from your ElephantSQL as the VALUE
+    * Add to the config vars AWS_SECRET_KEY as the KEY and paste the URL as the VALUE
+    * Also add the KEY - DISABLE_COLLECTSTATIC with the Value - 1 to the config vars
+        * This key value pair must be removed prior to final deployment
+    * In the root directory of your repository in github create a new file called `env.py` and write the following code:
+        ```
+        import os
+
+        os.environ["DATABASE_URL"]="postgres://url"
+        os.environ["SECRET_KEY"]="your secret key"
+        os.environ["AWS_SECRET_KEY"]="cloudinary://url"
+        ```
+    * Add the secret key just created to the Heroku Config Vars. SECRET_KEY as the KEY and the secret key value you created as the VALUE
+    * In settings.py write the following code:
+        ```
+        from pathlib import Path
+        import os
+        import dj_database_url
+        if os.path.isfile('env.py'):
+            import env
+        ```
+    * Replace the secret key that django has in the settings.py with `SECRET_KEY = os.environ.get('SECRET_KEY')`
+    * Comment out the default database and replace it with:
+        ```
+        DATABASES = {
+            'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        }
+        ```
+    * Make migrations:
+        * python3 manage.py makemigrations
+        * python3 manage.py migrate
+    * In the following order, add the Cloudinary libraries to the Django settings.py section for installed apps:
+        ```
+        'cloudinary_storage'
+        'django.contrib.staticfiles',
+        'cloudinary',
+        ```
+    * Add the following in settings.py to connect Cloudinary to Django:
+        ```
+        STATIC_URL = '/static/'
+        STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+        STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+        STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+        MEDIA_URL = '/media/'
+        DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+        ```
+    * Link the file to the templates directory in Heroku TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+    * Change the templates directory to TEMPLATES_DIR - 'DIRS': [TEMPLATES_DIR]
+    * For the `ALLOWED_HOSTS` add your heroku url and your localhost:
+        ```
+        ALLOWED_HOSTS = ['liquid-smoke.herokuapp.com', 'localhost']
+        ```
+    * In your root directory, create three new top folders: media, static and templates
+    * Create a `Procfile` file in the root directory
+    * Within the Procfile add the code - `web: guincorn PROJECT_NAME.wsgi`
+    * In the terminal, add the changed files, commit and push to GitHub
+    * In Heroku, navigate to the deployment tab and deploy the branch manually - watch the build logs for any errors.
+    * Heroku will now build the app for you. Once it has completed the build process you will see a 'Your App Was Successfully Deployed' message and a link to the app to visit the live site.
 
 ## Deployment checklist
+* Upon completion of development, change in settings.py DEBUG = True to DEBUG = False
+* In Heroku settings config vars change the DISABLE_COLLECTSTATIC value to 0
+* 'Choose a branch to deploy' should be 'main' and search for your repository
+* To manually deploy click the button 'Deploy Branch'
+* Your app was successfully deployed will be displayed when the app is deployed.
+* The deployed app will appear in the browser after you click "view."
 
 ## Forking a repository
 ### A fork is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.
@@ -833,6 +1133,7 @@ To ensure my website is fully responsive I used [responsivedesignchecker](https:
 
 # Credits 
 
+* Copied Readme aws section from [JoGorska](https://github.com/JoGorska/bonsai-shop) README.md
 * Search form/checkout design is inspired from Boutique-Ado ( Code institute walkthrough project )
 * Navbar changes
     * I was having responsiveness issues with my original navigation design so I took inspiration from Boutique Ado, as it fit the purpose.

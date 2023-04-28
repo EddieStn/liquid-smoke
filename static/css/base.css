@@ -185,7 +185,7 @@ table th {
     padding: 3px 8.5px;
 }
 
-@media (max-width: 367px) {
+@media (max-width: 400px) {
     html {
         letter-spacing: 0;
     }
@@ -203,11 +203,12 @@ table th {
         font-size: 0.9rem;
     }
     .nav-link {
-        padding: 0;
+        padding: 6px;
     }
     
 }
 
+/* Set the basket table smaller for small screens */
 @media (max-width: 530px) {
     .table {
         padding: 0;
